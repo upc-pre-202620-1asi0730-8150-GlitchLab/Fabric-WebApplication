@@ -1,0 +1,24 @@
+{
+  "sidebar": {
+    "companyName": "Fabric",
+    "dashboard": "Panel de Control",
+    "productionBatches": "Lotes de Producción",
+    "quality": "Calidad",
+    "machinery": "Maquinaria",
+    "alerts": "Alertas",
+    "viewProfile": "Ver Perfil",
+    "logOut": "Cerrar Sesión"
+  },
+
+  "dashboard": { "title": "Panel de Control", "placeholder": "Vista de Dashboard — contenido próximamente." },
+  "productionBatches": { "title": "Lotes de Producción", "placeholder": "Vista de Lotes de Producción — contenido próximamente." },
+  "quality": { "title": "Calidad", "placeholder": "Vista de Calidad — contenido próximamente." },
+  "machinery": { "title": "Maquinaria", "placeholder": "Vista de Maquinaria — contenido próximamente." },
+  "alerts": { "title": "Alertas", "placeholder": "Vista de Alertas — contenido próximamente." },
+
+  "notFound": {
+    "title": "Ruta no encontrada",
+    "message": "La página \"{path}\" no existe. Revisa la URL o elige una opción del menú lateral.",
+    "backButton": "Volver al Dashboard"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "sidebar": {
+    "companyName": "Fabric",
+    "dashboard": "Dashboard",
+    "productionBatches": "Production Batches",
+    "quality": "Quality Control",
+    "machinery": "Machine registry",
+    "alerts": "Alerts",
+    "viewProfile": "View Profile",
+    "logOut": "Log out"
+  },
+
+  "dashboard": { "title": "Panel de Control", "placeholder": "Vista de Dashboard — contenido próximamente." },
+  "productionBatches": { "title": "Lotes de Producción", "placeholder": "Vista de Lotes de Producción — contenido próximamente." },
+  "quality": { "title": "Calidad", "placeholder": "Vista de Calidad — contenido próximamente." },
+  "machinery": { "title": "Maquinaria", "placeholder": "Vista de Maquinaria — contenido próximamente." },
+  "alerts": { "title": "Alertas", "placeholder": "Vista de Alertas — contenido próximamente." },
+
+
+  "notFound": {
+    "title": "Route not found",
+    "message": "The page \"{path}\" doesn't exist. Check the URL or pick an option from the sidebar.",
+    "backButton": "Back to Dashboard"
+    }
+}
