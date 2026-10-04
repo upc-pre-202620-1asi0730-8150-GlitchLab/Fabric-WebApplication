@@ -106,7 +106,7 @@ const navItems = [
   font-size: 0.925rem;
 }
 
-.sidebar__link:hover {
+.sidebar__link:not(.sidebar__link--active):hover {
   background: #f3f2ec;
 }
 
