@@ -4,7 +4,7 @@ const pageNotFound = () => import ('./shared/presentation/views/page-not-found.v
 const productionBatches = () => import ('./production-batches/presentation/views/production-batches.vue');
 const dashboard = () => import ('./report-analytics/presentation/views/dashboard.vue');
 const qualityView = () => import ('./quality/presentation/views/quality.vue');
-const machine = () => import('./machine-registry/presentation/views/machinery.vue');
+const machine = () => import('./machine-registration/presentation/views/machinery.vue');
 const alerts = () => import('./alerts/presentation/views/alerts.vue');
 
 const routes = [
