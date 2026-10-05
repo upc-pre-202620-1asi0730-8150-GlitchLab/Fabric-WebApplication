@@ -4,7 +4,7 @@
     "dashboard": "Dashboard",
     "productionBatches": "Production Batches",
     "quality": "Quality Control",
-    "machinery": "Machine registry",
+    "machinery": "Machine registration",
     "alerts": "Alerts",
     "viewProfile": "View Profile",
     "logOut": "Log out"
@@ -13,13 +13,34 @@
   "dashboard": { "title": "Panel de Control", "placeholder": "Vista de Dashboard — contenido próximamente." },
   "productionBatches": { "title": "Lotes de Producción", "placeholder": "Vista de Lotes de Producción — contenido próximamente." },
   "quality": { "title": "Calidad", "placeholder": "Vista de Calidad — contenido próximamente." },
-  "machinery": { "title": "Maquinaria", "placeholder": "Vista de Maquinaria — contenido próximamente." },
   "alerts": { "title": "Alertas", "placeholder": "Vista de Alertas — contenido próximamente." },
 
 
   "notFound": {
-    "title": "Route not found",
+    "title": "Page not found",
     "message": "The page \"{path}\" doesn't exist. Check the URL or pick an option from the sidebar.",
     "backButton": "Back to Dashboard"
+    },
+
+  "machinery": {
+    "title": "Machinery",
+    "subtitle": "Monitor machine status, report breakdowns and review downtime.",
+    "registerButton": "Register Machine",
+    "types": {
+      "overlock": "Overlock",
+      "straightStitch": "Straight Stitch",
+      "coverstitch": "Coverstitch",
+      "buttonhole": "Buttonhole"
+    },
+    "status": {"operational": "Operational", "in-maintenance": "In Maintenance"},
+    "stats": {"total": "Total Machines", "operational": "Operational", "inMaintenance": "In Maintenance"},
+    "table": {"machine": "Machine", "type": "Type", "currentBatch": "Current Batch", "status": "Status", "currentDowntime": "Current Downtime", "lastFailure": "Last Failure"},
+    "form": {
+      "title": "Register Machine",
+      "type": "Machine Type",
+      "batch": "Production Batch",
+      "submit": "Register",
+      "cancel": "Cancel"
     }
+  }
 }

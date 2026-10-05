@@ -13,12 +13,34 @@
   "dashboard": { "title": "Panel de Control", "placeholder": "Vista de Dashboard — contenido próximamente." },
   "productionBatches": { "title": "Lotes de Producción", "placeholder": "Vista de Lotes de Producción — contenido próximamente." },
   "quality": { "title": "Calidad", "placeholder": "Vista de Calidad — contenido próximamente." },
-  "machinery": { "title": "Maquinaria", "placeholder": "Vista de Maquinaria — contenido próximamente." },
   "alerts": { "title": "Alertas", "placeholder": "Vista de Alertas — contenido próximamente." },
 
   "notFound": {
-    "title": "Ruta no encontrada",
+    "title": "Página no encontrada",
     "message": "La página \"{path}\" no existe. Revisa la URL o elige una opción del menú lateral.",
     "backButton": "Volver al Dashboard"
+  },
+
+
+  "machinery": {
+    "title": "Maquinaria",
+    "subtitle": "Supervisa el estado de las máquinas, reporta fallas y revisa el tiempo de inactividad.",
+    "registerButton": "Registrar Máquina",
+    "types": {
+      "overlock": "Overlock",
+      "straightStitch": "Costura Recta",
+      "coverstitch": "Recubridora",
+      "buttonhole": "Ojaladora"
+    },
+    "status": {"operational": "Operativa", "in-maintenance": "En Mantenimiento"},
+    "stats": {"total": "Total de Máquinas", "operational": "Operativas", "inMaintenance": "En Mantenimiento"},
+    "table": {"machine": "Máquina", "type": "Tipo", "currentBatch": "Lote Actual", "status": "Estado", "currentDowntime": "Tiempo de Inactividad", "lastFailure": "Última Falla"},
+    "form": {
+      "title": "Registrar Máquina",
+      "type": "Tipo de Máquina",
+      "batch": "Lote de Producción",
+      "submit": "Registrar",
+      "cancel": "Cancelar"
+    }
   }
 }
