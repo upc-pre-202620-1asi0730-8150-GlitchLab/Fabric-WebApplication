@@ -15,20 +15,16 @@ const useMachineStore = defineStore('machine-registration', () => {
     const inMaintenanceCount = computed(() => machines.value.filter(m => m.status === 'in-maintenance').length);
 
     function fetchMachines() {
-        machineApi.getMachines().then(response => {
+        return machineApi.getMachines().then(response => {
             machines.value = MachineAssembler.toEntitiesFromResponse(response);
             machinesLoaded.value = true;
         }).catch(error => errors.value.push(error));
     }
 
     function getMachineById(id) {
-        return machines.value.find(machine => machine.id === id);
+        return machines.value.find(machine => String(machine.id) === String(id));
     }
 
-    /**
-     * Generates the next machine code (MC-0XX) based on the highest existing one.
-     * @returns {string}
-     */
     function generateNextCode() {
         const maxNumber = machines.value
             .map(m => parseInt(String(m.code).replace('MC-', ''), 10))
@@ -37,12 +33,6 @@ const useMachineStore = defineStore('machine-registration', () => {
         return `MC-${String(maxNumber + 1).padStart(3, '0')}`;
     }
 
-    /**
-     * Registers a new machine. Always created as 'operational', with no
-     * downtime or failure recorded — that invariant lives here, once,
-     * regardless of what the form happens to send.
-     * @param {Machine} machine
-     */
     function addMachine(machine) {
         machine.code = generateNextCode();
         machine.status = 'operational';
@@ -51,13 +41,48 @@ const useMachineStore = defineStore('machine-registration', () => {
 
         machineApi.createMachine(machine).then(response => {
             machines.value.push(MachineAssembler.toEntityFromResource(response.data));
+            return fetchMachines();
         }).catch(error => errors.value.push(error));
+    }
+
+    function deleteMachine(machine) {
+        const removeLocal = () => {
+            machines.value = machines.value.filter(m => m.id !== machine.id);
+        };
+
+        machineApi.deleteMachine(machine.id).then(() => {
+            removeLocal();
+            return fetchMachines();
+        }).catch(error => {
+            if (error.response?.status === 404) removeLocal();
+            else errors.value.push(error);
+        });
+    }
+
+    function reportBreakdown(machine, {category, description, stoppedAt}) {
+        const resource = {
+            ...machine,
+            status: 'in-maintenance',
+            currentDowntime: null,
+            lastFailure: category,
+            failureDescription: description || null,
+            downtimeStartedAt: stoppedAt.toISOString()
+        };
+
+        return machineApi.updateMachine(resource).then(response => {
+            const updated = MachineAssembler.toEntityFromResource(response.data);
+            machines.value = machines.value.map(m => m.id === updated.id ? updated : m);
+            return updated;
+        }).catch(error => {
+            errors.value.push(error);
+            throw error;
+        });
     }
 
     return {
         machines, errors, machinesLoaded,
         totalMachines, operationalCount, inMaintenanceCount,
-        fetchMachines, getMachineById, addMachine
+        fetchMachines, getMachineById, addMachine, deleteMachine, reportBreakdown
     };
 });
 

@@ -20,7 +20,8 @@ export class MachineApi extends BaseApi {
     }
 
     createMachine(resource){
-        return this.#machinesEndpoint.create();
+        const {id, ...body} = resource;
+        return this.#machinesEndpoint.create(body);
     }
 
     updateMachine(resource){

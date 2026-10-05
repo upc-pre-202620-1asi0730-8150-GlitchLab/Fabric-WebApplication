@@ -10,10 +10,25 @@
     "logOut": "Cerrar Sesión"
   },
 
-  "dashboard": { "title": "Panel de Control", "placeholder": "Vista de Dashboard — contenido próximamente." },
-  "productionBatches": { "title": "Lotes de Producción", "placeholder": "Vista de Lotes de Producción — contenido próximamente." },
-  "quality": { "title": "Calidad", "placeholder": "Vista de Calidad — contenido próximamente." },
-  "alerts": { "title": "Alertas", "placeholder": "Vista de Alertas — contenido próximamente." },
+  "dashboard": {
+    "title": "Panel de Control",
+    "placeholder": "Vista de Dashboard — contenido próximamente."
+  },
+
+  "productionBatches": {
+    "title": "Lotes de Producción",
+    "placeholder": "Vista de Lotes de Producción — contenido próximamente."
+  },
+
+  "quality": {
+    "title": "Calidad",
+    "placeholder": "Vista de Calidad — contenido próximamente."
+  },
+
+  "alerts": {
+    "title": "Alertas",
+    "placeholder": "Vista de Alertas — contenido próximamente."
+  },
 
   "notFound": {
     "title": "Página no encontrada",
@@ -23,24 +38,113 @@
 
 
   "machinery": {
+    "confirmDelete": "¿Estás seguro de que quieres eliminar la máquina {code}?",
+    "deleteHeader": "Confirmar Eliminación",
+    "deleteAccept": "Eliminar",
+    "deleteReject": "Cancelar",
     "title": "Maquinaria",
     "subtitle": "Supervisa el estado de las máquinas, reporta fallas y revisa el tiempo de inactividad.",
     "registerButton": "Registrar Máquina",
+
+    "actions": {
+      "reportBreakdown": "Reportar Avería",
+      "details": "Detalles"
+    },
+    "details": {
+      "title": "Detalles de la Máquina",
+      "description": "Descripción de la Falla"
+    },
+    "failures": {
+      "needleBreakage": "Rotura de Aguja",
+      "mechanicalJam": "Atasco Mecánico",
+      "motorFailure": "Falla de Motor",
+      "other": "Otra"
+    },
+    "breakdown": {
+      "title": "Reportar Avería de Máquina",
+      "subtitle": "Registra una parada de máquina y solicita asistencia técnica inmediata.",
+      "back": "Volver a Maquinaria",
+      "info": {
+        "title": "Información de la Máquina",
+        "code": "Código de Máquina",
+        "type": "Tipo de Máquina",
+        "batch": "Lote Actual",
+        "status": "Estado Actual"
+      },
+      "details": {
+        "title": "Detalles de la Avería",
+        "subtitle": "Completa la información requerida para confirmar la parada de la máquina."
+      },
+      "fields": {
+        "machineCode": "Código de Máquina",
+        "category": "Categoría de Falla",
+        "categoryPlaceholder": "Selecciona el tipo de falla",
+        "stopTime": "Hora de Parada",
+        "stopTimePlaceholder": "p. ej. 10:35 AM",
+        "description": "Descripción de la Falla",
+        "descriptionPlaceholder": "Describe la falla o aporta información adicional para el equipo técnico."
+      },
+      "note": "Tras la confirmación: estado → En Mantenimiento · inicia el cronómetro de inactividad · se notifica al equipo técnico",
+      "cancel": "Cancelar",
+      "confirm": "Confirmar Parada",
+      "errors": {
+        "categoryRequired": "Selecciona al menos una categoría técnica de falla.",
+        "stopTimeRequired": "Ingresa la hora en que se detuvo la máquina.",
+        "stopTimeInvalid": "Ingresa una hora válida, p. ej. 10:35 AM o 14:35.",
+        "stopTimeFuture": "La hora de parada no puede estar en el futuro."
+      },
+      "success": {
+        "title": "Avería reportada",
+        "detail": "{code} ahora está En Mantenimiento. El equipo técnico fue notificado."
+      }
+    },
+
+    "filters": {
+      "searchPlaceholder": "Buscar código de máquina",
+      "status": "Estado",
+      "type": "Tipo de Máquina",
+      "noResults": "Ninguna máquina coincide con los filtros."
+    },
+
     "types": {
       "overlock": "Overlock",
       "straightStitch": "Costura Recta",
       "coverstitch": "Recubridora",
       "buttonhole": "Ojaladora"
     },
-    "status": {"operational": "Operativa", "in-maintenance": "En Mantenimiento"},
-    "stats": {"total": "Total de Máquinas", "operational": "Operativas", "inMaintenance": "En Mantenimiento"},
-    "table": {"machine": "Máquina", "type": "Tipo", "currentBatch": "Lote Actual", "status": "Estado", "currentDowntime": "Tiempo de Inactividad", "lastFailure": "Última Falla"},
+
+    "status": {
+      "operational": "Operativa",
+      "in-maintenance": "En Mantenimiento"
+    },
+
+    "stats": {
+      "total": "Total de Máquinas",
+      "operational": "Operativas",
+      "inMaintenance": "En Mantenimiento"
+    },
+
+    "table": {
+      "machine": "Máquina",
+      "type": "Tipo",
+      "currentBatch": "Lote Actual",
+      "status": "Estado",
+      "currentDowntime": "Tiempo de Inactividad",
+      "lastFailure": "Última Falla",
+      "actions": "Acciones"
+    },
+
     "form": {
       "title": "Registrar Máquina",
       "type": "Tipo de Máquina",
       "batch": "Lote de Producción",
       "submit": "Registrar",
-      "cancel": "Cancelar"
+      "cancel": "Cancelar",
+      "errors": {
+        "summary": "No puedes dejar campos vacíos. Completa todos los campos antes de registrar.",
+        "typeRequired": "Selecciona un tipo de máquina.",
+        "batchRequired": "Selecciona un lote de producción."
+      }
     }
   }
 }
