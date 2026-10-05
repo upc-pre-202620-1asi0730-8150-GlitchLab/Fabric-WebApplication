@@ -1,0 +1,61 @@
+{
+  "machines": [
+    {
+      "id": "1",
+      "code": "MC-014",
+      "type": "overlock",
+      "batchId": "LOT-024",
+      "status": "in-maintenance",
+      "currentDowntime": "01:42:18",
+      "lastFailure": "Mechanical Jam"
+    },
+    {
+      "id": "2",
+      "code": "MC-011",
+      "type": "straight-stitch",
+      "batchId": "LOT-024",
+      "status": "operational",
+      "currentDowntime": null,
+      "lastFailure": "Needle Breakage"
+    },
+    {
+      "id": "3",
+      "code": "MC-009",
+      "type": "coverstitch",
+      "batchId": "LOT-023",
+      "status": "operational",
+      "currentDowntime": null,
+      "lastFailure": null
+    },
+    {
+      "id": "4",
+      "code": "MC-007",
+      "type": "overlock",
+      "batchId": "LOT-022",
+      "status": "in-maintenance",
+      "currentDowntime": "00:38:45",
+      "lastFailure": "Motor Failure"
+    },
+    {
+      "id": "5",
+      "code": "MC-005",
+      "type": "straight-stitch",
+      "batchId": "LOT-021",
+      "status": "operational",
+      "currentDowntime": null,
+      "lastFailure": "Thread Tension"
+    },
+    {
+      "id": "6",
+      "code": "MC-003",
+      "type": "buttonhole",
+      "batchId": "LOT-020",
+      "status": "in-maintenance",
+      "currentDowntime": "00:22:10",
+      "lastFailure": "Needle Breakage"
+    },
+    {
+      "id": "SUFFepF"
+    }
+  ]
+}
