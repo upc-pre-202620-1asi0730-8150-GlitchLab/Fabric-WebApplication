@@ -12,7 +12,6 @@ const router = useRouter();
 const store = useMachineRegistrationStore();
 const confirm = useConfirm();
 
-// ---- Cronómetro de inactividad ----
 const now = ref(Date.now());
 let timer;
 
@@ -38,7 +37,6 @@ function failureLabel(value) {
   return match ? t(match.labelKey) : value;   // los datos viejos son texto plano
 }
 
-// ---- Menú de acciones (⋮) y detalles ----
 const menu = ref();
 const selectedMachine = ref(null);
 const detailsVisible = ref(false);
@@ -71,7 +69,7 @@ const navigateToNew = () => {
 
 const confirmDelete = (machine) => {
   confirm.require({
-    message: t('machinery.confirmDelete', {code: machine.code}),
+    message: t('machinery.confirmDelete', {id: machine.id}),
     header: t('machinery.deleteHeader'),
     icon: 'pi pi-exclamation-triangle',
     acceptLabel: t('machinery.deleteAccept'),
@@ -87,7 +85,6 @@ function typeLabel(type) {
   return match ? t(match.labelKey) : type;
 }
 
-// ---- Filtros ----
 const search = ref('');
 const statusFilter = ref(null);
 const typeFilter = ref(null);
@@ -105,7 +102,7 @@ const typeOptions = computed(() =>
 const filteredMachines = computed(() => {
   const term = search.value.trim().toLowerCase();
   return store.machines.filter(m =>
-      (!term || String(m.code).toLowerCase().includes(term)) &&
+      (!term || String(m.id).toLowerCase().includes(term)) &&
       (!statusFilter.value || m.status === statusFilter.value) &&
       (!typeFilter.value || m.type === typeFilter.value)
   );
@@ -151,7 +148,7 @@ watch([search, statusFilter, typeFilter], () => { first.value = 0; });
                    paginator :rows="5" data-key="id"
                    scrollable table-style="min-width: 50rem" class="machinery__table">
       <template #empty>{{ t('machinery.filters.noResults') }}</template>
-      <pv-column field="code" :header="t('machinery.table.machine')" sortable/>
+      <pv-column field="id" :header="t('machinery.table.machine')" sortable/>
       <pv-column :header="t('machinery.table.type')">
         <template #body="{data}">{{ typeLabel(data.type) }}</template>
       </pv-column>
@@ -185,7 +182,7 @@ watch([search, statusFilter, typeFilter], () => { first.value = 0; });
       <dl v-if="selectedMachine" class="machinery__details">
         <div>
           <dt>{{ t('machinery.table.machine') }}</dt>
-          <dd>{{ selectedMachine.code }}</dd>
+          <dd>{{ selectedMachine.id }}</dd>
         </div>
         <div>
           <dt>{{ t('machinery.table.type') }}</dt>
@@ -217,7 +214,7 @@ watch([search, statusFilter, typeFilter], () => { first.value = 0; });
       </dl>
     </pv-dialog>
 
-    <pv-button :label="t('machinery.registerButton')" icon="pi pi-plus" class="mt-3 register-btn" @click="navigateToNew"/>
+    <pv-button :label="t('machinery.registerButton')" icon="pi pi-plus" class="mt-3 btn-brand-primary" @click="navigateToNew"/>
 
     <div v-if="store.errors.length" class="text-red-500 mt-3">
       {{ t('errors.occurred') }}: {{ store.errors.map(e => e.message).join(', ') }}
@@ -257,23 +254,6 @@ watch([search, statusFilter, typeFilter], () => { first.value = 0; });
 .machinery__stat-value {
   font-size: 1.75rem;
   font-weight: 700;
-}
-
-.register-btn {
-  background: #43521f;
-  border-color: #43521f;
-  color: #ffffff;
-}
-
-.register-btn:enabled:hover {
-  background: #36421a;
-  border-color: #36421a;
-  color: #ffffff;
-}
-
-.register-btn:enabled:active {
-  background: #2c3615;
-  border-color: #2c3615;
 }
 
 .machinery__filters {

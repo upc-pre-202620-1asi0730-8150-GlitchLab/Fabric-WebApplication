@@ -17,3 +17,21 @@ body {
   height: 100%;
   width: 100%;
 }
+
+
+.p-button.btn-brand-primary {
+  background: #43521f;
+  border-color: #43521f;
+  color: #ffffff;
+}
+
+.p-button.btn-brand-primary:enabled:hover {
+  background: #36421a;
+  border-color: #36421a;
+  color: #ffffff;
+}
+
+.p-button.btn-brand-primary:enabled:active {
+  background: #2c3615;
+  border-color: #2c3615;
+}

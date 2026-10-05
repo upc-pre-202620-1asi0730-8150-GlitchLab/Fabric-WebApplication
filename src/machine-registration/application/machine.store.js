@@ -25,16 +25,16 @@ const useMachineStore = defineStore('machine-registration', () => {
         return machines.value.find(machine => String(machine.id) === String(id));
     }
 
-    function generateNextCode() {
-        const maxNumber = machines.value
-            .map(m => parseInt(String(m.code).replace('MC-', ''), 10))
+    function generateNextId() {
+        const maxId = machines.value
+            .map(m => parseInt(m.id, 10))
             .filter(n => !isNaN(n))
             .reduce((max, n) => Math.max(max, n), 0);
-        return `MC-${String(maxNumber + 1).padStart(3, '0')}`;
+        return String(maxId + 1);
     }
 
     function addMachine(machine) {
-        machine.code = generateNextCode();
+        machine.id = generateNextId();
         machine.status = 'operational';
         machine.currentDowntime = null;
         machine.lastFailure = null;

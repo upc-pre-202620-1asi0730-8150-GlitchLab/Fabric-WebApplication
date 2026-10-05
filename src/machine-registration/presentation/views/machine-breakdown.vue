@@ -19,7 +19,6 @@ onMounted(() => {
   if (!store.machinesLoaded) store.fetchMachines();
 });
 
-// Si la máquina no existe o ya está en mantenimiento, no hay nada que reportar.
 watch(() => store.machinesLoaded, (loaded) => {
   if (loaded && (!machine.value || machine.value.status === 'in-maintenance')) goBack();
 }, {immediate: true});
@@ -38,9 +37,6 @@ function typeLabel(type) {
   return match ? t(match.labelKey) : type;
 }
 
-/**
- * Converts "10:35 AM" or "14:35" into a Date for today. Returns null if invalid.
- */
 function parseStopTime(value) {
   const match = value.trim().match(/^(\d{1,2}):([0-5]\d)\s*(AM|PM)?$/i);
   if (!match) return null;
@@ -59,7 +55,6 @@ function parseStopTime(value) {
   return date;
 }
 
-// ---- Validaciones (devuelven la clave i18n del error, o null) ----
 const categoryError = computed(() =>
     submitted.value && !form.value.category ? 'categoryRequired' : null
 );
@@ -90,12 +85,12 @@ async function confirmStop() {
     toast.add({
       severity: 'success',
       summary: t('machinery.breakdown.success.title'),
-      detail: t('machinery.breakdown.success.detail', {code: machine.value.code}),
+      detail: t('machinery.breakdown.success.detail', {id: machine.value.id}),
       life: 4000
     });
     goBack();
   } catch {
-    // el error ya quedó guardado en store.errors y se muestra abajo
+
   } finally {
     saving.value = false;
   }
@@ -119,7 +114,7 @@ async function confirmStop() {
       <div class="breakdown__info-grid">
         <div>
           <span class="breakdown__info-label">{{ t('machinery.breakdown.info.code') }}</span>
-          <span class="breakdown__info-value">{{ machine.code }}</span>
+          <span class="breakdown__info-value">{{ machine.id }}</span>
         </div>
         <div>
           <span class="breakdown__info-label">{{ t('machinery.breakdown.info.type') }}</span>
@@ -145,7 +140,7 @@ async function confirmStop() {
         <div class="breakdown__fields">
           <div>
             <label for="machine-code">{{ t('machinery.breakdown.fields.machineCode') }} *</label>
-            <pv-input-text id="machine-code" :model-value="machine.code" readonly
+            <pv-input-text id="machine-code" :model-value="machine.id" readonly
                            class="w-full breakdown__readonly"/>
           </div>
 
@@ -184,7 +179,7 @@ async function confirmStop() {
             <pv-button type="button" :label="t('machinery.breakdown.cancel')" severity="secondary" outlined
                        @click="goBack"/>
             <pv-button type="submit" :label="t('machinery.breakdown.confirm')" :loading="saving"
-                       class="confirm-btn"/>
+                       class="btn-brand-primary"/>
           </div>
         </div>
       </form>
@@ -289,16 +284,27 @@ label {
   gap: 0.75rem;
 }
 
-.confirm-btn {
-  background: #43521f;
-  border-color: #43521f;
-  color: #ffffff;
+.breakdown__card {
+  background: #ffffff;
+  border: 1px solid #e5e5e0;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
-.confirm-btn:enabled:hover {
-  background: #36421a;
-  border-color: #36421a;
-  color: #ffffff;
+.breakdown__card--info {
+  background: #f7f6f1;
+}
+
+.breakdown__note {
+  flex: 1 1 18rem;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.8rem;
+  background: #f3f2ec;
+  border: 1px solid #e5e5e0;
 }
 
 @media (max-width: 576px) {

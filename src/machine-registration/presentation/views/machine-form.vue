@@ -57,7 +57,7 @@ const navigateBack = () => {
         {{ t('machinery.form.errors.summary') }}
       </p>
 
-      <pv-button :label="t('machinery.form.submit')" icon="pi pi-save" type="submit" class="register-btn"/>
+      <pv-button :label="t('machinery.form.submit')" icon="pi pi-save" type="submit" class="btn-brand-primary"/>
       <pv-button :label="t('machinery.form.cancel')" class="ml-2" severity="secondary" @click="navigateBack"/>
     </form>
     <div v-if="store.errors.length" class="text-red-500 mt-3">
@@ -67,20 +67,4 @@ const navigateBack = () => {
 </template>
 
 <style scoped>
-.register-btn {
-  background: #43521f;
-  border-color: #43521f;
-  color: #ffffff;
-}
-
-.register-btn:enabled:hover {
-  background: #36421a;
-  border-color: #36421a;
-  color: #ffffff;
-}
-
-.register-btn:enabled:active {
-  background: #2c3615;
-  border-color: #2c3615;
-}
 </style>

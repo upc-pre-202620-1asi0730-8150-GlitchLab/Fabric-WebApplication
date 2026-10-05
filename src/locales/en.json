@@ -66,7 +66,7 @@
       "back": "Back to Machinery",
       "info": {
         "title": "Machine Information",
-        "code": "Machine Code",
+        "code": "Machine ID",
         "type": "Machine Type",
         "batch": "Current Batch",
         "status": "Current Status"
@@ -76,7 +76,7 @@
         "subtitle": "Complete the required information to confirm the machine stop."
       },
       "fields": {
-        "machineCode": "Machine Code",
+        "machineCode": "Machine Id",
         "category": "Failure Category",
         "categoryPlaceholder": "Select failure type",
         "stopTime": "Stop Time",
@@ -123,7 +123,7 @@
       "inMaintenance": "In Maintenance"},
 
     "table": {
-      "machine": "Machine",
+      "machine": "Machine ID",
       "type": "Type",
       "currentBatch": "Current Batch",
       "status": "Status",
