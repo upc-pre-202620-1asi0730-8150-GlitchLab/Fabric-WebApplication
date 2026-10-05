@@ -9,7 +9,7 @@ const navItems = [
   {to: "/dashboard", icon: "pi pi-home", labelKey: "sidebar.dashboard"},
   {to: "/production-batches", icon: "pi pi-box", labelKey: "sidebar.productionBatches"},
   {to: "/quality", icon: "pi pi-verified", labelKey: "sidebar.quality"},
-  {to: "/machine-registry", icon: "pi pi-cog", labelKey: "sidebar.machinery"},
+  {to: "/machinery", icon: "pi pi-cog", labelKey: "sidebar.machinery"},
   {to: "/alerts", icon: "pi pi-bell", labelKey: "sidebar.alerts"}
 ];
 </script>
