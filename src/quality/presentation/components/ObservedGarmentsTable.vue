@@ -71,10 +71,10 @@
 
             <div v-if="openMenuId === item.id" class="dropdown-menu">
               <button type="button" class="menu-btn" @click.stop="openEvidence(item)">
-                <span>📷</span> Add Evidence
+                <span></span> Add Evidence
               </button>
               <button type="button" class="menu-btn" @click.stop="openDisposition(item)">
-                <span>⚖️</span> Disposition
+                <span></span> Disposition
               </button>
             </div>
           </td>

@@ -1,151 +1,147 @@
 <template>
-  <div class="quality-view-container">
-    <header class="quality-header">
-      <div class="header-left">
-        <h1 class="page-title">Quality</h1>
-        <p class="page-description">
-          Manage fabric inspections, quality tests and garment defects.
-        </p>
-      </div>
+  <div class="quality-container">
+    <AddEvidenceView
+        v-if="currentView === 'evidence' && selectedDefectForEvidence"
+        :defect="selectedDefectForEvidence"
+        @back="currentView = 'defects'"
+        @save-evidence="handleSaveEvidence"
+    />
 
-      <div class="header-right">
-        <button class="btn-dashboard-shortcut" @click="goToDashboard">
-          &larr; Back to Dashboard
+    <div v-else>
+      <header class="header">
+        <div>
+          <h1 class="page-title">Quality</h1>
+          <p class="page-subtitle">Manage fabric inspections, quality tests and garment defects.</p>
+        </div>
+      </header>
+
+      <div class="tabs">
+        <button
+            class="tab"
+            :class="{ active: currentTab === 'fabric' }"
+            @click="currentTab = 'fabric'"
+        >
+          Fabric
+        </button>
+        <button
+            class="tab"
+            :class="{ active: currentTab === 'defects' }"
+            @click="currentTab = 'defects'"
+        >
+          Defects
         </button>
       </div>
-    </header>
 
-    <div class="tabs-bar">
-      <button
-          class="tab-btn"
-          :class="{ active: currentTab === 'fabric' }"
-          @click="currentTab = 'fabric'"
-      >
-        Fabric
-      </button>
-      <button
-          class="tab-btn"
-          :class="{ active: currentTab === 'defects' }"
-          @click="currentTab = 'defects'"
-      >
-        Defects
-      </button>
-    </div>
+      <div v-if="currentTab === 'defects'" class="layout-grid">
+        <section class="left-col">
+          <RegisterDefectForm @create-defect="handleCreateDefect" />
+        </section>
 
-    <div v-if="currentTab === 'defects'" class="quality-grid">
-      <section class="left-panel">
-        <RegisterDefectForm @register-defect="handleRegisterDefect" />
-      </section>
+        <section class="right-col">
+          <div class="panel-card">
+            <ObservedGarmentsTable
+                :defects="defectList"
+                :selected-defect="activeDefect"
+                @select-defect="selectDefect"
+                @navigate-to-evidence="goToEvidenceView"
+            />
 
-      <section class="right-panel">
-        <div class="panel-card">
-          <ObservedGarmentsTable
-              :defects="defectList"
-              :selected-defect="activeDefect"
-              @select-defect="selectDefect"
-          />
+            <DefectDispositionCard
+                v-if="activeDefect"
+                :defect="activeDefect"
+                @confirm-disposition="handleConfirmDisposition"
+            />
+          </div>
+        </section>
+      </div>
 
-          <DefectDispositionCard
-              v-if="activeDefect"
-              :defect="activeDefect"
-              @apply-disposition="handleApplyDisposition"
-          />
-        </div>
-      </section>
-    </div>
-
-    <div v-else class="fabric-placeholder-panel">
-      <p>Fabric inspections module (Under development by group members).</p>
-      <button class="tab-btn active" @click="currentTab = 'defects'">
-        Return to Defects
-      </button>
+      <div v-else class="empty-tab">
+        <p>Fabric inspections module (Under development by group members).</p>
+        <button class="tab active" @click="currentTab = 'defects'">Return to Defects</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import RegisterDefectForm from '../components/RegisterDefectForm.vue';
-import ObservedGarmentsTable from '../components/ObservedGarmentsTable.vue';
-import DefectDispositionCard from '../components/DefectDispositionCard.vue';
-import { DefectRecord } from '../../domain/model/defect.model.js';
+import { ref, onMounted } from 'vue'
+import RegisterDefectForm from '../components/RegisterDefectForm.vue'
+import ObservedGarmentsTable from '../components/ObservedGarmentsTable.vue'
+import DefectDispositionCard from '../components/DefectDispositionCard.vue'
+import AddEvidenceView from './AddEvidenceView.vue'
+import { DefectService } from '../../infrastructure/defect.service.js'
 
-const router = useRouter();
-const currentTab = ref('defects');
+const currentView = ref('defects')
+const currentTab = ref('defects')
+const defectList = ref([])
+const activeDefect = ref(null)
+const selectedDefectForEvidence = ref(null)
 
-const defectList = ref([
-  new DefectRecord({
-    id: 'DEF-031',
-    batchId: 'LOT-024 — T-Shirt Basic',
-    defectType: 'Open stitches',
-    quantity: 6,
-    machineId: 'MC-014 — Overlock',
-    origin: 'Machine',
-    status: 'Pending Decision'
-  }),
-  new DefectRecord({
-    id: 'DEF-032',
-    batchId: 'LOT-024 — T-Shirt Basic',
-    defectType: 'Torn fabric',
-    quantity: 2,
-    machineId: 'MC-014 — Overlock',
-    origin: 'Fabric',
-    status: 'Pending Decision'
-  })
-]);
-
-const activeDefect = ref(defectList.value[0]);
-
-const selectDefect = (defect) => {
-  activeDefect.value = defect;
-};
-
-const handleRegisterDefect = (newDefectData) => {
-  const nextIdNumber = defectList.value.length + 31;
-  const newId = `DEF-0${nextIdNumber}`;
-
-  const createdDefect = new DefectRecord({
-    id: newId,
-    batchId: newDefectData.batchId,
-    defectType: newDefectData.defectType,
-    quantity: newDefectData.quantity,
-    machineId: newDefectData.machineId,
-    origin: newDefectData.origin,
-    status: newDefectData.status,
-    observation: newDefectData.observation
-  });
-
-  defectList.value.push(createdDefect);
-  activeDefect.value = createdDefect;
-};
-
-const handleApplyDisposition = ({ defectId, disposition, correction, quantity }) => {
-  const target = defectList.value.find((d) => d.id === defectId);
-  if (target) {
-    target.disposition = disposition;
-    target.correctionType = correction;
-    target.status = disposition;
-    alert(`Disposition confirmed: ${disposition} for ${quantity} garments in ${defectId}.`);
+const loadDefects = async () => {
+  const data = await DefectService.getAll()
+  defectList.value = data
+  if (data.length > 0 && !activeDefect.value) {
+    activeDefect.value = data[0]
   }
-};
+}
 
-const goToDashboard = () => {
-  router.push('/dashboard');
-};
+onMounted(() => {
+  loadDefects()
+})
+
+const selectDefect = (item) => {
+  activeDefect.value = item
+}
+
+const goToEvidenceView = (item) => {
+  selectedDefectForEvidence.value = item
+  currentView.value = 'evidence'
+}
+
+const handleSaveEvidence = async ({ defectId, evidences }) => {
+  await DefectService.update(defectId, { evidences })
+  await loadDefects()
+  currentView.value = 'defects'
+}
+
+const handleCreateDefect = async (formData) => {
+  const newDefect = {
+    id: `DEF-0${defectList.value.length + 31}`,
+    batchId: formData.batchId.split(' ')[0],
+    defectType: formData.defectType,
+    quantity: formData.quantity,
+    machineId: formData.machineId,
+    origin: formData.origin,
+    status: formData.status,
+    observation: formData.observation,
+    garmentModel: formData.batchId.split('—')[1]?.trim() || 'T-Shirt Basic',
+    date: 'Sep 16, 2026',
+    evidences: []
+  }
+
+  await DefectService.create(newDefect)
+  await loadDefects()
+  activeDefect.value = newDefect
+}
+
+const handleConfirmDisposition = async ({ defectId, decision, correction }) => {
+  await DefectService.update(defectId, {
+    status: decision,
+    disposition: decision,
+    correctionType: correction
+  })
+  await loadDefects()
+}
 </script>
 
 <style scoped>
-.quality-view-container {
+.quality-container {
   padding: 32px 40px;
   background-color: #ffffff;
   min-height: 100vh;
   box-sizing: border-box;
 }
-.quality-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+.header {
   margin-bottom: 24px;
 }
 .page-title {
@@ -155,39 +151,22 @@ const goToDashboard = () => {
   color: #1a1a1a;
   margin: 0 0 6px 0;
 }
-.page-description {
+.page-subtitle {
   font-family: 'Inter', sans-serif;
   font-size: 0.95rem;
   color: #8892a0;
   margin: 0;
 }
-.btn-dashboard-shortcut {
-  background: transparent;
-  border: 1px solid #eaeaea;
-  padding: 8px 16px;
-  border-radius: 8px;
-  color: #485320;
-  font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.btn-dashboard-shortcut:hover {
-  background-color: #f5f7fa;
-  border-color: #485320;
-}
-
-.tabs-bar {
+.tabs {
   display: flex;
   gap: 12px;
   margin-bottom: 28px;
 }
-.tab-btn {
-  padding: 8px 28px;
+.tab {
+  padding: 8px 36px;
   border-radius: 8px;
   font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: 600;
   border: 1px solid #eaeaea;
   background-color: #ffffff;
@@ -195,27 +174,25 @@ const goToDashboard = () => {
   cursor: pointer;
   transition: all 0.2s;
 }
-.tab-btn.active {
+.tab.active {
   background-color: #485320;
   border-color: #485320;
   color: #ffffff;
 }
-
-.quality-grid {
+.layout-grid {
   display: grid;
-  grid-template-columns: 420px 1fr;
-  gap: 28px;
+  grid-template-columns: 410px 1fr;
+  gap: 24px;
   align-items: start;
 }
 .panel-card {
   background: #ffffff;
   border: 1px solid #eaeaea;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
-.fabric-placeholder-panel {
-  padding: 48px;
+.empty-tab {
+  padding: 60px;
   text-align: center;
   color: #8892a0;
   border: 2px dashed #eaeaea;
