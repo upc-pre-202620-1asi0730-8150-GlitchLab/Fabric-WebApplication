@@ -115,7 +115,9 @@
 
     "status": {
       "operational": "Operational",
-      "in-maintenance": "In Maintenance"},
+      "in-maintenance": "In Maintenance",
+      "machine-stopped": "Machine Stopped"
+    },
 
     "stats": {
       "total": "Total Machines",

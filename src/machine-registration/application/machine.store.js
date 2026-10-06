@@ -2,12 +2,15 @@ import {defineStore} from "pinia";
 import {computed, ref} from "vue";
 import {MachineApi} from "../infrastructure/machine-api.js";
 import {MachineAssembler} from "../infrastructure/machine.assembler.js";
+import {MACHINE_STATUS} from "../domain/model/machine-status.js";
 
 const machineApi = new MachineApi();
 
 const useMachineStore = defineStore('machine-registration', () => {
     const machines = ref([]);
     const errors = ref([]);
+    const stopEvents = ref([]);
+    const maintenanceRecords = ref([]);
     const machinesLoaded = ref(false);
 
     const totalMachines = computed(() => machines.value.length);
@@ -60,29 +63,75 @@ const useMachineStore = defineStore('machine-registration', () => {
     }
 
     function reportBreakdown(machine, {category, description, stoppedAt}) {
-        const resource = {
-            ...machine,
-            status: 'in-maintenance',
-            currentDowntime: null,
-            lastFailure: category,
-            failureDescription: description || null,
-            downtimeStartedAt: stoppedAt.toISOString()
+        const stopEvent = {
+            machineId: machine.id,
+            cause: category,
+            stoppedAt: stoppedAt.toISOString(),
+            resumedAt: null,
+            durationMinutes: null,
+            failureDescription: description || null
         };
 
-        return machineApi.updateMachine(resource).then(response => {
-            const updated = MachineAssembler.toEntityFromResource(response.data);
-            machines.value = machines.value.map(m => m.id === updated.id ? updated : m);
-            return updated;
+        return machineApi.createStopEvent(stopEvent).then(response => {
+            stopEvents.value.push(response.data);
+            machine.status = MACHINE_STATUS.MACHINE_STOPPED;
+            machine.lastFailure = category;
+            machine.downtimeStartedAt = stopEvent.stoppedAt;
+            return machineApi.updateMachine(machine);
         }).catch(error => {
             errors.value.push(error);
             throw error;
         });
     }
 
+    function registerMaintenance(machineId, recordData) {
+        const record = {machineId, ...recordData};
+
+        return machineApi.createMaintenanceRecord(record).then(response => {
+            maintenanceRecords.value.push(response.data);
+            const machine = machines.value.find(m => m.id === machineId);
+            machine.status = MACHINE_STATUS.IN_MAINTENANCE;
+            return machineApi.updateMachine(machine);
+        }).catch(error => errors.value.push(error));
+    }
+
+    function resumeOperation(machineId, {resumedAt}) {
+        const machine = machines.value.find(m => m.id === machineId);
+        const openEvent = stopEvents.value.find(e => e.machineId === machineId && e.resumedAt === null);
+
+        const resumedDate = new Date(resumedAt);
+        const stoppedDate = new Date(machine.downtimeStartedAt);
+        const durationMinutes = Math.round((resumedDate - stoppedDate) / 60000);
+
+        const updates = openEvent
+            ? machineApi.updateStopEvent({...openEvent, resumedAt, durationMinutes})
+            : Promise.resolve();
+
+        return updates.then(() => {
+            machine.status = MACHINE_STATUS.OPERATIONAL;
+            machine.currentDowntime = null;
+            machine.lastFailure = null;
+            machine.downtimeStartedAt = null;
+            return machineApi.updateMachine(machine);
+        }).catch(error => errors.value.push(error));
+    }
+
+    function fetchStopEvents() {
+        machineApi.getStopEvents().then(response => stopEvents.value = response.data)
+            .catch(error => errors.value.push(error));
+    }
+
+    function fetchMaintenanceRecords() {
+        machineApi.getMaintenanceRecords().then(response => maintenanceRecords.value = response.data)
+            .catch(error => errors.value.push(error));
+    }
+
     return {
-        machines, errors, machinesLoaded,
+        machines,stopEvents, maintenanceRecords, errors, machinesLoaded,
         totalMachines, operationalCount, inMaintenanceCount,
-        fetchMachines, getMachineById, addMachine, deleteMachine, reportBreakdown
+        fetchMachines, getMachineById, addMachine, deleteMachine, reportBreakdown,
+        registerMaintenance, resumeOperation,
+        fetchStopEvents, fetchMaintenanceRecords
     };
 });
 

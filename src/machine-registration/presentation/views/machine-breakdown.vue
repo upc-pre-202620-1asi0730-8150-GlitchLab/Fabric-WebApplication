@@ -6,6 +6,7 @@ import {useToast} from "primevue/usetoast";
 import useMachineRegistrationStore from "../../application/machine.store.js";
 import {MACHINE_TYPES} from "../../domain/model/machine-type.js";
 import {FAILURE_CATEGORIES} from "../../domain/model/failure-category.js";
+import {MACHINE_STATUS_SEVERITY} from "../../domain/model/machine-status.js";
 
 const {t} = useI18n();
 const route = useRoute();
@@ -20,7 +21,7 @@ onMounted(() => {
 });
 
 watch(() => store.machinesLoaded, (loaded) => {
-  if (loaded && (!machine.value || machine.value.status === 'in-maintenance')) goBack();
+  if (loaded && (!machine.value || machine.value.status !== 'operational')) goBack();
 }, {immediate: true});
 
 const form = ref({category: null, stopTime: '', description: ''});
@@ -85,7 +86,10 @@ async function confirmStop() {
     toast.add({
       severity: 'success',
       summary: t('machinery.breakdown.success.title'),
-      detail: t('machinery.breakdown.success.detail', {id: machine.value.id}),
+      detail: t('machinery.breakdown.success.detail',
+          {
+        id: machine.value.id
+      }),
       life: 4000
     });
     goBack();
@@ -126,7 +130,7 @@ async function confirmStop() {
         </div>
         <div>
           <span class="breakdown__info-label">{{ t('machinery.breakdown.info.status') }}</span>
-          <pv-tag :severity="machine.status === 'operational' ? 'success' : 'warning'"
+          <pv-tag :severity="MACHINE_STATUS_SEVERITY[machine.status]"
                   :value="t(`machinery.status.${machine.status}`)"/>
         </div>
       </div>

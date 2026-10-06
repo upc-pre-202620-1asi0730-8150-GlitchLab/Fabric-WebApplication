@@ -115,7 +115,8 @@
 
     "status": {
       "operational": "Operativa",
-      "in-maintenance": "En Mantenimiento"
+      "in-maintenance": "En Mantenimiento",
+      "machine-stopped": "Máquina Detenida"
     },
 
     "stats": {

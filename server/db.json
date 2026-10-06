@@ -11,21 +11,13 @@
       "downtimeStartedAt": "2026-10-05T06:23:00.000Z"
     },
     {
-      "id": "4",
-      "type": "coverstitch",
-      "batchId": "LOT-020",
-      "status": "operational",
-      "currentDowntime": null,
-      "lastFailure": null
-    },
-    {
       "id": "5",
       "type": "overlock",
       "batchId": "LOT-022",
       "status": "in-maintenance",
       "currentDowntime": null,
       "lastFailure": "needle-breakage",
-      "failureDescription": "the sex",
+      "failureDescription": "the",
       "downtimeStartedAt": "2026-10-05T07:10:00.000Z"
     },
     {
@@ -47,6 +39,18 @@
       "lastFailure": null,
       "failureDescription": null,
       "downtimeStartedAt": null
+    },
+    {
+      "id": "8",
+      "type": "straight-stitch",
+      "batchId": "LOT-021",
+      "status": "operational",
+      "currentDowntime": null,
+      "lastFailure": null,
+      "failureDescription": null,
+      "downtimeStartedAt": null
     }
-  ]
+  ],
+  "stopEvents": [],
+  "maintenanceRecords": []
 }
