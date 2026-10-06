@@ -58,5 +58,86 @@
       "date": "Sep 16, 2026",
       "evidences": []
     }
+  ],
+  "dashboard": [
+    {
+      "id": 1,
+      "date": "2026-10-04",
+      "totalProduced": 1450,
+      "averagePerHour": 181,
+      "dailyCompliance": 92
+    },
+    {
+      "id": 2,
+      "date": "2026-10-03",
+      "totalProduced": 1380,
+      "averagePerHour": 172,
+      "dailyCompliance": 88
+    },
+    {
+      "id": 3,
+      "date": "2026-10-02",
+      "totalProduced": 1520,
+      "averagePerHour": 190,
+      "dailyCompliance": 95
+    }
+  ],
+  "alerts": [
+    {
+      "id": 1,
+      "status": "CRITICAL",
+      "type": "Machine Downtime",
+      "reference": "MC-014",
+      "title": "Machine downtime above limit",
+      "description": "Accumulated downtime: 47 min · Maximum allowed: 30 min",
+      "action": "View Machine",
+      "accumulated": "47 min",
+      "limit": "30 min",
+      "excess": "17 min",
+      "machine": "MC-014 — Overlock",
+      "batch": "All batches"
+    },
+    {
+      "id": 2,
+      "status": "CRITICAL",
+      "type": "Defect Rate",
+      "reference": "LOT-024",
+      "title": "Defect rate above tolerance",
+      "description": "Accumulated defective garments: 5.6% · Maximum allowed: 5%",
+      "action": "View Batch",
+      "accumulated": "5.6%",
+      "limit": "5%",
+      "excess": "0.6%",
+      "machine": "LOT-024",
+      "batch": "LOT-024"
+    },
+    {
+      "id": 3,
+      "status": "WARNING",
+      "type": "Rework Rate",
+      "reference": "LOT-021",
+      "title": "Rework rate within target",
+      "description": "Current rework rate: 1.7% · Optimal flow threshold: below 2%",
+      "action": "View Batch",
+      "accumulated": "1.7%",
+      "limit": "2%",
+      "excess": "0%",
+      "machine": "LOT-021",
+      "batch": "LOT-021"
+    },
+    {
+      "id": 4,
+      "status": "OPTIMAL",
+      "type": "Machine Downtime",
+      "reference": "MC-008",
+      "title": "Machine downtime normalized",
+      "description": "Accumulated downtime: 12 min · Maximum allowed: 30 min",
+      "action": "View Machine",
+      "accumulated": "12 min",
+      "limit": "30 min",
+      "excess": "0 min",
+      "machine": "MC-008 — Sewing",
+      "batch": "All batches"
+    }
   ]
 }
