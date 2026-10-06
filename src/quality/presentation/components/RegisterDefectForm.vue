@@ -43,7 +43,6 @@
         </div>
       </div>
 
-      <!-- Associated Machine -->
       <div class="form-group">
         <label class="form-label">Associated</label>
         <div class="select-wrapper">
@@ -55,7 +54,6 @@
         </div>
       </div>
 
-      <!-- Defect Origin -->
       <div class="form-group">
         <label class="form-label">Defect</label>
         <div class="select-wrapper">
@@ -162,10 +160,11 @@ const handleSubmit = () => {
 }
 .select-wrapper {
   position: relative;
+  width: 100%;
 }
+
 .form-control {
   width: 100%;
-  padding: 10px 14px;
   border: 1px solid #eaeaea;
   border-radius: 8px;
   font-family: 'Inter', sans-serif;
@@ -176,12 +175,29 @@ const handleSubmit = () => {
   outline: none;
   transition: border-color 0.2s;
 }
+
+select.form-control {
+  height: 42px;
+  line-height: normal;
+  padding: 0 32px 0 14px;
+  cursor: pointer;
+}
+
+input.form-control {
+  height: 42px;
+  line-height: normal;
+  padding: 0 14px;
+}
+
+textarea.form-control {
+  min-height: 60px;
+  padding: 10px 14px;
+  line-height: 1.4;
+  resize: vertical;
+}
+
 .form-control:focus {
   border-color: #485320;
-}
-.textarea {
-  resize: vertical;
-  min-height: 52px;
 }
 .field-hint {
   font-family: 'Inter', sans-serif;
@@ -211,5 +227,8 @@ const handleSubmit = () => {
 }
 .font-mono {
   font-family: 'JetBrains Mono', monospace;
+}
+.text-center {
+  text-align: center;
 }
 </style>

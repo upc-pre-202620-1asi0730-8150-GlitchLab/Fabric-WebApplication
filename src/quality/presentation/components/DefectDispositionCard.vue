@@ -179,9 +179,10 @@ const handleConfirm = () => {
   font-weight: 500;
   color: #1a1a1a;
 }
+
+/* Base general de campos */
 .form-control {
   width: 100%;
-  padding: 10px 14px;
   border: 1px solid #eaeaea;
   border-radius: 8px;
   font-family: 'Inter', sans-serif;
@@ -190,12 +191,28 @@ const handleConfirm = () => {
   background-color: #ffffff;
   box-sizing: border-box;
 }
+
+/* Control select e input */
+select.form-control {
+  height: 42px;
+  line-height: normal;
+  padding: 0 32px 0 14px;
+  cursor: pointer;
+}
+
+input.form-control {
+  height: 42px;
+  line-height: normal;
+  padding: 0 14px;
+}
+
 .form-control:focus {
   border-color: #485320;
   outline: none;
 }
 .btn {
   padding: 10px 20px;
+  height: 42px;
   border-radius: 8px;
   font-family: 'Inter', sans-serif;
   font-weight: 600;
@@ -203,6 +220,7 @@ const handleConfirm = () => {
   cursor: pointer;
   border: none;
   white-space: nowrap;
+  box-sizing: border-box;
 }
 .btn-primary {
   background-color: #485320;
