@@ -13,6 +13,12 @@ const useMachineStore = defineStore('machine-registration', () => {
     const maintenanceRecords = ref([]);
     const machinesLoaded = ref(false);
 
+    const getStopEventsForMachine = (machineId) =>
+        computed(() => stopEvents.value.filter(e => e.machineId === machineId));
+
+    const getMaintenanceRecordsForMachine = (machineId) =>
+        computed(() => maintenanceRecords.value.filter(r => r.machineId === machineId));
+
     const totalMachines = computed(() => machines.value.length);
     const operationalCount = computed(() => machines.value.filter(m => m.status === 'operational').length);
     const inMaintenanceCount = computed(() => machines.value.filter(m => m.status === 'in-maintenance').length);
@@ -95,26 +101,7 @@ const useMachineStore = defineStore('machine-registration', () => {
         }).catch(error => errors.value.push(error));
     }
 
-    function resumeOperation(machineId, {resumedAt}) {
-        const machine = machines.value.find(m => m.id === machineId);
-        const openEvent = stopEvents.value.find(e => e.machineId === machineId && e.resumedAt === null);
 
-        const resumedDate = new Date(resumedAt);
-        const stoppedDate = new Date(machine.downtimeStartedAt);
-        const durationMinutes = Math.round((resumedDate - stoppedDate) / 60000);
-
-        const updates = openEvent
-            ? machineApi.updateStopEvent({...openEvent, resumedAt, durationMinutes})
-            : Promise.resolve();
-
-        return updates.then(() => {
-            machine.status = MACHINE_STATUS.OPERATIONAL;
-            machine.currentDowntime = null;
-            machine.lastFailure = null;
-            machine.downtimeStartedAt = null;
-            return machineApi.updateMachine(machine);
-        }).catch(error => errors.value.push(error));
-    }
 
     function fetchStopEvents() {
         machineApi.getStopEvents().then(response => stopEvents.value = response.data)
@@ -124,6 +111,28 @@ const useMachineStore = defineStore('machine-registration', () => {
     function fetchMaintenanceRecords() {
         machineApi.getMaintenanceRecords().then(response => maintenanceRecords.value = response.data)
             .catch(error => errors.value.push(error));
+    }
+
+    function resumeOperation(machine, {resumedAt}) {
+        const openEvent = stopEvents.value.find(e => e.machineId === machine.id && e.resumedAt === null);
+        const durationMinutes = openEvent
+            ? Math.round((resumedAt.getTime() - new Date(openEvent.stoppedAt).getTime()) / 60000)
+            : null;
+
+        const closeEvent = openEvent
+            ? machineApi.updateStopEvent({...openEvent, resumedAt: resumedAt.toISOString(), durationMinutes})
+            : Promise.resolve();
+
+        return closeEvent.then(() => {
+            machine.status = MACHINE_STATUS.OPERATIONAL;
+            machine.currentDowntime = null;
+            machine.lastFailure = null;
+            machine.downtimeStartedAt = null;
+            return machineApi.updateMachine(machine);
+        }).catch(error => {
+            errors.value.push(error);
+            throw error;
+        });
     }
 
     return {
