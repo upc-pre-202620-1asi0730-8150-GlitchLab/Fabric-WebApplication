@@ -1,0 +1,62 @@
+{
+  "defects": [
+    {
+      "id": "DEF-031",
+      "batchId": "LOT-024",
+      "garmentModel": "T-Shirt Basic",
+      "defectType": "Open stitches",
+      "quantity": 6,
+      "machineId": "MC-014 — Overlock",
+      "origin": "Machine",
+      "status": "Pending Decision",
+      "observation": "Open stitches along sleeve seam",
+      "disposition": null,
+      "correctionType": null,
+      "date": "Sep 16, 2026",
+      "evidences": [
+        {
+          "id": "EVD-001",
+          "fileName": "evidence_01.jpg",
+          "fileSize": "2.4 MB",
+          "date": "Sep 16, 2026",
+          "description": "Open stitches in left sleeve",
+          "type": "Photo",
+          "correctiveAction": "Adjust needle thread tension"
+        },
+        {
+          "id": "EVD-002",
+          "fileName": "evidence_02.jpg",
+          "fileSize": "1.8 MB",
+          "date": "Sep 16, 2026",
+          "description": "Detail of defect",
+          "type": "Photo",
+          "correctiveAction": ""
+        },
+        {
+          "id": "EVD-003",
+          "fileName": "evidence_03.jpg",
+          "fileSize": "3.1 MB",
+          "date": "Sep 16, 2026",
+          "description": "Location of defect",
+          "type": "Photo",
+          "correctiveAction": ""
+        }
+      ]
+    },
+    {
+      "id": "DEF-032",
+      "batchId": "LOT-024",
+      "garmentModel": "T-Shirt Basic",
+      "defectType": "Torn fabric",
+      "quantity": 2,
+      "machineId": "MC-014 — Overlock",
+      "origin": "Fabric",
+      "status": "Pending Decision",
+      "observation": "Small cut near collar",
+      "disposition": null,
+      "correctionType": null,
+      "date": "Sep 16, 2026",
+      "evidences": []
+    }
+  ]
+}
