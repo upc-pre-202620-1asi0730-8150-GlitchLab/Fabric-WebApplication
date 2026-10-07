@@ -1,4 +1,8 @@
 {
+  "errors": {
+    "occurred": "Ocurrió un error"
+  },
+
   "sidebar": {
     "companyName": "Fabric",
     "dashboard": "Panel de Control",

@@ -72,7 +72,7 @@ const navigateToNew = () => {
 
 const confirmDelete = (machine) => {
   confirm.require({
-    message: t('machinery.confirmDelete', {id: machine.id}),
+    message: t('machinery.confirmDelete', {code: machine.id}),
     header: t('machinery.deleteHeader'),
     icon: 'pi pi-exclamation-triangle',
     acceptLabel: t('machinery.deleteAccept'),

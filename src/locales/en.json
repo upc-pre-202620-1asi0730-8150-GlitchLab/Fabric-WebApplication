@@ -1,4 +1,8 @@
 {
+  "errors": {
+    "occurred": "An error occurred"
+  },
+
   "sidebar": {
     "companyName": "Fabric",
     "dashboard": "Dashboard",
@@ -11,23 +15,23 @@
   },
 
   "dashboard": {
-    "title": "Panel de Control",
-    "placeholder": "Vista de Dashboard — contenido próximamente."
+    "title": "Dashboard",
+    "placeholder": "Dashboard view — content coming soon."
   },
 
   "productionBatches": {
-    "title": "Lotes de Producción",
-    "placeholder": "Vista de Lotes de Producción — contenido próximamente."
+    "title": "Production Batches",
+    "placeholder": "Production Batches view — content coming soon."
   },
 
   "quality": {
-    "title": "Calidad",
-    "placeholder": "Vista de Calidad — contenido próximamente."
+    "title": "Quality Control",
+    "placeholder": "Quality view — content coming soon."
   },
 
   "alerts": {
-    "title": "Alertas",
-    "placeholder": "Vista de Alertas — contenido próximamente."
+    "title": "Alerts",
+    "placeholder": "Alerts view — content coming soon."
   },
 
 
@@ -35,7 +39,7 @@
     "title": "Page not found",
     "message": "The page \"{path}\" doesn't exist. Check the URL or pick an option from the sidebar.",
     "backButton": "Back to Dashboard"
-    },
+  },
 
   "machinery": {
 

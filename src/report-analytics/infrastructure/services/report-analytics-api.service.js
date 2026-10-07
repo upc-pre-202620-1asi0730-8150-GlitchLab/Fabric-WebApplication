@@ -1,25 +1,12 @@
-﻿import axios from 'axios';
-import { DashboardMetrics } from '../../domain/model/dashboard-metrics.model';
-
-const http = axios.create({
-    baseURL: import.meta.env.VITE_FABRIC_API_URL || 'http://localhost:3000'
-});
+﻿import { http } from '../../../shared/infrastructure/base-api.js';
+import { DashboardMetrics } from '../../domain/model/dashboard-metrics.model.js';
 
 export class ReportAnalyticsApiService {
     async getDashboardData(date) {
         try {
             const response = await http.get('/dashboard', { params: { date } });
-
             const rawData = Array.isArray(response.data) ? response.data[0] : response.data;
-
-            const metricData = rawData || {
-                totalProduced: 0,
-                averagePerHour: 0,
-                dailyCompliance: 0,
-                selectedDate: date
-            };
-
-            return new DashboardMetrics(metricData);
+            return new DashboardMetrics({ ...(rawData || {}), selectedDate: date });
         } catch (error) {
             console.error('Error fetching dashboard analytics:', error);
             throw error;

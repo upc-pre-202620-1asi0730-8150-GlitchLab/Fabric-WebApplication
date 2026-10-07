@@ -58,7 +58,7 @@ const createChart = () => {
 
 watch(() => props.data, () => {
   if (props.data.length > 0) createChart()
-}, { deep: true })
+}, { deep: true, flush: 'post' })
 
 onMounted(() => {
   if (props.data.length > 0) createChart()

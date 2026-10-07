@@ -36,6 +36,7 @@ app
     .component('pv-tag', Tag)
     .component('pv-confirm-dialog', ConfirmDialog)
     .component('pv-select', Select)
+    .component('pv-dropdown', Select)
     .component('pv-select-button', SelectButton)
     .component('pv-progress-bar', ProgressBar)
     .use(ToastService)

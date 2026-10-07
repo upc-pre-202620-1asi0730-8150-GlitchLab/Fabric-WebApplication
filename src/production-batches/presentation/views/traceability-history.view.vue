@@ -75,6 +75,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { http } from '../../../shared/infrastructure/base-api.js'
 
 const route = useRoute()
 const batch = ref(null)
@@ -82,11 +83,11 @@ const history = ref([])
 
 const fetchData = async () => {
   try {
-    const batchRes = await fetch(`http://localhost:3000/batches/${route.params.id}`)
-    batch.value = await batchRes.json()
+    const { data: batchData } = await http.get(`/batches/${route.params.id}`)
+    batch.value = batchData
 
-    const histRes = await fetch(`http://localhost:3000/traceabilityHistory?batchId=${route.params.id}`)
-    history.value = await histRes.json()
+    const { data: histData } = await http.get('/traceabilityHistory', { params: { batchId: route.params.id } })
+    history.value = histData
   } catch (err) {
     console.error('Error fetching traceability history:', err)
   }

@@ -3,18 +3,27 @@ import {useI18n} from "vue-i18n";
 import {useRouter} from "vue-router";
 import {computed, onMounted, ref} from "vue";
 import useMachineRegistrationStore from "../../application/machine.store.js";
+import {http} from "../../../shared/infrastructure/base-api.js";
 import {Machine} from "../../domain/model/machine.entity.js";
 import {MACHINE_TYPES} from "../../domain/model/machine-type.js";
 
 const {t} = useI18n();
 const router = useRouter();
 const store = useMachineRegistrationStore();
-onMounted(() => {
+const batchOptions = ref(['LOT-020', 'LOT-021', 'LOT-022', 'LOT-023', 'LOT-024', 'LOT-025']);
+
+onMounted(async () => {
   if (!store.machinesLoaded) store.fetchMachines();
+  try {
+    const {data} = await http.get('/batches');
+    const codes = [...new Set(data.map(b => b.batchNumber).filter(Boolean))];
+    if (codes.length) batchOptions.value = codes;
+  } catch (e) {
+    console.error('Could not load batches, using defaults', e);
+  }
 });
 
 const typeOptions = MACHINE_TYPES.map(mt => ({label: t(mt.labelKey), value: mt.value}));
-const batchOptions = ['LOT-020', 'LOT-021', 'LOT-022', 'LOT-023', 'LOT-024', 'LOT-025'];
 
 const form = ref({type: null, batchId: null});
 
@@ -22,12 +31,12 @@ const submitted = ref(false);
 const typeInvalid = computed(() => submitted.value && !form.value.type);
 const batchInvalid = computed(() => submitted.value && !form.value.batchId);
 
-const saveMachine = () => {
+const saveMachine = async () => {
   submitted.value = true;
   if (!form.value.type || !form.value.batchId) return;
 
   const machine = new Machine({type: form.value.type, batchId: form.value.batchId});
-  store.addMachine(machine);
+  await store.addMachine(machine);
   navigateBack();
 };
 

@@ -5,7 +5,8 @@ import StatCard from '../components/StatCard.vue'
 import ProductionChart from '../components/ProductionChart.vue'
 import BatchesStage from '../components/BatchesStage.vue'
 import BatchProgress from '../components/BatchProgress.vue'
-import {useProductionStore} from "../../../stores/production.js";
+import ExportReportModal from '../components/ExportReportModal.vue'
+import { useProductionStore } from '../../../stores/production.js'
 
 const selectedDate = ref('2026-10-04')
 const selectedBatch = ref('All batches')
@@ -18,17 +19,22 @@ const metrics = ref({
 
 const loading = ref(true)
 const error = ref(null)
+const showExport = ref(false)
+const productionHistory = ref([])
 
 const reportService = new ReportAnalyticsApiService()
-
 const productionStore = useProductionStore()
 
 const loadDashboardData = async () => {
   try {
     loading.value = true
-    const data = await reportService.getDashboardData(selectedDate.value)
+    error.value = null
+    const [data, history] = await Promise.all([
+      reportService.getDashboardData(selectedDate.value),
+      reportService.getDashboardHistory()
+    ])
     metrics.value = data
-    await productionStore.loadDashboard(selectedDate.value)
+    productionHistory.value = history
   } catch (err) {
     console.error('Error loading dashboard:', err)
     error.value = 'Failed to load report analytics.'
@@ -37,20 +43,35 @@ const loadDashboardData = async () => {
   }
 }
 
-const productionHistory = ref([])
-
-onMounted(async () => {
-  await loadDashboardData()
-  try {
-    productionHistory.value = await reportService.getDashboardHistory()
-  } catch (err) {
-    console.error('Error loading production history:', err)
-  }
-})
-
 onMounted(() => {
+  productionStore.fetchBatches()
   loadDashboardData()
 })
+
+// Export: Excel option downloads a CSV (opens in Excel), PDF option opens the print dialog
+const downloadCsv = (rows, filename) => {
+  const csv = rows.map(r => r.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(',')).join('\n')
+  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = filename
+  link.click()
+  URL.revokeObjectURL(url)
+}
+
+const onExport = (options) => {
+  if (options.format === 'excel') {
+    const rows = [['Date', 'Total produced', 'Average per hour', 'Daily compliance (%)']]
+    productionHistory.value
+        .filter(r => r.date >= options.startDate && r.date <= options.endDate)
+        .forEach(r => rows.push([r.date, r.totalProduced, r.averagePerHour, r.dailyCompliance]))
+    downloadCsv(rows, `fabric-report-${options.startDate}_${options.endDate}.csv`)
+  } else {
+    window.print()
+  }
+  showExport.value = false
+}
 </script>
 
 <template>
@@ -79,7 +100,7 @@ onMounted(() => {
         </div>
       </div>
 
-      <button class="export-report-button">
+      <button class="export-report-button" @click="showExport = true">
         ↓ Export Report
       </button>
     </header>
@@ -118,6 +139,8 @@ onMounted(() => {
 
       <BatchProgress />
     </template>
+
+    <ExportReportModal v-if="showExport" @close="showExport = false" @export="onExport" />
   </div>
 </template>
 

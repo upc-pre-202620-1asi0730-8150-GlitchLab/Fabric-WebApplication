@@ -1,6 +1,6 @@
 ﻿<template>
   <div class="surface-card border-round-xl p-0 shadow-1 overflow-hidden">
-    <pv-data-table :value="batches" responsiveLayout="scroll" class="p-datatable-sm">
+    <pv-data-table :value="batches" responsiveLayout="scroll" class="p-datatable-sm" paginator :rows="8">
       <pv-column field="batchNumber" header="Batch ID" sortable class="font-bold text-900"></pv-column>
       <pv-column field="garmentModel" header="Garment Model" sortable class="text-700"></pv-column>
       <pv-column field="projectedQuantity" header="Projected Quantity" sortable class="text-700">
@@ -44,17 +44,6 @@
 
     <!-- Context Menu para las acciones del lote -->
     <pv-menu ref="menu" id="overlay_menu" :model="menuItems" :popup="true" />
-
-    <div class="flex align-items-center justify-content-between p-3 text-xs text-600 bg-white">
-      <span>Showing 1–8 of {{ totalBatches }} batches</span>
-      <div class="flex gap-1 align-items-center">
-        <pv-button icon="pi pi-chevron-left" class="p-button-text p-button-sm p-button-secondary" disabled />
-        <pv-button label="1" class="p-button-sm btn-olive px-3 py-1" />
-        <pv-button label="2" class="p-button-text p-button-sm p-button-secondary" />
-        <pv-button label="3" class="p-button-text p-button-sm p-button-secondary" />
-        <pv-button icon="pi pi-chevron-right" class="p-button-text p-button-sm p-button-secondary" />
-      </div>
-    </div>
   </div>
 </template>
 

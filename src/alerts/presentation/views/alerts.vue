@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { AlertsApiService } from '../../infrastructure/services/alerts-api.service.js'
 import AlertRow from '../components/Alerts.vue'
 
@@ -14,6 +15,11 @@ const loading = ref(true)
 const error = ref(null)
 
 const alertsService = new AlertsApiService()
+const router = useRouter()
+
+const reviewAlert = (alert) => {
+  router.push(alert.type === 'Machine Downtime' ? '/machinery' : '/production-batches')
+}
 
 const fetchAlerts = async () => {
   try {
@@ -227,8 +233,8 @@ onMounted(() => {
             </div>
           </div>
 
-          <button class="review-button">
-            Review Machine
+          <button class="review-button" @click="reviewAlert(selectedAlert)">
+            {{ selectedAlert.action || 'Review' }}
           </button>
         </div>
       </section>

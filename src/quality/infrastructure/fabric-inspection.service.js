@@ -1,59 +1,20 @@
-import axios from 'axios'
+import { http } from '../../shared/infrastructure/base-api.js'
 
-const BASE_URL = import.meta.env.VITE_FABRIC_API_URL || 'http://localhost:3000'
-const PRIMARY_API = `${BASE_URL}/api/fabricInspections`
-const FALLBACK_API = `${BASE_URL}/fabricInspections`
-const STORAGE_KEY = 'fabric_inspections_cache'
+const PATH = '/fabricInspections'
 
 export class FabricInspectionService {
-    static async getApiUrl() {
-        try {
-            await axios.get(PRIMARY_API, { timeout: 800 })
-            return PRIMARY_API
-        } catch {
-            return FALLBACK_API
-        }
-    }
-
     static async getAll() {
-        const endpoint = await this.getApiUrl()
-        try {
-            const response = await axios.get(endpoint, { timeout: 2000 })
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(response.data))
-            return response.data
-        } catch {
-            const cached = localStorage.getItem(STORAGE_KEY)
-            return cached ? JSON.parse(cached) : []
-        }
+        const { data } = await http.get(PATH)
+        return data
     }
 
     static async create(inspection) {
-        const endpoint = await this.getApiUrl()
-        try {
-            const response = await axios.post(endpoint, inspection)
-            return response.data
-        } catch {
-            const current = await this.getAll()
-            current.push(inspection)
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(current))
-            return inspection
-        }
+        const { data } = await http.post(PATH, inspection)
+        return data
     }
 
     static async update(inspectionId, updatedFields) {
-        const endpoint = await this.getApiUrl()
-        try {
-            const response = await axios.patch(`${endpoint}/${inspectionId}`, updatedFields)
-            return response.data
-        } catch {
-            const current = await this.getAll()
-            const index = current.findIndex(i => i.id === inspectionId)
-            if (index !== -1) {
-                current[index] = { ...current[index], ...updatedFields }
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(current))
-                return current[index]
-            }
-            return null
-        }
+        const { data } = await http.patch(`${PATH}/${encodeURIComponent(inspectionId)}`, updatedFields)
+        return data
     }
 }

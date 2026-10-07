@@ -58,6 +58,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { http } from '../../../shared/infrastructure/base-api.js'
 
 const route = useRoute()
 const batch = ref(null)
@@ -66,11 +67,11 @@ const newObsText = ref('')
 
 const fetchData = async () => {
   try {
-    const batchRes = await fetch(`http://localhost:3000/batches/${route.params.id}`)
-    batch.value = await batchRes.json()
+    const { data: batchData } = await http.get(`/batches/${route.params.id}`)
+    batch.value = batchData
 
-    const obsRes = await fetch(`http://localhost:3000/observations?batchId=${route.params.id}`)
-    observations.value = await obsRes.json()
+    const { data: obsData } = await http.get('/observations', { params: { batchId: route.params.id } })
+    observations.value = obsData.slice().reverse()
   } catch (err) {
     console.error('Error fetching observations:', err)
   }
@@ -92,12 +93,7 @@ const addObservation = async () => {
   }
 
   try {
-    const res = await fetch('http://localhost:3000/observations', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newObs)
-    })
-    const savedObs = await res.json()
+    const { data: savedObs } = await http.post('/observations', newObs)
     observations.value.unshift(savedObs)
     newObsText.value = ''
   } catch (err) {

@@ -26,8 +26,8 @@ const useMachineStore = defineStore('machine-registration', () => {
     function fetchMachines() {
         return machineApi.getMachines().then(response => {
             machines.value = MachineAssembler.toEntitiesFromResponse(response);
-            machinesLoaded.value = true;
-        }).catch(error => errors.value.push(error));
+        }).catch(error => errors.value.push(error))
+            .finally(() => { machinesLoaded.value = true; });
     }
 
     function getMachineById(id) {
@@ -61,7 +61,7 @@ const useMachineStore = defineStore('machine-registration', () => {
             machines.value = machines.value.filter(m => m.id !== machine.id);
         };
 
-        machineApi.deleteMachine(machine.id).then(() => {
+        return machineApi.deleteMachine(machine.id).then(() => {
             removeLocal();
             return fetchMachines();
         }).catch(error => {

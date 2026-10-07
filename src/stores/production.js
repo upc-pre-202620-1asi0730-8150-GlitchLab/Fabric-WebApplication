@@ -1,30 +1,74 @@
-import { defineStore } from 'pinia'
-import axios from 'axios'
+import { defineStore } from 'pinia';
+import { ProductionBatchesApiService } from '../production-batches/infrastructure/services/production-batches-api.service.js';
 
-const BASE_URL = import.meta.env.VITE_FABRIC_API_URL || 'http://localhost:3000'
+const batchesService = new ProductionBatchesApiService();
 
 export const useProductionStore = defineStore('production', {
     state: () => ({
-        dashboardData: null,
         batches: [],
-        loading: false
+        currentBatch: null,
+        loading: false,
+        error: null
     }),
-    actions: {
-        async loadDashboard(date) {
-            this.loading = true
-            try {
-                const [prodRes, batchesRes] = await Promise.all([
-                    axios.get(`${BASE_URL}/dashboard`, { params: { date } }),
-                    axios.get(`${BASE_URL}/batches`, { params: { date } })
-                ])
 
-                this.dashboardData = prodRes.data
-                this.batches = batchesRes.data
-            } catch (error) {
-                console.error('Error in productionStore.loadDashboard:', error)
+    getters: {
+        /** { Cutting: 2, Sewing: 1, ... } used by the dashboard. */
+        batchesByStage: (state) => state.batches.reduce((acc, batch) => {
+            const stage = batch.currentStage || 'Unknown';
+            acc[stage] = (acc[stage] || 0) + 1;
+            return acc;
+        }, {}),
+
+        /** Next free code, e.g. LOT-088. */
+        nextBatchNumber: (state) => {
+            const max = state.batches
+                .map(b => parseInt(String(b.batchNumber || '').replace(/\D/g, ''), 10))
+                .filter(n => !isNaN(n))
+                .reduce((m, n) => Math.max(m, n), 0);
+            return `LOT-${String(max + 1).padStart(3, '0')}`;
+        }
+    },
+
+    actions: {
+        async fetchBatches() {
+            this.loading = true;
+            this.error = null;
+            try {
+                const response = await batchesService.getAll();
+                this.batches = response.data;
+            } catch (err) {
+                this.error = err.response?.data?.message || 'Could not load the production batches.';
             } finally {
-                this.loading = false
+                this.loading = false;
+            }
+        },
+
+        async fetchBatchById(id) {
+            this.loading = true;
+            this.error = null;
+            try {
+                const response = await batchesService.getById(id);
+                this.currentBatch = response.data;
+            } catch (err) {
+                this.error = 'Could not load the batch detail.';
+            } finally {
+                this.loading = false;
+            }
+        },
+
+        async createBatch(batchData) {
+            this.loading = true;
+            this.error = null;
+            try {
+                const response = await batchesService.createBatch(batchData);
+                this.batches.push(response.data);
+                return response.data;
+            } catch (err) {
+                this.error = 'Could not register the batch.';
+                throw err;
+            } finally {
+                this.loading = false;
             }
         }
     }
-})
+});

@@ -8,8 +8,8 @@ const emit = defineEmits([
 
 const reportType = ref('Production & Quality')
 
-const startDate = ref('2026-09-01')
-const endDate = ref('2026-09-30')
+const startDate = ref('2026-10-01')
+const endDate = ref('2026-10-31')
 
 const selectedBatch = ref('All batches')
 

@@ -71,6 +71,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { http } from '../../../shared/infrastructure/base-api.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -82,8 +83,8 @@ const updateForm = ref({ newStage: '', quantity: null, notes: '' })
 
 const fetchBatch = async () => {
   try {
-    const res = await fetch(`http://localhost:3000/batches/${route.params.id}`)
-    batch.value = await res.json()
+    const { data } = await http.get(`/batches/${route.params.id}`)
+    batch.value = data
     updateForm.value.newStage = batch.value.currentStage
   } catch (err) {
     console.error('Error fetching batch:', err)
@@ -104,25 +105,53 @@ const getStageStatus = (stage) => {
   return 'future'
 }
 
+const formatMovementDate = (d) => d.toLocaleString('en-US', {
+  month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false
+})
+
 const saveStageUpdate = async () => {
   if (!batch.value) return
 
   const newIndex = stages.indexOf(updateForm.value.newStage)
+  if (newIndex < 0) return
   const calculatedProgress = Math.round(((newIndex + 1) / stages.length) * 100)
+  const batchId = batch.value.id
 
   try {
-    await fetch(`http://localhost:3000/batches/${batch.value.id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        currentStage: updateForm.value.newStage,
-        progressPercentage: calculatedProgress,
-        status: updateForm.value.newStage === 'Completed' ? 'Completed' : batch.value.status
+    // Register the processed quantity in the traceability history
+    const quantity = Number(updateForm.value.quantity)
+    if (quantity > 0) {
+      const { data: history } = await http.get('/traceabilityHistory', { params: { batchId } })
+      const last = history[history.length - 1]
+      const qtyIn = last ? Number(last.qtyOut) : Number(batch.value.projectedQuantity)
+
+      await Promise.all(
+          history
+              .filter(h => h.status === 'Current')
+              .map(h => http.patch(`/traceabilityHistory/${h.id}`, { status: 'Completed' }))
+      )
+
+      await http.post('/traceabilityHistory', {
+        batchId,
+        stage: batch.value.currentStage,
+        dateTime: formatMovementDate(new Date()),
+        qtyIn,
+        qtyOut: quantity,
+        difference: quantity - qtyIn,
+        responsible: 'Supervisor',
+        status: 'Current'
       })
+    }
+
+    await http.patch(`/batches/${batchId}`, {
+      currentStage: updateForm.value.newStage,
+      progressPercentage: calculatedProgress,
+      status: updateForm.value.newStage === 'Completed' ? 'Completed' : batch.value.status
     })
     router.push('/production-batches')
   } catch (err) {
     console.error('Error updating stage:', err)
+    alert('Could not update the stage. Please try again.')
   }
 }
 </script>

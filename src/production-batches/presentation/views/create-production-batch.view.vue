@@ -79,7 +79,7 @@
 
       <div class="form-actions">
         <button type="button" class="btn-cancel" @click="$router.push('/production-batches')">Cancel</button>
-        <button type="submit" class="btn-olive">Create Batch</button>
+        <button type="submit" class="btn-olive" :disabled="saving">Create Batch</button>
       </div>
     </form>
   </div>
@@ -88,10 +88,11 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { ProductionBatchesApiService } from '../../infrastructure/services/production-batches-api.service'
+import { useProductionStore } from '../../../stores/production.js'
 
 const router = useRouter()
-const batchesService = new ProductionBatchesApiService()
+const productionStore = useProductionStore()
+const saving = ref(false)
 
 const form = ref({
   garmentModel: '',
@@ -111,27 +112,33 @@ const garmentModels = [
 ]
 
 const createBatch = async () => {
-  if (form.value.projectedQuantity <= 0) {
+  if (!form.value.projectedQuantity || form.value.projectedQuantity <= 0) {
     alert('Projected quantity must be greater than 0.')
     return
   }
 
-  const newBatch = {
-    batchNumber: `LOT-0${Math.floor(Math.random() * 90 + 10)}`,
-    garmentModel: form.value.garmentModel,
-    projectedQuantity: form.value.projectedQuantity,
-    currentStage: 'Cutting',
-    progressPercentage: 10,
-    deliveryDate: form.value.deliveryDate,
-    status: 'In Production',
-    notes: form.value.notes
-  }
-
+  saving.value = true
   try {
-    await batchesService.createBatch(newBatch)
+    // Load current batches first so the new code (LOT-xxx) never collides
+    await productionStore.fetchBatches()
+    if (productionStore.error) throw new Error(productionStore.error)
+
+    await productionStore.createBatch({
+      batchNumber: productionStore.nextBatchNumber,
+      garmentModel: form.value.garmentModel,
+      projectedQuantity: form.value.projectedQuantity,
+      currentStage: 'Cutting',
+      progressPercentage: 10,
+      deliveryDate: form.value.deliveryDate,
+      status: 'In Production',
+      notes: form.value.notes
+    })
     router.push('/production-batches')
   } catch (err) {
     console.error('Error creating batch:', err)
+    alert('Could not create the batch. Please try again.')
+  } finally {
+    saving.value = false
   }
 }
 </script>

@@ -1,9 +1,5 @@
-﻿import axios from 'axios';
+﻿import { http } from '../../../shared/infrastructure/base-api.js';
 import { Alert } from '../../domain/model/alert.model.js';
-
-const http = axios.create({
-    baseURL: import.meta.env.VITE_FABRIC_API_URL || 'http://localhost:3000'
-});
 
 export class AlertsApiService {
     async getAll() {

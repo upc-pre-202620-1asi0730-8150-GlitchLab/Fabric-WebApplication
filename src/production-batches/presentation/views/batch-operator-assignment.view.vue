@@ -120,6 +120,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { http } from '../../../shared/infrastructure/base-api.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -136,14 +137,14 @@ const showErrorModal = ref(false)
 
 const fetchData = async () => {
   try {
-    const batchRes = await fetch(`http://localhost:3000/batches/${route.params.id}`)
-    batch.value = await batchRes.json()
+    const { data: batchData } = await http.get(`/batches/${route.params.id}`)
+    batch.value = batchData
 
-    const opRes = await fetch(`http://localhost:3000/operators`)
-    operators.value = await opRes.json()
+    const { data: opData } = await http.get('/operators')
+    operators.value = opData
 
-    const assignedRes = await fetch(`http://localhost:3000/assignedOperators?batchId=${route.params.id}`)
-    assignedList.value = await assignedRes.json()
+    const { data: assignedData } = await http.get('/assignedOperators', { params: { batchId: route.params.id } })
+    assignedList.value = assignedData
   } catch (err) {
     console.error('Error fetching operator data:', err)
   }
@@ -180,12 +181,7 @@ const assignOperator = async () => {
   }
 
   try {
-    const res = await fetch('http://localhost:3000/assignedOperators', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newAssignment)
-    })
-    const saved = await res.json()
+    const { data: saved } = await http.post('/assignedOperators', newAssignment)
     assignedList.value.push(saved)
     selectedOperatorId.value = ''
 

@@ -38,24 +38,24 @@ const productionStore = useProductionStore()
       >
 
         <strong>
-          {{ batch.id }}
+          {{ batch.batchNumber }}
         </strong>
 
         <span>
-          {{ batch.stage }}
+          {{ batch.currentStage }}
         </span>
 
         <div class="progress-bar">
 
           <div
               class="progress-fill"
-              :style="{ width: `${batch.progress}%` }"
+              :style="{ width: `${batch.progressPercentage}%` }"
           ></div>
 
         </div>
 
         <small>
-          {{ batch.progress }}%
+          {{ batch.progressPercentage }}%
         </small>
 
       </div>
