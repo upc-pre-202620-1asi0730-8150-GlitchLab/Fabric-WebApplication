@@ -1,4 +1,9 @@
 {
   "/api/v1/*": "/$1",
-  "/api/*": "/$1"
+  "/api/*": "/$1",
+  "/production-batches": "/batches",
+  "/production-batches/*": "/batches/$1",
+  "/batch-operators": "/assignedOperators",
+  "/batch-movements": "/traceabilityHistory",
+  "/batch-observations": "/observations"
 }
