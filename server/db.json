@@ -89,7 +89,7 @@
       "garmentModel": "T-Shirt Basic",
       "defectType": "Open stitches",
       "quantity": 6,
-      "machineId": "MC-014 ??? Overlock",
+      "machineId": "MC-014 — Overlock",
       "origin": "Machine",
       "status": "Pending Decision",
       "observation": "Open stitches along sleeve seam",
@@ -132,7 +132,7 @@
       "garmentModel": "T-Shirt Basic",
       "defectType": "Torn fabric",
       "quantity": 2,
-      "machineId": "MC-014 ??? Overlock",
+      "machineId": "MC-014 — Overlock",
       "origin": "Fabric",
       "status": "Pending Decision",
       "observation": "Small cut near collar",
@@ -167,26 +167,26 @@
   ],
   "alerts": [
     {
-      "id": 1,
+      "id": "1",
       "status": "CRITICAL",
       "type": "Machine Downtime",
       "reference": "MC-014",
       "title": "Machine downtime above limit",
-      "description": "Accumulated downtime: 47 min ?? Maximum allowed: 30 min",
+      "description": "Accumulated downtime: 47 min · Maximum allowed: 30 min",
       "action": "View Machine",
       "accumulated": "47 min",
       "limit": "30 min",
       "excess": "17 min",
-      "machine": "MC-014 ??? Overlock",
+      "machine": "MC-014 — Overlock",
       "batch": "All batches"
     },
     {
-      "id": 2,
+      "id": "2",
       "status": "CRITICAL",
       "type": "Defect Rate",
       "reference": "LOT-024",
       "title": "Defect rate above tolerance",
-      "description": "Accumulated defective garments: 5.6% ?? Maximum allowed: 5%",
+      "description": "Accumulated defective garments: 5.6% · Maximum allowed: 5%",
       "action": "View Batch",
       "accumulated": "5.6%",
       "limit": "5%",
@@ -195,12 +195,12 @@
       "batch": "LOT-024"
     },
     {
-      "id": 3,
+      "id": "3",
       "status": "WARNING",
       "type": "Rework Rate",
       "reference": "LOT-021",
       "title": "Rework rate within target",
-      "description": "Current rework rate: 1.7% ?? Optimal flow threshold: below 2%",
+      "description": "Current rework rate: 1.7% · Optimal flow threshold: below 2%",
       "action": "View Batch",
       "accumulated": "1.7%",
       "limit": "2%",
@@ -209,17 +209,17 @@
       "batch": "LOT-021"
     },
     {
-      "id": 4,
+      "id": "4",
       "status": "OPTIMAL",
       "type": "Machine Downtime",
       "reference": "MC-008",
       "title": "Machine downtime normalized",
-      "description": "Accumulated downtime: 12 min ?? Maximum allowed: 30 min",
+      "description": "Accumulated downtime: 12 min · Maximum allowed: 30 min",
       "action": "View Machine",
       "accumulated": "12 min",
       "limit": "30 min",
       "excess": "0 min",
-      "machine": "MC-008 ??? Sewing",
+      "machine": "MC-008 — Sewing",
       "batch": "All batches"
     }
   ],
@@ -269,5 +269,170 @@
       "shrinkageTest": null,
       "rollStatus": "Blocked"
     }
-  ]
+  ],
+  "batches": [
+    {
+      "id": "1",
+      "batchNumber": "LOT-024",
+      "garmentModel": "T-Shirt Basic",
+      "projectedQuantity": 1000,
+      "currentStage": "Sewing",
+      "progressPercentage": 64,
+      "deliveryDate": "2026-04-25",
+      "status": "In Production",
+      "notes": "Lote inicial de camisetas de algodón."
+    },
+    {
+      "id": "2",
+      "batchNumber": "LOT-023",
+      "garmentModel": "Hoodie",
+      "projectedQuantity": 500,
+      "currentStage": "Cutting",
+      "progressPercentage": 35,
+      "deliveryDate": "2026-04-28",
+      "status": "In Production",
+      "notes": ""
+    },
+    {
+      "id": "3",
+      "batchNumber": "LOT-022",
+      "garmentModel": "Polo Shirt",
+      "projectedQuantity": 750,
+      "currentStage": "Finishing",
+      "progressPercentage": 82,
+      "deliveryDate": "2026-04-22",
+      "status": "At Risk",
+      "notes": ""
+    },
+    {
+      "batchNumber": "LOT-087",
+      "garmentModel": "Hoodie",
+      "projectedQuantity": 1000,
+      "currentStage": "Quality Check",
+      "progressPercentage": 80,
+      "deliveryDate": "2001-11-20",
+      "status": "In Production",
+      "notes": "hola",
+      "id": "tTS6zDZQnrk"
+    }
+  ],
+  "operators": [
+    {
+      "id": "1",
+      "name": "Carlos Mendoza",
+      "specialty": "Overlock"
+    },
+    {
+      "id": "2",
+      "name": "Ana Torres",
+      "specialty": "Straight Stitch"
+    },
+    {
+      "id": "3",
+      "name": "Luis Ramos",
+      "specialty": "Finishing"
+    },
+    {
+      "id": "4",
+      "name": "Maria Lopez",
+      "specialty": "Quality Control"
+    }
+  ],
+  "assignedOperators": [
+    {
+      "id": "1",
+      "batchId": "1",
+      "operatorName": "Carlos Mendoza",
+      "specialty": "Overlock",
+      "stage": "Sewing",
+      "assignedAt": "16/09/2026 09:15"
+    },
+    {
+      "id": "2",
+      "batchId": "1",
+      "operatorName": "Ana Torres",
+      "specialty": "Straight Stitch",
+      "stage": "Sewing",
+      "assignedAt": "16/09/2026 09:18"
+    },
+    {
+      "batchId": "tTS6zDZQnrk",
+      "operatorName": "Ana Torres",
+      "specialty": "Straight Stitch",
+      "stage": "Quality Check",
+      "assignedAt": "6/10/2026, 19:08:40",
+      "id": "TIwgAZlMHPo"
+    },
+    {
+      "batchId": "1",
+      "operatorName": "Maria Lopez",
+      "specialty": "Quality Control",
+      "stage": "Sewing",
+      "assignedAt": "6/10/2026, 23:00:18",
+      "id": "tHW1BFG0cX0"
+    }
+  ],
+  "traceabilityHistory": [
+    {
+      "id": "1",
+      "batchId": "1",
+      "stage": "Cutting",
+      "dateTime": "Sep 14, 2026 09:15",
+      "qtyIn": 500,
+      "qtyOut": 500,
+      "difference": 0,
+      "responsible": "Carlos Mendoza",
+      "status": "Completed"
+    },
+    {
+      "id": "2",
+      "batchId": "1",
+      "stage": "Sewing",
+      "dateTime": "Sep 15, 2026 14:20",
+      "qtyIn": 500,
+      "qtyOut": 492,
+      "difference": -8,
+      "responsible": "Ana Torres",
+      "status": "Completed"
+    },
+    {
+      "id": "3",
+      "batchId": "1",
+      "stage": "Finishing",
+      "dateTime": "Sep 16, 2026 10:30",
+      "qtyIn": 492,
+      "qtyOut": 487,
+      "difference": -5,
+      "responsible": "Luis Ramos",
+      "status": "Completed"
+    },
+    {
+      "id": "4",
+      "batchId": "1",
+      "stage": "Quality Check",
+      "dateTime": "Sep 17, 2026 15:10",
+      "qtyIn": 487,
+      "qtyOut": 487,
+      "difference": 0,
+      "responsible": "Maria Lopez",
+      "status": "Current"
+    }
+  ],
+  "observations": [
+    {
+      "id": "1",
+      "batchId": "1",
+      "timestamp": "16/09/2026 · 11:42",
+      "text": "Production paused for 15 minutes while material availability was confirmed.",
+      "author": "Registered by Rosangela Silva"
+    },
+    {
+      "id": "2",
+      "batchId": "1",
+      "timestamp": "15/09/2026 · 16:10",
+      "text": "Supervisor agreed to prioritize finishing before end of shift.",
+      "author": ""
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
