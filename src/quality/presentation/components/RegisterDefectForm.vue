@@ -1,13 +1,13 @@
 <template>
   <div class="defect-card">
     <div class="card-header">
-      <h3 class="card-title">Register Garment Defect</h3>
-      <p class="card-subtitle">Record a defect detected on the production line.</p>
+      <h3 class="card-title">{{ $t('quality.form.title') }}</h3>
+      <p class="card-subtitle">{{ $t('quality.form.subtitle') }}</p>
     </div>
 
     <form @submit.prevent="handleSubmit" class="form-body">
       <div class="form-group">
-        <label class="form-label">Active</label>
+        <label class="form-label">{{ $t('quality.form.active') }}</label>
         <div class="select-wrapper">
           <select v-model="form.batchId" class="form-control" required>
             <option value="LOT-024 — T-Shirt Basic">LOT-024 — T-Shirt Basic</option>
@@ -19,20 +19,20 @@
 
       <div class="form-row">
         <div class="form-group flex-2">
-          <label class="form-label">Defect</label>
+          <label class="form-label">{{ $t('quality.form.defect') }}</label>
           <div class="select-wrapper">
             <select v-model="form.defectType" class="form-control" required>
-              <option value="Open stitches">Open stitches</option>
-              <option value="Torn fabric">Torn fabric</option>
-              <option value="Uneven seam">Uneven seam</option>
-              <option value="Oil stain">Oil stain</option>
-              <option value="Loose button">Loose button</option>
+              <option value="Open stitches">{{ $t('quality.form.defectTypes.openStitches') }}</option>
+              <option value="Torn fabric">{{ $t('quality.form.defectTypes.tornFabric') }}</option>
+              <option value="Uneven seam">{{ $t('quality.form.defectTypes.unevenSeam') }}</option>
+              <option value="Oil stain">{{ $t('quality.form.defectTypes.oilStain') }}</option>
+              <option value="Loose button">{{ $t('quality.form.defectTypes.looseButton') }}</option>
             </select>
           </div>
         </div>
 
         <div class="form-group flex-1">
-          <label class="form-label">Qty</label>
+          <label class="form-label">{{ $t('quality.form.qty') }}</label>
           <input
               type="number"
               min="1"
@@ -44,7 +44,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">Associated</label>
+        <label class="form-label">{{ $t('quality.form.associated') }}</label>
         <div class="select-wrapper">
           <select v-model="form.machineId" class="form-control">
             <option value="MC-014 — Overlock">MC-014 — Overlock</option>
@@ -55,31 +55,31 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">Defect</label>
+        <label class="form-label">{{ $t('quality.form.origin') }}</label>
         <div class="select-wrapper">
           <select v-model="form.origin" class="form-control">
-            <option value="Machine">Machine</option>
-            <option value="Fabric">Fabric</option>
-            <option value="Operator">Operator</option>
-            <option value="Unknown Origin">Unknown Origin</option>
+            <option value="Machine">{{ $t('quality.form.origins.machine') }}</option>
+            <option value="Fabric">{{ $t('quality.form.origins.fabric') }}</option>
+            <option value="Operator">{{ $t('quality.form.origins.operator') }}</option>
+            <option value="Unknown Origin">{{ $t('quality.form.origins.unknown') }}</option>
           </select>
         </div>
-        <p class="field-hint">Unknown Origin &rarr; record is saved as "In Evaluation".</p>
+        <p class="field-hint">{{ $t('quality.form.originHint') }}</p>
       </div>
 
       <div class="form-group">
-        <label class="form-label">Observat</label>
+        <label class="form-label">{{ $t('quality.form.observation') }}</label>
         <textarea
             v-model="form.observation"
             class="form-control textarea"
             rows="2"
-            placeholder="Optional details about the detected defect."
+            :placeholder="$t('quality.form.observationPlaceholder')"
         ></textarea>
       </div>
 
       <div class="form-actions">
         <button type="submit" class="btn btn-primary">
-          Register Defect
+          {{ $t('quality.form.btnRegister') }}
         </button>
       </div>
     </form>

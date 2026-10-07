@@ -1,8 +1,8 @@
 <template>
   <div class="disposition-section" v-if="defect">
     <div class="section-header">
-      <h3 class="card-title">Disposition for {{ defect.id }}</h3>
-      <p class="card-subtitle">Choose what should happen to the observed garments.</p>
+      <h3 class="card-title">{{ $t('quality.disposition.title') }} {{ defect.id }}</h3>
+      <p class="card-subtitle">{{ $t('quality.disposition.subtitle') }}</p>
     </div>
 
     <div class="decision-cards">
@@ -11,9 +11,9 @@
           :class="{ active: selectedOption === 'Send to Rework' }"
           @click="selectedOption = 'Send to Rework'"
       >
-        <h4 class="decision-title">Send to Rework</h4>
-        <p class="decision-desc">Repairable garment.</p>
-        <p class="decision-foot">Keeps projected inventory.</p>
+        <h4 class="decision-title">{{ $t('quality.disposition.rework.title') }}</h4>
+        <p class="decision-desc">{{ $t('quality.disposition.rework.desc') }}</p>
+        <p class="decision-foot">{{ $t('quality.disposition.rework.foot') }}</p>
       </div>
 
       <div
@@ -21,15 +21,15 @@
           :class="{ active: selectedOption === 'Permanent Discard' }"
           @click="selectedOption = 'Permanent Discard'"
       >
-        <h4 class="decision-title">Permanent Discard</h4>
-        <p class="decision-desc">Irreparable garment.</p>
-        <p class="decision-foot">Reduces saleable batch balance.</p>
+        <h4 class="decision-title">{{ $t('quality.disposition.discard.title') }}</h4>
+        <p class="decision-desc">{{ $t('quality.disposition.discard.desc') }}</p>
+        <p class="decision-foot">{{ $t('quality.disposition.discard.foot') }}</p>
       </div>
     </div>
 
     <div class="disposition-form">
       <div class="form-group flex-2">
-        <label class="form-label">Correction</label>
+        <label class="form-label">{{ $t('quality.disposition.correction') }}</label>
         <div class="select-wrapper">
           <select v-model="correction" class="form-control" :disabled="selectedOption === 'Permanent Discard'">
             <option value="ST-03 — Sewing Correction">ST-03 — Sewing Correction</option>
@@ -40,7 +40,7 @@
       </div>
 
       <div class="form-group flex-1">
-        <label class="form-label">Quantity</label>
+        <label class="form-label">{{ $t('quality.disposition.quantity') }}</label>
         <input
             type="number"
             v-model.number="quantity"
@@ -57,13 +57,13 @@
             :class="selectedOption === 'Send to Rework' ? 'btn-primary' : 'btn-danger'"
             @click="handleConfirm"
         >
-          {{ selectedOption === 'Send to Rework' ? 'Confirm Rework' : 'Confirm Discard' }}
+          {{ selectedOption === 'Send to Rework' ? $t('quality.disposition.btnRework') : $t('quality.disposition.btnDiscard') }}
         </button>
       </div>
     </div>
 
     <div class="info-callout">
-      Rework &rarr; pending adjustment queue, no inventory deduction. Discard &rarr; saleable balance reduced and waste cost accumulated.
+      {{ $t('quality.disposition.callout') }}
     </div>
   </div>
 </template>
@@ -180,7 +180,6 @@ const handleConfirm = () => {
   color: #1a1a1a;
 }
 
-/* Base general de campos */
 .form-control {
   width: 100%;
   border: 1px solid #eaeaea;
@@ -192,7 +191,6 @@ const handleConfirm = () => {
   box-sizing: border-box;
 }
 
-/* Control select e input */
 select.form-control {
   height: 42px;
   line-height: normal;

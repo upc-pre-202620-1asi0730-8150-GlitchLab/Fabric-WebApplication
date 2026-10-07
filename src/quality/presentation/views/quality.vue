@@ -10,8 +10,8 @@
     <div v-else>
       <header class="header">
         <div>
-          <h1 class="page-title">Quality</h1>
-          <p class="page-subtitle">Manage fabric inspections, quality tests and garment defects.</p>
+          <h1 class="page-title">{{ $t('quality.title') }}</h1>
+          <p class="page-subtitle">{{ $t('quality.subtitle') }}</p>
         </div>
       </header>
 
@@ -23,14 +23,14 @@
             :class="{ active: currentTab === 'fabric' }"
             @click="currentTab = 'fabric'"
         >
-          Fabric
+          {{ $t('quality.tabs.fabric') }}
         </button>
         <button
             class="tab"
             :class="{ active: currentTab === 'defects' }"
             @click="currentTab = 'defects'"
         >
-          Defects
+          {{ $t('quality.tabs.defects') }}
         </button>
       </div>
 
@@ -43,14 +43,15 @@
           <div class="panel-card">
             <ObservedGarmentsTable
                 :defects="defectList"
-                :selected-defect="activeDefect"
-                @select-defect="selectDefect"
+                :selected-defect="selectedDefect"
+                @select-defect="handleSelectDefect"
+                @open-disposition="handleOpenDisposition"
                 @navigate-to-evidence="goToEvidenceView"
             />
 
             <DefectDispositionCard
-                v-if="activeDefect"
-                :defect="activeDefect"
+                v-if="dispositionDefect"
+                :defect="dispositionDefect"
                 @apply-disposition="handleConfirmDisposition"
             />
           </div>
@@ -64,6 +65,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import RegisterDefectForm from '../components/RegisterDefectForm.vue'
 import ObservedGarmentsTable from '../components/ObservedGarmentsTable.vue'
 import DefectDispositionCard from '../components/DefectDispositionCard.vue'
@@ -71,10 +73,16 @@ import AddEvidenceView from './AddEvidenceView.vue'
 import FabricInspections from '../components/fabricInspections.vue'
 import { DefectService } from '../../infrastructure/defect.service.js'
 
+const { t } = useI18n()
+
 const currentView = ref('defects')
 const currentTab = ref('defects')
 const defectList = ref([])
-const activeDefect = ref(null)
+
+const selectedDefect = ref(null)
+
+const dispositionDefect = ref(null)
+
 const selectedDefectForEvidence = ref(null)
 const errorMessage = ref('')
 
@@ -83,15 +91,16 @@ const loadDefects = async () => {
     errorMessage.value = ''
     const data = await DefectService.getAll()
     defectList.value = data
-    if (activeDefect.value) {
-      activeDefect.value = data.find(d => d.id === activeDefect.value.id) || null
+
+    if (dispositionDefect.value) {
+      dispositionDefect.value = data.find(d => d.id === dispositionDefect.value.id) || null
     }
-    if (data.length > 0 && !activeDefect.value) {
-      activeDefect.value = data[0]
+    if (selectedDefect.value) {
+      selectedDefect.value = data.find(d => d.id === selectedDefect.value.id) || null
     }
   } catch (err) {
     console.error('Error loading defects:', err)
-    errorMessage.value = 'Could not load defects from the server.'
+    errorMessage.value = t('quality.errors.load')
   }
 }
 
@@ -99,8 +108,16 @@ onMounted(() => {
   loadDefects()
 })
 
-const selectDefect = (item) => {
-  activeDefect.value = item
+const handleSelectDefect = (item) => {
+  selectedDefect.value = item
+  if (dispositionDefect.value) {
+    dispositionDefect.value = item
+  }
+}
+
+const handleOpenDisposition = (item) => {
+  selectedDefect.value = item
+  dispositionDefect.value = item
 }
 
 const goToEvidenceView = (item) => {
@@ -123,7 +140,7 @@ const handleSaveEvidence = async ({ defectId, evidences }) => {
     currentView.value = 'defects'
   } catch (err) {
     console.error('Error saving evidence:', err)
-    errorMessage.value = 'Could not save the evidence.'
+    errorMessage.value = t('quality.errors.saveEvidence')
     currentView.value = 'defects'
   }
 }
@@ -144,16 +161,14 @@ const handleCreateDefect = async (formData) => {
   }
 
   try {
-    const created = await DefectService.create(newDefect)
-    activeDefect.value = created
+    await DefectService.create(newDefect)
     await loadDefects()
   } catch (err) {
     console.error('Error creating defect:', err)
-    errorMessage.value = 'Could not register the defect.'
+    errorMessage.value = t('quality.errors.create')
   }
 }
 
-// DefectDispositionCard emits: { defectId, disposition, correction, quantity }
 const handleConfirmDisposition = async ({ defectId, disposition, correction }) => {
   try {
     await DefectService.update(defectId, {
@@ -164,7 +179,7 @@ const handleConfirmDisposition = async ({ defectId, disposition, correction }) =
     await loadDefects()
   } catch (err) {
     console.error('Error applying disposition:', err)
-    errorMessage.value = 'Could not apply the disposition.'
+    errorMessage.value = t('quality.errors.disposition')
   }
 }
 </script>
