@@ -5,6 +5,7 @@ import {computed, onMounted, onUnmounted, ref, watch} from "vue";
 import {FAILURE_CATEGORIES} from "../../domain/model/failure-category.js";
 import useMachineRegistrationStore from "../../application/machine.store.js";
 import {MACHINE_TYPES} from "../../domain/model/machine-type.js";
+import {MACHINE_STATUS, MACHINE_STATUS_SEVERITY} from "../../domain/model/machine-status.js";
 import {useConfirm} from "primevue";
 
 const {t} = useI18n();
@@ -34,18 +35,17 @@ function downtimeLabel(machine) {
 function failureLabel(value) {
   if (!value) return '—';
   const match = FAILURE_CATEGORIES.find(f => f.value === value);
-  return match ? t(match.labelKey) : value;   // los datos viejos son texto plano
+  return match ? t(match.labelKey) : value;
 }
 
 const menu = ref();
 const selectedMachine = ref(null);
-const detailsVisible = ref(false);
 
 const menuItems = computed(() => [
   {
     label: t('machinery.actions.reportBreakdown'),
     icon: 'pi pi-exclamation-triangle',
-    disabled: selectedMachine.value?.status === 'in-maintenance',
+    disabled: selectedMachine.value?.status !== MACHINE_STATUS.OPERATIONAL,
     command: () => router.push({
       name: 'machine-registration-machine-breakdown',
       params: {id: selectedMachine.value.id}
@@ -54,7 +54,10 @@ const menuItems = computed(() => [
   {
     label: t('machinery.actions.details'),
     icon: 'pi pi-info-circle',
-    command: () => { detailsVisible.value = true; }
+    command: () => router.push({
+      name: 'machine-registration-machine-detail',
+      params: {id: selectedMachine.value.id}
+    })
   }
 ]);
 
@@ -90,10 +93,9 @@ const statusFilter = ref(null);
 const typeFilter = ref(null);
 const first = ref(0);
 
-const statusOptions = computed(() => [
-  {label: t('machinery.status.operational'), value: 'operational'},
-  {label: t('machinery.status.in-maintenance'), value: 'in-maintenance'}
-]);
+const statusOptions = computed(() =>
+    Object.values(MACHINE_STATUS).map(value => ({label: t(`machinery.status.${value}`), value}))
+);
 
 const typeOptions = computed(() =>
     MACHINE_TYPES.map(mt => ({label: t(mt.labelKey), value: mt.value}))
@@ -116,37 +118,37 @@ watch([search, statusFilter, typeFilter], () => { first.value = 0; });
     <h1>{{ t('machinery.title') }}</h1>
     <p>{{ t('machinery.subtitle') }}</p>
 
-    <div class="machinery__stats">
+    <div class="stats-grid">
       <pv-card>
         <template #title>{{ t('machinery.stats.total') }}</template>
-        <template #content><span class="machinery__stat-value">{{ store.totalMachines }}</span></template>
+        <template #content><span class="stat-value">{{ store.totalMachines }}</span></template>
       </pv-card>
       <pv-card>
         <template #title>{{ t('machinery.stats.operational') }}</template>
-        <template #content><span class="machinery__stat-value">{{ store.operationalCount }}</span></template>
+        <template #content><span class="stat-value">{{ store.operationalCount }}</span></template>
       </pv-card>
       <pv-card>
         <template #title>{{ t('machinery.stats.inMaintenance') }}</template>
-        <template #content><span class="machinery__stat-value">{{ store.inMaintenanceCount }}</span></template>
+        <template #content><span class="stat-value">{{ store.inMaintenanceCount }}</span></template>
       </pv-card>
     </div>
 
-    <div class="machinery__filters">
-      <pv-icon-field class="machinery__search">
+    <div class="filters-bar">
+      <pv-icon-field class="search-field">
         <pv-input-icon class="pi pi-search"/>
         <pv-input-text v-model="search" :placeholder="t('machinery.filters.searchPlaceholder')" class="w-full"/>
       </pv-icon-field>
 
       <pv-select v-model="statusFilter" :options="statusOptions" option-label="label" option-value="value"
-                 :placeholder="t('machinery.filters.status')" show-clear class="machinery__select"/>
+                 :placeholder="t('machinery.filters.status')" show-clear class="filter-select"/>
 
       <pv-select v-model="typeFilter" :options="typeOptions" option-label="label" option-value="value"
-                 :placeholder="t('machinery.filters.type')" show-clear class="machinery__select"/>
+                 :placeholder="t('machinery.filters.type')" show-clear class="filter-select"/>
     </div>
 
     <pv-data-table :loading="!store.machinesLoaded" :value="filteredMachines" v-model:first="first"
                    paginator :rows="5" data-key="id"
-                   scrollable table-style="min-width: 50rem" class="machinery__table">
+                   scrollable table-style="min-width: 50rem">
       <template #empty>{{ t('machinery.filters.noResults') }}</template>
       <pv-column field="id" :header="t('machinery.table.machine')" sortable/>
       <pv-column :header="t('machinery.table.type')">
@@ -155,8 +157,7 @@ watch([search, statusFilter, typeFilter], () => { first.value = 0; });
       <pv-column field="batchId" :header="t('machinery.table.currentBatch')"/>
       <pv-column :header="t('machinery.table.status')">
         <template #body="{data}">
-          <pv-tag :severity="data.status === 'operational' ? 'success' : 'warning'"
-                  :value="t(`machinery.status.${data.status}`)"/>
+          <pv-tag :severity="MACHINE_STATUS_SEVERITY[data.status]" :value="t(`machinery.status.${data.status}`)"/>
         </template>
       </pv-column>
       <pv-column field="currentDowntime" :header="t('machinery.table.currentDowntime')">
@@ -177,43 +178,6 @@ watch([search, statusFilter, typeFilter], () => { first.value = 0; });
 
     <pv-menu ref="menu" :model="menuItems" popup/>
 
-    <pv-dialog v-model:visible="detailsVisible" modal :header="t('machinery.details.title')"
-               :style="{width: '30rem'}" :breakpoints="{'576px': '92vw'}">
-      <dl v-if="selectedMachine" class="machinery__details">
-        <div>
-          <dt>{{ t('machinery.table.machine') }}</dt>
-          <dd>{{ selectedMachine.id }}</dd>
-        </div>
-        <div>
-          <dt>{{ t('machinery.table.type') }}</dt>
-          <dd>{{ typeLabel(selectedMachine.type) }}</dd>
-        </div>
-        <div>
-          <dt>{{ t('machinery.table.currentBatch') }}</dt>
-          <dd>{{ selectedMachine.batchId }}</dd>
-        </div>
-        <div>
-          <dt>{{ t('machinery.table.status') }}</dt>
-          <dd>
-            <pv-tag :severity="selectedMachine.status === 'operational' ? 'success' : 'warning'"
-                    :value="t(`machinery.status.${selectedMachine.status}`)"/>
-          </dd>
-        </div>
-        <div>
-          <dt>{{ t('machinery.table.currentDowntime') }}</dt>
-          <dd>{{ downtimeLabel(selectedMachine) }}</dd>
-        </div>
-        <div>
-          <dt>{{ t('machinery.table.lastFailure') }}</dt>
-          <dd>{{ failureLabel(selectedMachine.lastFailure) }}</dd>
-        </div>
-        <div class="machinery__details-full">
-          <dt>{{ t('machinery.details.description') }}</dt>
-          <dd>{{ selectedMachine.failureDescription || '—' }}</dd>
-        </div>
-      </dl>
-    </pv-dialog>
-
     <pv-button :label="t('machinery.registerButton')" icon="pi pi-plus" class="mt-3 btn-brand-primary" @click="navigateToNew"/>
 
     <div v-if="store.errors.length" class="text-red-500 mt-3">
@@ -223,60 +187,4 @@ watch([search, statusFilter, typeFilter], () => { first.value = 0; });
 </template>
 
 <style scoped>
-
-.machinery__details {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin: 0;
-}
-
-.machinery__details dt {
-  font-size: 0.75rem;
-}
-
-.machinery__details dd {
-  margin: 0.2rem 0 0;
-  font-weight: 600;
-}
-
-.machinery__details-full {
-  grid-column: 1 / -1;
-}
-
-.machinery__stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  gap: 1rem;
-  margin: 1.5rem 0;
-}
-
-.machinery__stat-value {
-  font-size: 1.75rem;
-  font-weight: 700;
-}
-
-.machinery__filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.machinery__search {
-  flex: 1 1 16rem;
-  max-width: 24rem;
-}
-
-.machinery__select {
-  flex: 0 1 12rem;
-  min-width: 10rem;
-}
-
-.machinery__filters :deep(.p-inputtext),
-.machinery__filters :deep(.p-select) {
-  background: #ffffff;
-
-  border-radius: 0.75rem;
-}
 </style>

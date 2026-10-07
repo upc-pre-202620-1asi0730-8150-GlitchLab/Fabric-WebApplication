@@ -38,6 +38,76 @@
 
 
   "machinery": {
+
+    "detail": {
+      "title": "Detalle de Máquina",
+      "subtitle": "Revisa el estado, el historial de inactividad y los mantenimientos de la máquina.",
+      "back": "Volver a Maquinaria",
+      "info": {
+        "status": "Estado Actual",
+        "batch": "Lote Actual",
+        "stopStarted": "Detenida Desde",
+        "currentDowntime": "Tiempo de Inactividad",
+        "lastFailure": "Última Falla"
+      },
+      "tabs": {
+        "operation": "Operación",
+        "history": "Historial de Mantenimiento"
+      },
+      "operation": {
+        "title": "Reanudar Operación",
+        "subtitle": "Cierra la parada actual y vuelve a poner la máquina en operación.",
+        "alreadyOperational": "Esta máquina ya está operativa."
+      },
+      "downtime": {
+        "title": "Historial de Inactividad",
+        "subtitle": "Todas las paradas registradas para esta máquina.",
+        "date": "Fecha", "cause": "Causa", "stop": "Hora de Parada", "resume": "Hora de Reanudación",
+        "time": "Minutos", "total": "Inactividad total"
+      },
+      "history": {
+        "title": "Historial de Mantenimiento",
+        "subtitle": "Mantenimientos registrados para esta máquina.",
+        "register": "Registrar Mantenimiento",
+        "date": "Fecha", "type": "Tipo", "intervention": "Intervención",
+        "parts": "Piezas Reemplazadas", "technician": "Técnico"
+      },
+      "resume": {
+        "field": "Hora de Reanudación",
+        "placeholder": "p. ej. 10:35 AM",
+        "confirm": "Confirmar Reanudación",
+        "errors": {
+          "resumedAtRequired": "Ingresa la hora en que la máquina reanudó operación.",
+          "resumedAtInvalid": "Ingresa una hora válida, p. ej. 10:35 AM o 14:35.",
+          "resumedAtFuture": "La hora de reanudación no puede estar en el futuro."
+        },
+        "success": {"title": "Operación reanudada", "detail": "{code} ahora está Operativa."}
+      },
+      "maintenance": {
+        "title": "Registrar Mantenimiento",
+        "subtitle": "Registra la intervención realizada en esta máquina.",
+        "back": "Volver al Detalle de la Máquina",
+        "fields": {
+          "date": "Fecha", "type": "Tipo de Mantenimiento", "typePlaceholder": "Selecciona el tipo de mantenimiento",
+          "technician": "Técnico", "technicianPlaceholder": "Nombre del técnico",
+          "parts": "Piezas Reemplazadas", "partsPlaceholder": "p. ej. Aguja, correa",
+          "intervention": "Intervención Realizada",
+          "interventionPlaceholder": "Describe el trabajo de mantenimiento realizado."
+        },
+        "errors": {
+          "maintenanceTypeRequired": "Selecciona un tipo de mantenimiento.",
+          "technicianRequired": "Ingresa el nombre del técnico.",
+          "interventionRequired": "Describe la intervención realizada."
+        },
+        "cancel": "Cancelar", "submit": "Registrar Mantenimiento",
+        "success": {"title": "Mantenimiento registrado", "detail": "{code} ahora está En Mantenimiento."}
+      }
+    },
+    "maintenanceTypes": {
+      "corrective": "Correctivo",
+      "preventive": "Preventivo"
+    },
+
     "confirmDelete": "¿Estás seguro de que quieres eliminar la máquina {code}?",
     "deleteHeader": "Confirmar Eliminación",
     "deleteAccept": "Eliminar",

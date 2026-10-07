@@ -38,6 +38,75 @@
     },
 
   "machinery": {
+
+    "detail": {
+      "title": "Machine Detail",
+      "subtitle": "Review machine status, downtime history and maintenance records.",
+      "back": "Back to Machinery",
+      "info": {
+        "status": "Current Status",
+        "batch": "Current Batch",
+        "stopStarted": "Stopped Since",
+        "currentDowntime": "Current Downtime",
+        "lastFailure": "Last Failure"
+      },
+      "tabs": {
+        "operation": "Operation",
+        "history": "Maintenance History"
+      },
+      "operation": {
+        "title": "Resume Operation",
+        "subtitle": "Close the current stop event and bring the machine back online.",
+        "alreadyOperational": "This machine is already operational."
+      },
+      "downtime": {
+        "title": "Downtime History",
+        "subtitle": "All stop events recorded for this machine.",
+        "date": "Date", "cause": "Cause", "stop": "Stopped At", "resume": "Resumed At",
+        "time": "Minutes", "total": "Total downtime"
+      },
+      "history": {
+        "title": "Maintenance History",
+        "subtitle": "Maintenance records registered for this machine.",
+        "register": "Register Maintenance",
+        "date": "Date", "type": "Type", "intervention": "Intervention",
+        "parts": "Parts Replaced", "technician": "Technician"
+      },
+      "resume": {
+        "field": "Resumed At",
+        "placeholder": "e.g. 10:35 AM",
+        "confirm": "Confirm Resume",
+        "errors": {
+          "resumedAtRequired": "Enter the time the machine resumed operation.",
+          "resumedAtInvalid": "Enter a valid time, e.g. 10:35 AM or 14:35.",
+          "resumedAtFuture": "The resume time cannot be in the future."
+        },
+        "success": {"title": "Operation resumed", "detail": "{code} is now Operational."}
+      },
+      "maintenance": {
+        "title": "Register Maintenance",
+        "subtitle": "Record the intervention performed on this machine.",
+        "back": "Back to Machine Detail",
+        "fields": {
+          "date": "Date", "type": "Maintenance Type", "typePlaceholder": "Select maintenance type",
+          "technician": "Technician", "technicianPlaceholder": "Technician name",
+          "parts": "Parts Replaced", "partsPlaceholder": "e.g. Needle, belt",
+          "intervention": "Intervention Performed",
+          "interventionPlaceholder": "Describe the maintenance work performed."
+        },
+        "errors": {
+          "maintenanceTypeRequired": "Select a maintenance type.",
+          "technicianRequired": "Enter the technician's name.",
+          "interventionRequired": "Describe the intervention performed."
+        },
+        "cancel": "Cancel", "submit": "Register Maintenance",
+        "success": {"title": "Maintenance registered", "detail": "{code} is now In Maintenance."}
+      }
+    },
+    "maintenanceTypes": {
+      "corrective": "Corrective",
+      "preventive": "Preventive"
+    },
     "confirmDelete": "Are you sure you want to delete machine {code}?",
     "deleteHeader": "Confirm Deletion",
     "deleteAccept": "Delete",

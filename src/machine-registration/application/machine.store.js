@@ -92,15 +92,16 @@ const useMachineStore = defineStore('machine-registration', () => {
 
     function registerMaintenance(machineId, recordData) {
         const record = {machineId, ...recordData};
-
         return machineApi.createMaintenanceRecord(record).then(response => {
             maintenanceRecords.value.push(response.data);
             const machine = machines.value.find(m => m.id === machineId);
             machine.status = MACHINE_STATUS.IN_MAINTENANCE;
             return machineApi.updateMachine(machine);
-        }).catch(error => errors.value.push(error));
+        }).catch(error => {
+            errors.value.push(error);
+            throw error;
+        });
     }
-
 
 
     function fetchStopEvents() {
@@ -136,11 +137,12 @@ const useMachineStore = defineStore('machine-registration', () => {
     }
 
     return {
-        machines,stopEvents, maintenanceRecords, errors, machinesLoaded,
+        machines, stopEvents, maintenanceRecords, errors, machinesLoaded,
         totalMachines, operationalCount, inMaintenanceCount,
         fetchMachines, getMachineById, addMachine, deleteMachine, reportBreakdown,
         registerMaintenance, resumeOperation,
-        fetchStopEvents, fetchMaintenanceRecords
+        fetchStopEvents, fetchMaintenanceRecords,
+        getStopEventsForMachine, getMaintenanceRecordsForMachine
     };
 });
 

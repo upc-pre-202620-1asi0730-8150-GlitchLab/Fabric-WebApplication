@@ -35,3 +35,193 @@ body {
   background: #2c3615;
   border-color: #2c3615;
 }
+
+label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.page-back-link {
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e5e5e0;
+  border-radius: 1rem;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.card h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.1rem;
+}
+
+.card-muted {
+  background: #f7f6f1;
+}
+
+.section-subtitle {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.info-label {
+  display: block;
+  font-size: 0.75rem;
+  margin-bottom: 0.2rem;
+}
+
+.info-value {
+  font-weight: 600;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.filters-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-field {
+  flex: 1 1 16rem;
+  max-width: 24rem;
+}
+
+.filter-select {
+  flex: 0 1 12rem;
+  min-width: 10rem;
+}
+
+.filters-bar .p-inputtext,
+.filters-bar .p-select {
+  background: #ffffff;
+  border-radius: 0.75rem;
+}
+
+.fields-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.25rem;
+  margin: 1.25rem 0;
+}
+
+.hint-text,
+.field-msg {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+}
+
+.footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.note-box {
+  flex: 1 1 18rem;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.8rem;
+  background: #f3f2ec;
+  border: 1px solid #e5e5e0;
+}
+
+.actions-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+@media (max-width: 576px) {
+  .actions-row {
+    width: 100%;
+  }
+
+  .actions-row > * {
+    flex: 1;
+  }
+}
+
+.tabs-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 1.5rem;
+}
+
+.section-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.total-row {
+  text-align: right;
+  font-weight: 700;
+  margin-top: 0.75rem;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.data-table th {
+  text-align: left;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  padding: 0.5rem 0.25rem;
+  border-bottom: 1px solid #e5e5e0;
+}
+
+.data-table td {
+  padding: 0.6rem 0.25rem;
+  border-bottom: 1px solid #f0efe9;
+}
