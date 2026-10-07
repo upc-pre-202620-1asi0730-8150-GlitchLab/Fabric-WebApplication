@@ -49,6 +49,16 @@
       "lastFailure": null,
       "failureDescription": null,
       "downtimeStartedAt": null
+    },
+    {
+      "id": "9",
+      "type": "overlock",
+      "batchId": "LOT-022",
+      "status": "operational",
+      "currentDowntime": null,
+      "lastFailure": null,
+      "failureDescription": null,
+      "downtimeStartedAt": null
     }
   ],
   "stopEvents": [
