@@ -9,7 +9,7 @@ const navItems = [
   {to: "/dashboard", icon: "pi pi-home", labelKey: "sidebar.dashboard"},
   {to: "/production-batches", icon: "pi pi-box", labelKey: "sidebar.productionBatches"},
   {to: "/quality", icon: "pi pi-verified", labelKey: "sidebar.quality"},
-  {to: "/machine-registry", icon: "pi pi-cog", labelKey: "sidebar.machinery"},
+  {to: "/machinery", icon: "pi pi-cog", labelKey: "sidebar.machinery"},
   {to: "/alerts", icon: "pi pi-bell", labelKey: "sidebar.alerts"}
 ];
 </script>
@@ -53,16 +53,20 @@ const navItems = [
 
 <style scoped>
 .sidebar {
+  position: sticky;        /* nuevo */
+  top: 0;                  /* nuevo */
+  align-self: flex-start;  /* nuevo, imprescindible dentro de un flex */
+  flex-shrink: 0;          /* nuevo */
   width: 16rem;
   height: 100vh;
+  overflow-y: auto;        /* nuevo */
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: #f5f6fa;     /* antes #ffffff */
   border-right: 1px solid #e5e5e0;
   padding: 1.5rem 1rem;
   box-sizing: border-box;
 }
-
 .sidebar__brand {
   display: flex;
   align-items: center;
@@ -106,7 +110,7 @@ const navItems = [
   font-size: 0.925rem;
 }
 
-.sidebar__link:hover {
+.sidebar__link:not(.sidebar__link--active):hover {
   background: #f3f2ec;
 }
 

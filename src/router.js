@@ -1,17 +1,17 @@
 import {createWebHistory, createRouter} from "vue-router";
+import machineRegistrationRoutes from "./machine-registration/presentation/machine-routes.js";
 
 const pageNotFound = () => import ('./shared/presentation/views/page-not-found.vue');
 const productionBatches = () => import ('./production-batches/presentation/views/production-batches.vue');
 const dashboard = () => import ('./report-analytics/presentation/views/dashboard.vue');
 const qualityView = () => import ('./quality/presentation/views/quality.vue');
-const machine = () => import('./machine-registry/presentation/views/machinery.vue');
 const alerts = () => import('./alerts/presentation/views/alerts.vue');
 
 const routes = [
     {path: '/dashboard', name:'dashboard', component: dashboard, meta: {title:'Dashboard'}},
     {path : '/production-batches', name:'production-batches', component: productionBatches, meta: {title:'Production Batches'}},
     {path: '/quality', name: 'quality', component: qualityView, meta: {title:'Quality Control'}},
-    {path: '/machine-registry', name: 'machinery', component: machine, meta :{title:'Machine Registry'}},
+    {path: '/machinery', name: 'machinery' ,children: machineRegistrationRoutes},
     {path: '/alerts', name:'alerts', component: alerts, meta: {title:'Alerts'}},
     {path: '/', redirect:'/dashboard'},
     {path : '/:pathMatch(.*)*', name: 'not-found', component: pageNotFound , meta: {title: 'Page not found', hideSidebar: true}},

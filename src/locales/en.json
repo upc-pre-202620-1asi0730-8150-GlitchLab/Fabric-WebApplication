@@ -4,22 +4,216 @@
     "dashboard": "Dashboard",
     "productionBatches": "Production Batches",
     "quality": "Quality Control",
-    "machinery": "Machine registry",
+    "machinery": "Machinery",
     "alerts": "Alerts",
     "viewProfile": "View Profile",
     "logOut": "Log out"
   },
 
-  "dashboard": { "title": "Panel de Control", "placeholder": "Vista de Dashboard — contenido próximamente." },
-  "productionBatches": { "title": "Lotes de Producción", "placeholder": "Vista de Lotes de Producción — contenido próximamente." },
-  "quality": { "title": "Calidad", "placeholder": "Vista de Calidad — contenido próximamente." },
-  "machinery": { "title": "Maquinaria", "placeholder": "Vista de Maquinaria — contenido próximamente." },
-  "alerts": { "title": "Alertas", "placeholder": "Vista de Alertas — contenido próximamente." },
+  "dashboard": {
+    "title": "Panel de Control",
+    "placeholder": "Vista de Dashboard — contenido próximamente."
+  },
+
+  "productionBatches": {
+    "title": "Lotes de Producción",
+    "placeholder": "Vista de Lotes de Producción — contenido próximamente."
+  },
+
+  "quality": {
+    "title": "Calidad",
+    "placeholder": "Vista de Calidad — contenido próximamente."
+  },
+
+  "alerts": {
+    "title": "Alertas",
+    "placeholder": "Vista de Alertas — contenido próximamente."
+  },
 
 
   "notFound": {
-    "title": "Route not found",
+    "title": "Page not found",
     "message": "The page \"{path}\" doesn't exist. Check the URL or pick an option from the sidebar.",
     "backButton": "Back to Dashboard"
+    },
+
+  "machinery": {
+
+    "detail": {
+      "title": "Machine Detail",
+      "subtitle": "Review machine status, downtime history and maintenance records.",
+      "back": "Back to Machinery",
+      "info": {
+        "status": "Current Status",
+        "batch": "Current Batch",
+        "stopStarted": "Stopped Since",
+        "currentDowntime": "Current Downtime",
+        "lastFailure": "Last Failure"
+      },
+      "tabs": {
+        "operation": "Operation",
+        "history": "Maintenance History"
+      },
+      "operation": {
+        "title": "Resume Operation",
+        "subtitle": "Close the current stop event and bring the machine back online.",
+        "alreadyOperational": "This machine is already operational."
+      },
+      "downtime": {
+        "title": "Downtime History",
+        "subtitle": "All stop events recorded for this machine.",
+        "date": "Date", "cause": "Cause", "stop": "Stopped At", "resume": "Resumed At",
+        "time": "Minutes", "total": "Total downtime"
+      },
+      "history": {
+        "title": "Maintenance History",
+        "subtitle": "Maintenance records registered for this machine.",
+        "register": "Register Maintenance",
+        "date": "Date", "type": "Type", "intervention": "Intervention",
+        "parts": "Parts Replaced", "technician": "Technician"
+      },
+      "resume": {
+        "field": "Resumed At",
+        "placeholder": "e.g. 10:35 AM",
+        "confirm": "Confirm Resume",
+        "errors": {
+          "resumedAtRequired": "Enter the time the machine resumed operation.",
+          "resumedAtInvalid": "Enter a valid time, e.g. 10:35 AM or 14:35.",
+          "resumedAtFuture": "The resume time cannot be in the future."
+        },
+        "success": {"title": "Operation resumed", "detail": "{code} is now Operational."}
+      },
+      "maintenance": {
+        "title": "Register Maintenance",
+        "subtitle": "Record the intervention performed on this machine.",
+        "back": "Back to Machine Detail",
+        "fields": {
+          "date": "Date", "type": "Maintenance Type", "typePlaceholder": "Select maintenance type",
+          "technician": "Technician", "technicianPlaceholder": "Technician name",
+          "parts": "Parts Replaced", "partsPlaceholder": "e.g. Needle, belt",
+          "intervention": "Intervention Performed",
+          "interventionPlaceholder": "Describe the maintenance work performed."
+        },
+        "errors": {
+          "maintenanceTypeRequired": "Select a maintenance type.",
+          "technicianRequired": "Enter the technician's name.",
+          "interventionRequired": "Describe the intervention performed."
+        },
+        "cancel": "Cancel", "submit": "Register Maintenance",
+        "success": {"title": "Maintenance registered", "detail": "{code} is now In Maintenance."}
+      }
+    },
+    "maintenanceTypes": {
+      "corrective": "Corrective",
+      "preventive": "Preventive"
+    },
+    "confirmDelete": "Are you sure you want to delete machine {code}?",
+    "deleteHeader": "Confirm Deletion",
+    "deleteAccept": "Delete",
+    "deleteReject": "Cancel",
+    "title": "Machinery",
+    "subtitle": "Monitor machine status, report breakdowns and review downtime.",
+    "registerButton": "Register Machine",
+
+    "actions": {
+      "reportBreakdown": "Report Breakdown",
+      "details": "Details"
+    },
+    "details": {
+      "title": "Machine Details",
+      "description": "Failure Description"
+    },
+    "failures": {
+      "needleBreakage": "Needle Breakage",
+      "mechanicalJam": "Mechanical Jam",
+      "motorFailure": "Motor Failure",
+      "other": "Other"
+    },
+    "breakdown": {
+      "title": "Report Machine Breakdown",
+      "subtitle": "Register a machine stop and request immediate technical assistance.",
+      "back": "Back to Machinery",
+      "info": {
+        "title": "Machine Information",
+        "code": "Machine ID",
+        "type": "Machine Type",
+        "batch": "Current Batch",
+        "status": "Current Status"
+      },
+      "details": {
+        "title": "Breakdown Details",
+        "subtitle": "Complete the required information to confirm the machine stop."
+      },
+      "fields": {
+        "machineCode": "Machine Id",
+        "category": "Failure Category",
+        "categoryPlaceholder": "Select failure type",
+        "stopTime": "Stop Time",
+        "stopTimePlaceholder": "e.g. 10:35 AM",
+        "description": "Failure Description",
+        "descriptionPlaceholder": "Describe the failure or provide additional information for the technical team."
+      },
+      "note": "After confirmation: status → In Maintenance · downtime timer starts · technical team notified",
+      "cancel": "Cancel",
+      "confirm": "Confirm Stop",
+      "errors": {
+        "categoryRequired": "Select at least one technical failure category.",
+        "stopTimeRequired": "Enter the time the machine stopped.",
+        "stopTimeInvalid": "Enter a valid time, e.g. 10:35 AM or 14:35.",
+        "stopTimeFuture": "The stop time cannot be in the future."
+      },
+      "success": {
+        "title": "Breakdown reported",
+        "detail": "{code} is now In Maintenance. The technical team has been notified."
+      }
+    },
+
+    "filters": {
+      "searchPlaceholder": "Search machine code",
+      "status": "Status",
+      "type": "Machine Type",
+      "noResults": "No machines match your filters."
+    },
+
+    "types": {
+      "overlock": "Overlock",
+      "straightStitch": "Straight Stitch",
+      "coverstitch": "Coverstitch",
+      "buttonhole": "Buttonhole"
+    },
+
+    "status": {
+      "operational": "Operational",
+      "in-maintenance": "In Maintenance",
+      "machine-stopped": "Machine Stopped"
+    },
+
+    "stats": {
+      "total": "Total Machines",
+      "operational": "Operational",
+      "inMaintenance": "In Maintenance"},
+
+    "table": {
+      "machine": "Machine ID",
+      "type": "Type",
+      "currentBatch": "Current Batch",
+      "status": "Status",
+      "currentDowntime": "Current Downtime",
+      "lastFailure": "Last Failure",
+      "actions": "Actions"},
+
+    "form": {
+      "title": "Register Machine",
+      "type": "Machine Type",
+      "batch": "Production Batch",
+      "submit": "Register",
+      "cancel": "Cancel",
+
+      "errors": {
+        "summary": "You can't leave empty fields. Please complete all the fields before registering.",
+        "typeRequired": "Please select a machine type.",
+        "batchRequired": "Please select a production batch."
+      }
     }
+  }
 }
