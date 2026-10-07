@@ -1376,4 +1376,13 @@ input {
 
 }
 
+[class*="license"],
+[id*="license"],
+div[style*="Invalid PrimeUI License"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 
