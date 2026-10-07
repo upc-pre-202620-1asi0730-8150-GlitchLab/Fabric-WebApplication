@@ -1,5 +1,4 @@
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
 import './style.css'
 import App from './App.vue'
 import router from "./router.js";
@@ -22,7 +21,7 @@ import i18n from "./i18n.js";
 
 const app = createApp(App)
 
-createApp(App)
+app
     .component('pv-dialog', Dialog)
     .component('pv-menu', Menu)
     .component('pv-textarea', Textarea)
@@ -42,6 +41,14 @@ createApp(App)
     .use(ConfirmationService)
     .use(i18n)
     .use(pinia)
-    .use(PrimeVue, {theme: { preset: Material, options: { darkModeSelector: false } }, ripple: true, license: primeUiLicenseKey})    .use(router)
+    .use(PrimeVue, {
+        theme: {
+            preset: Material,
+            options: {
+                darkModeSelector: false
+            }
+        },
+        ripple: true
+    })
+    .use(router)
     .mount('#app')
-app.use(createPinia())
