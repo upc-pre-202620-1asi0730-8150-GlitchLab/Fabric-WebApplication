@@ -13,7 +13,49 @@
   ],
   "stopEvents": [],
   "maintenanceRecords": [],
-  "defects": [],
+  "defects": [
+    {
+      "id": "DEF-031",
+      "batchId": "LOT-024",
+      "defectType": "Open stitches",
+      "quantity": 6,
+      "machineId": "MC-014 — Overlock",
+      "origin": "Machine",
+      "status": "Send to Rework",
+      "observation": "",
+      "garmentModel": "T-Shirt Basic",
+      "date": "Oct 7, 2026",
+      "evidences": [],
+      "disposition": "Send to Rework",
+      "correctionType": "ST-04 — Ironing / Pressing"
+    },
+    {
+      "id": "DEF-032",
+      "batchId": "LOT-024",
+      "defectType": "Open stitches",
+      "quantity": 6,
+      "machineId": "MC-014 — Overlock",
+      "origin": "Machine",
+      "status": "Pending Decision",
+      "observation": "",
+      "garmentModel": "T-Shirt Basic",
+      "date": "Oct 7, 2026",
+      "evidences": []
+    },
+    {
+      "id": "DEF-033",
+      "batchId": "LOT-024",
+      "defectType": "Open stitches",
+      "quantity": 6,
+      "machineId": "MC-014 — Overlock",
+      "origin": "Machine",
+      "status": "Pending Decision",
+      "observation": "",
+      "garmentModel": "T-Shirt Basic",
+      "date": "Oct 7, 2026",
+      "evidences": []
+    }
+  ],
   "dashboard": [
     {
       "id": 1,
