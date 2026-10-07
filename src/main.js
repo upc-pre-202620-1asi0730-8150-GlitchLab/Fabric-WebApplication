@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import './style.css'
 import App from './App.vue'
 import router from "./router.js";
@@ -19,7 +20,7 @@ import {
 } from "primevue";
 import i18n from "./i18n.js";
 
-const primeUiLicenseKey = import.meta.env.VITE_PRIME_UI_LICENSE_KEY;
+const app = createApp(App)
 
 createApp(App)
     .component('pv-dialog', Dialog)
@@ -43,3 +44,4 @@ createApp(App)
     .use(pinia)
     .use(PrimeVue, {theme: { preset: Material, options: { darkModeSelector: false } }, ripple: true, license: primeUiLicenseKey})    .use(router)
     .mount('#app')
+app.use(createPinia())
