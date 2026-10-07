@@ -1,59 +1,9 @@
 {
   "machines": [
     {
-      "id": "3",
-      "type": "overlock",
-      "batchId": "LOT-023",
-      "status": "in-maintenance",
-      "currentDowntime": null,
-      "lastFailure": null,
-      "failureDescription": null,
-      "downtimeStartedAt": null
-    },
-    {
-      "id": "5",
-      "type": "overlock",
-      "batchId": "LOT-022",
-      "status": "machine-stopped",
-      "currentDowntime": null,
-      "lastFailure": "needle-breakage",
-      "failureDescription": "the",
-      "downtimeStartedAt": "2026-10-07T04:50:00.000Z"
-    },
-    {
-      "id": "6",
-      "type": "coverstitch",
+      "id": "1",
+      "type": "straight-stitch",
       "batchId": "LOT-020",
-      "status": "in-maintenance",
-      "currentDowntime": null,
-      "lastFailure": "other",
-      "failureDescription": "SEDED",
-      "downtimeStartedAt": "2026-10-05T07:14:00.000Z"
-    },
-    {
-      "id": "7",
-      "type": "straight-stitch",
-      "batchId": "LOT-021",
-      "status": "operational",
-      "currentDowntime": null,
-      "lastFailure": null,
-      "failureDescription": null,
-      "downtimeStartedAt": null
-    },
-    {
-      "id": "8",
-      "type": "straight-stitch",
-      "batchId": "LOT-021",
-      "status": "operational",
-      "currentDowntime": null,
-      "lastFailure": null,
-      "failureDescription": null,
-      "downtimeStartedAt": null
-    },
-    {
-      "id": "9",
-      "type": "overlock",
-      "batchId": "LOT-022",
       "status": "operational",
       "currentDowntime": null,
       "lastFailure": null,
@@ -63,95 +13,17 @@
   ],
   "stopEvents": [
     {
-      "machineId": "7",
+      "machineId": "1",
       "cause": "mechanical-jam",
-      "stoppedAt": "2026-10-06T06:23:00.000Z",
-      "resumedAt": "2026-10-06T17:20:00.000Z",
-      "durationMinutes": 657,
-      "failureDescription": "dw",
-      "id": 1
-    },
-    {
-      "machineId": "5",
-      "cause": "needle-breakage",
-      "stoppedAt": "2026-10-07T04:50:00.000Z",
+      "stoppedAt": "2026-10-07T07:12:00.000Z",
       "resumedAt": null,
       "durationMinutes": null,
-      "failureDescription": "swswsw",
-      "id": 2
+      "failureDescription": null,
+      "id": 3
     }
   ],
-  "maintenanceRecords": [
-    {
-      "machineId": "3",
-      "date": "2026-10-16",
-      "maintenanceType": "corrective",
-      "interventionPerformed": "wswswswswsws",
-      "partsReplaced": "wswswsw",
-      "technician": "swsws",
-      "id": 1
-    }
-  ],
-  "defects": [
-    {
-      "id": "DEF-031",
-      "batchId": "LOT-024",
-      "garmentModel": "T-Shirt Basic",
-      "defectType": "Open stitches",
-      "quantity": 6,
-      "machineId": "MC-014 — Overlock",
-      "origin": "Machine",
-      "status": "Pending Decision",
-      "observation": "Open stitches along sleeve seam",
-      "disposition": null,
-      "correctionType": null,
-      "date": "Sep 16, 2026",
-      "evidences": [
-        {
-          "id": "EVD-001",
-          "fileName": "evidence_01.jpg",
-          "fileSize": "2.4 MB",
-          "date": "Sep 16, 2026",
-          "description": "Open stitches in left sleeve",
-          "type": "Photo",
-          "correctiveAction": "Adjust needle thread tension"
-        },
-        {
-          "id": "EVD-002",
-          "fileName": "evidence_02.jpg",
-          "fileSize": "1.8 MB",
-          "date": "Sep 16, 2026",
-          "description": "Detail of defect",
-          "type": "Photo",
-          "correctiveAction": ""
-        },
-        {
-          "id": "EVD-003",
-          "fileName": "evidence_03.jpg",
-          "fileSize": "3.1 MB",
-          "date": "Sep 16, 2026",
-          "description": "Location of defect",
-          "type": "Photo",
-          "correctiveAction": ""
-        }
-      ]
-    },
-    {
-      "id": "DEF-032",
-      "batchId": "LOT-024",
-      "garmentModel": "T-Shirt Basic",
-      "defectType": "Torn fabric",
-      "quantity": 2,
-      "machineId": "MC-014 — Overlock",
-      "origin": "Fabric",
-      "status": "Pending Decision",
-      "observation": "Small cut near collar",
-      "disposition": null,
-      "correctionType": null,
-      "date": "Sep 16, 2026",
-      "evidences": []
-    }
-  ],
+  "maintenanceRecords": [],
+  "defects": [],
   "dashboard": [
     {
       "id": 1,
