@@ -55,10 +55,7 @@
         </section>
       </div>
 
-      <div v-else class="empty-tab">
-        <p>Fabric inspections module (Under development by group members).</p>
-        <button class="tab active" @click="currentTab = 'defects'">Return to Defects</button>
-      </div>
+      <div v-else><FabricInspections /></div>
     </div>
   </div>
 </template>
@@ -69,6 +66,7 @@ import RegisterDefectForm from '../components/RegisterDefectForm.vue'
 import ObservedGarmentsTable from '../components/ObservedGarmentsTable.vue'
 import DefectDispositionCard from '../components/DefectDispositionCard.vue'
 import AddEvidenceView from './AddEvidenceView.vue'
+import FabricInspections from '../components/fabricInspections.vue'
 import { DefectService } from '../../infrastructure/defect.service.js'
 
 const currentView = ref('defects')

@@ -139,5 +139,52 @@
       "machine": "MC-008 — Sewing",
       "batch": "All batches"
     }
+  ],
+  "fabricInspections": [
+    {
+      "id": "1",
+      "rollId": "ROLL-001",
+      "supplier": "Textile A",
+      "inspectionDate": "2026-09-16",
+      "initialResult": "Conforming",
+      "shrinkageTest": "Approved",
+      "rollStatus": "Available for Cutting"
+    },
+    {
+      "id": "2",
+      "rollId": "ROLL-002",
+      "supplier": "Supplier B",
+      "inspectionDate": "2026-09-16",
+      "initialResult": "Observed",
+      "shrinkageTest": "Pending",
+      "rollStatus": "Blocked"
+    },
+    {
+      "id": "3",
+      "rollId": "ROLL-003",
+      "supplier": "Textile A",
+      "inspectionDate": "2026-09-15",
+      "initialResult": "Conforming",
+      "shrinkageTest": "Approved",
+      "rollStatus": "Available for Cutting"
+    },
+    {
+      "id": "4",
+      "rollId": "ROLL-004",
+      "supplier": "Supplier C",
+      "inspectionDate": "2026-09-15",
+      "initialResult": "Conforming",
+      "shrinkageTest": "Non-Compliant",
+      "rollStatus": "Not Available"
+    },
+    {
+      "id": "5",
+      "rollId": "ROLL-005",
+      "supplier": "Supplier B",
+      "inspectionDate": "2026-09-14",
+      "initialResult": "Observed",
+      "shrinkageTest": null,
+      "rollStatus": "Blocked"
+    }
   ]
 }
