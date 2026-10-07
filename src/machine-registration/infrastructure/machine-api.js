@@ -1,9 +1,9 @@
 import {BaseApi} from "../../shared/infrastructure/base-api.js";
 import {BaseEndpoint} from "../../shared/infrastructure/base-endpoint.js";
 
-const machinesEndpointPath = import.meta.env.VITE_MACHINES_ENDPOINT_PATH;
-const stopEventsEndpointPath = import.meta.env.VITE_STOP_EVENTS_ENDPOINT_PATH;
-const maintenanceRecordsEndpointPath = import.meta.env.VITE_MAINTENANCE_RECORDS_ENDPOINT_PATH;
+const machinesEndpointPath = import.meta.env.VITE_MACHINES_ENDPOINT_PATH || '/machines';
+const stopEventsEndpointPath = import.meta.env.VITE_STOP_EVENTS_ENDPOINT_PATH || '/stopEvents';
+const maintenanceRecordsEndpointPath = import.meta.env.VITE_MAINTENANCE_RECORDS_ENDPOINT_PATH || '/maintenanceRecords';
 
 export class MachineApi extends BaseApi {
     #machinesEndpoint;
@@ -44,6 +44,7 @@ export class MachineApi extends BaseApi {
     createStopEvent(resource) {
         return this.#stopEventsEndpoint.create(resource);
     }
+
     updateStopEvent(resource) {
         return this.#stopEventsEndpoint.update(resource.id, resource);
     }
@@ -51,6 +52,7 @@ export class MachineApi extends BaseApi {
     getMaintenanceRecords() {
         return this.#maintenanceRecordsEndpoint.getAll();
     }
+
     createMaintenanceRecord(resource) {
         return this.#maintenanceRecordsEndpoint.create(resource);
     }

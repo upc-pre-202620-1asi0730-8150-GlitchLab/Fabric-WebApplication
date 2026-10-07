@@ -89,10 +89,10 @@
                   <span class="item-icon">🔍</span> Traceability
                 </div>
                 <div class="dropdown-item" @click="goToAction(batch.id, '/history')">
-                  <span class="item-icon">📜</span> History
+                  <span class="item-icon">🕒</span> History
                 </div>
                 <div class="dropdown-item" @click="goToAction(batch.id, '/observations')">
-                  <span class="item-icon">💬</span> Batch Observations
+                  <span class="item-icon">📝</span> Batch Observations
                 </div>
               </div>
             </div>
@@ -125,7 +125,8 @@ const activeMenuId = ref(null)
 
 const fetchBatches = async () => {
   try {
-    const res = await fetch('http://localhost:3000/batches')
+    const baseUrl = import.meta.env.VITE_FABRIC_API_URL || 'http://localhost:3000'
+    const res = await fetch(`${baseUrl}/batches`)
     batches.value = await res.json()
   } catch (err) {
     console.error('Error fetching batches:', err)
@@ -227,7 +228,7 @@ const getStatusClass = (status) => {
   background: #F9FAFB;
   border: 1px solid #E5E7EB;
   border-radius: 12px;
-  overflow: visible; /* Allows popover to overflow */
+  overflow: visible;
 }
 
 .custom-table {
@@ -271,7 +272,6 @@ const getStatusClass = (status) => {
 .menu-wrapper { position: relative; display: inline-block; }
 .btn-icon { background: none; border: none; font-size: 18px; color: #6B7280; cursor: pointer; padding: 4px 8px; }
 
-/* Dropdown Menu Popup */
 .dropdown-menu {
   position: absolute;
   right: 0;

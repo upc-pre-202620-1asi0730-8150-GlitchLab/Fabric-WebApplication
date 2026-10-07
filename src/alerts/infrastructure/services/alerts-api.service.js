@@ -2,7 +2,7 @@
 import { Alert } from '../../domain/model/alert.model.js';
 
 const http = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: import.meta.env.VITE_FABRIC_API_URL || 'http://localhost:3000'
 });
 
 export class AlertsApiService {

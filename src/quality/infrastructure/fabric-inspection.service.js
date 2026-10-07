@@ -1,7 +1,8 @@
 import axios from 'axios'
 
-const PRIMARY_API = 'http://localhost:3000/api/fabricInspections'
-const FALLBACK_API = 'http://localhost:3000/fabricInspections'
+const BASE_URL = import.meta.env.VITE_FABRIC_API_URL || 'http://localhost:3000'
+const PRIMARY_API = `${BASE_URL}/api/fabricInspections`
+const FALLBACK_API = `${BASE_URL}/fabricInspections`
 const STORAGE_KEY = 'fabric_inspections_cache'
 
 export class FabricInspectionService {

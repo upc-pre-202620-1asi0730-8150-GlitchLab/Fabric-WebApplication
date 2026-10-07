@@ -1,7 +1,8 @@
 import axios from 'axios'
 
-const PRIMARY_API = 'http://localhost:3000/api/defects'
-const FALLBACK_API = 'http://localhost:3000/defects'
+const BASE_URL = import.meta.env.VITE_FABRIC_API_URL || 'http://localhost:3000'
+const PRIMARY_API = `${BASE_URL}/api/defects`
+const FALLBACK_API = `${BASE_URL}/defects`
 const STORAGE_KEY = 'fabric_defects_cache'
 
 export class DefectService {

@@ -3,21 +3,17 @@
  * @author Diego Sebastian Reategui Galarcep (u20201F165)
  */
 
-import axios from 'axios';
+import { BaseApi } from '../../shared/infrastructure/base-api.js';
 import { ProductionBatch } from '../../domain/model/production-batch.entity.js';
 import { BatchOperator } from '../../domain/model/batch-operator.entity.js';
 import { BatchMovement } from '../../domain/model/batch-movement.entity.js';
 import { BatchObservation } from '../../domain/model/batch-observation.entity.js';
 
+export class ProductionBatchesApiService extends BaseApi {
 
-const http = axios.create({
-    baseURL: 'http://localhost:3000',
-    headers: {
-        'Content-Type': 'application/json'
+    constructor() {
+        super();
     }
-});
-
-export class ProductionBatchesApiService {
 
     /**
      * Obtiene la lista completa de lotes de producción.
@@ -25,7 +21,7 @@ export class ProductionBatchesApiService {
      */
     async getAllBatches() {
         try {
-            const response = await http.get('/production-batches');
+            const response = await this.http.get('/production-batches');
             return response.data.map(item => new ProductionBatch(item));
         } catch (error) {
             console.error('Error fetching production batches:', error);
@@ -40,7 +36,7 @@ export class ProductionBatchesApiService {
      */
     async getBatchById(id) {
         try {
-            const response = await http.get(`/production-batches/${id}`);
+            const response = await this.http.get(`/production-batches/${id}`);
             return new ProductionBatch(response.data);
         } catch (error) {
             console.error(`Error fetching batch with ID ${id}:`, error);
@@ -55,7 +51,7 @@ export class ProductionBatchesApiService {
      */
     async createBatch(batchData) {
         try {
-            const response = await http.post('/production-batches', batchData);
+            const response = await this.http.post('/production-batches', batchData);
             return new ProductionBatch(response.data);
         } catch (error) {
             console.error('Error creating production batch:', error);
@@ -71,7 +67,7 @@ export class ProductionBatchesApiService {
      */
     async updateBatchStatus(batchId, updateData) {
         try {
-            const response = await http.patch(`/production-batches/${batchId}`, updateData);
+            const response = await this.http.patch(`/production-batches/${batchId}`, updateData);
             return new ProductionBatch(response.data);
         } catch (error) {
             console.error(`Error updating stage for batch ${batchId}:`, error);
@@ -86,7 +82,7 @@ export class ProductionBatchesApiService {
      */
     async getOperatorsByBatchId(batchId) {
         try {
-            const response = await http.get(`/batch-operators?batchId=${batchId}`);
+            const response = await this.http.get(`/batch-operators?batchId=${batchId}`);
             return response.data.map(item => new BatchOperator(item));
         } catch (error) {
             console.error(`Error fetching operators for batch ${batchId}:`, error);
@@ -101,7 +97,7 @@ export class ProductionBatchesApiService {
      */
     async assignOperator(operatorData) {
         try {
-            const response = await http.post('/batch-operators', operatorData);
+            const response = await this.http.post('/batch-operators', operatorData);
             return new BatchOperator(response.data);
         } catch (error) {
             console.error('Error assigning operator to batch stage:', error);
@@ -116,7 +112,7 @@ export class ProductionBatchesApiService {
      */
     async getMovementsByBatchId(batchId) {
         try {
-            const response = await http.get(`/batch-movements?batchId=${batchId}`);
+            const response = await this.http.get(`/batch-movements?batchId=${batchId}`);
             return response.data.map(item => new BatchMovement(item));
         } catch (error) {
             console.error(`Error fetching movements for batch ${batchId}:`, error);
@@ -131,7 +127,7 @@ export class ProductionBatchesApiService {
      */
     async registerMovement(movementData) {
         try {
-            const response = await http.post('/batch-movements', movementData);
+            const response = await this.http.post('/batch-movements', movementData);
             return new BatchMovement(response.data);
         } catch (error) {
             console.error('Error registering batch movement:', error);
@@ -146,7 +142,7 @@ export class ProductionBatchesApiService {
      */
     async getObservationsByBatchId(batchId) {
         try {
-            const response = await http.get(`/batch-observations?batchId=${batchId}`);
+            const response = await this.http.get(`/batch-observations?batchId=${batchId}`);
             return response.data.map(item => new BatchObservation(item));
         } catch (error) {
             console.error(`Error fetching observations for batch ${batchId}:`, error);
@@ -161,7 +157,7 @@ export class ProductionBatchesApiService {
      */
     async createObservation(observationData) {
         try {
-            const response = await http.post('/batch-observations', observationData);
+            const response = await this.http.post('/batch-observations', observationData);
             return new BatchObservation(response.data);
         } catch (error) {
             console.error('Error creating observation:', error);

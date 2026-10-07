@@ -2,7 +2,7 @@
 import { DashboardMetrics } from '../../domain/model/dashboard-metrics.model';
 
 const http = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: import.meta.env.VITE_FABRIC_API_URL || 'http://localhost:3000'
 });
 
 export class ReportAnalyticsApiService {
@@ -25,7 +25,6 @@ export class ReportAnalyticsApiService {
             throw error;
         }
     }
-
 
     async getDashboardHistory() {
         try {
