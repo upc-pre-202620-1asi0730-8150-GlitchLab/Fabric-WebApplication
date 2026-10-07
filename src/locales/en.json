@@ -25,8 +25,142 @@
   },
 
   "quality": {
-    "title": "Quality Control",
-    "placeholder": "Quality view — content coming soon."
+    "title": "Quality",
+    "subtitle": "Manage fabric inspections, quality tests and garment defects.",
+    "tabs": {
+      "fabric": "Fabric",
+      "defects": "Defects"
+    },
+    "errors": {
+      "load": "Could not load defects from the server.",
+      "saveEvidence": "Could not save the evidence.",
+      "create": "Could not register the defect.",
+      "disposition": "Could not apply the disposition."
+    },
+    "form": {
+      "title": "Register Garment Defect",
+      "subtitle": "Record a defect detected on the production line.",
+      "active": "Active",
+      "defect": "Defect",
+      "qty": "Qty",
+      "associated": "Associated",
+      "origin": "Defect",
+      "originHint": "Unknown Origin → record is saved as \"In Evaluation\".",
+      "observation": "Observat",
+      "observationPlaceholder": "Optional details about the detected defect.",
+      "btnRegister": "Register Defect",
+      "defectTypes": {
+        "openStitches": "Open stitches",
+        "tornFabric": "Torn fabric",
+        "unevenSeam": "Uneven seam",
+        "oilStain": "Oil stain",
+        "looseButton": "Loose button"
+      },
+      "origins": {
+        "machine": "Machine",
+        "fabric": "Fabric",
+        "operator": "Operator",
+        "unknown": "Unknown Origin"
+      }
+    },
+    "table": {
+      "title": "Observed Garments",
+      "subtitle": "Review pending defects and define their final disposition.",
+      "groupBy": "Group by:",
+      "groups": {
+        "none": "None (Individual)",
+        "type": "Defect Type",
+        "machine": "Machine",
+        "batch": "Batch"
+      },
+      "recurrence": {
+        "incidences": "Incidences",
+        "totalQty": "Total Qty"
+      },
+      "columns": {
+        "defect": "DEFECT",
+        "batch": "BATCH",
+        "defectType": "DEFECT TYPE",
+        "qty": "QTY",
+        "status": "STATUS",
+        "actions": "ACTIONS"
+      },
+      "actions": {
+        "addEvidence": "Add Evidence",
+        "disposition": "Disposition"
+      },
+      "empty": "No observed garments recorded.",
+      "statuses": {
+        "pending": "Pending Decision",
+        "evaluation": "In Evaluation",
+        "rework": "Send to Rework",
+        "discard": "Permanent Discard"
+      }
+    },
+    "disposition": {
+      "title": "Disposition for",
+      "subtitle": "Choose what should happen to the observed garments.",
+      "rework": {
+        "title": "Send to Rework",
+        "desc": "Repairable garment.",
+        "foot": "Keeps projected inventory."
+      },
+      "discard": {
+        "title": "Permanent Discard",
+        "desc": "Irreparable garment.",
+        "foot": "Reduces saleable batch balance."
+      },
+      "correction": "Correction",
+      "quantity": "Quantity",
+      "btnRework": "Confirm Rework",
+      "btnDiscard": "Confirm Discard",
+      "callout": "Rework → pending adjustment queue, no inventory deduction. Discard → saleable balance reduced and waste cost accumulated."
+    },
+    "evidence": {
+      "back": "Back to Defects",
+      "title": "Add Evidence",
+      "subtitle": "Attach and register evidence for the detected garment defect.",
+      "defectInfo": {
+        "title": "Defect Information",
+        "defectId": "Defect ID",
+        "status": "Status",
+        "batch": "Batch",
+        "defectType": "Defect Type",
+        "quantity": "Quantity",
+        "associatedMachine": "Associated Machine",
+        "garment": "Garment"
+      },
+      "details": {
+        "title": "Evidence Details",
+        "type": "Evidence Type *",
+        "date": "Evidence Date *",
+        "description": "Description *",
+        "descriptionPlaceholder": "Describe what the evidence shows...",
+        "action": "Corrective Action Taken",
+        "actionPlaceholder": "Describe the corrective action taken or planned.",
+        "types": {
+          "photo": "Photo",
+          "labReport": "Lab Report",
+          "inspectionSheet": "Inspection Sheet"
+        }
+      },
+      "upload": {
+        "title": "Upload Evidence",
+        "dragText": "Drag and drop files here",
+        "clickText": "or click to upload",
+        "note": "Accepted formats: JPG, PNG, PDF - Max size: 10 MB each",
+        "uploadedTitle": "Uploaded Evidence",
+        "empty": "No evidence attached to this defect yet.",
+        "photoBadge": "PHOTO"
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "save": "Save Evidence"
+      },
+      "errors": {
+        "sizeLimit": "File size exceeds the 10 MB limit."
+      }
+    }
   },
 
   "alerts": {

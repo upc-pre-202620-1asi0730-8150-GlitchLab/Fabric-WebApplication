@@ -26,7 +26,141 @@
 
   "quality": {
     "title": "Calidad",
-    "placeholder": "Vista de Calidad — contenido próximamente."
+    "subtitle": "Administre inspecciones de tela, pruebas de calidad y defectos de prendas.",
+    "tabs": {
+      "fabric": "Telas",
+      "defects": "Defectos"
+    },
+    "errors": {
+      "load": "No se pudieron cargar los defectos desde el servidor.",
+      "saveEvidence": "No se pudo guardar la evidencia.",
+      "create": "No se pudo registrar el defecto.",
+      "disposition": "No se pudo aplicar la disposición."
+    },
+    "form": {
+      "title": "Registrar Defecto de Prenda",
+      "subtitle": "Registre un defecto detectado en la línea de producción.",
+      "active": "Activo",
+      "defect": "Defecto",
+      "qty": "Cant.",
+      "associated": "Asociado",
+      "origin": "Defecto",
+      "originHint": "Origen Desconocido → el registro se guarda como \"En Evaluación\".",
+      "observation": "Observación",
+      "observationPlaceholder": "Detalles opcionales sobre el defecto detectado.",
+      "btnRegister": "Registrar Defecto",
+      "defectTypes": {
+        "openStitches": "Puntadas abiertas",
+        "tornFabric": "Tela rasgada",
+        "unevenSeam": "Costura irregular",
+        "oilStain": "Mancha de aceite",
+        "looseButton": "Botón suelto"
+      },
+      "origins": {
+        "machine": "Máquina",
+        "fabric": "Tela",
+        "operator": "Operario",
+        "unknown": "Origen Desconocido"
+      }
+    },
+    "table": {
+      "title": "Prendas Observadas",
+      "subtitle": "Revise los defectos pendientes y defina su disposición final.",
+      "groupBy": "Agrupar por:",
+      "groups": {
+        "none": "Ninguno (Individual)",
+        "type": "Tipo de Defecto",
+        "machine": "Máquina",
+        "batch": "Lote"
+      },
+      "recurrence": {
+        "incidences": "Incidencias",
+        "totalQty": "Cant. Total"
+      },
+      "columns": {
+        "defect": "DEFECTO",
+        "batch": "LOTE",
+        "defectType": "TIPO DE DEFECTO",
+        "qty": "CANT",
+        "status": "ESTADO",
+        "actions": "ACCIONES"
+      },
+      "actions": {
+        "addEvidence": "Adjuntar Evidencia",
+        "disposition": "Disposición"
+      },
+      "empty": "No hay prendas observadas registradas.",
+      "statuses": {
+        "pending": "Decisión Pendiente",
+        "evaluation": "En Evaluación",
+        "rework": "Enviar a Reproceso",
+        "discard": "Descarte Definitivo"
+      }
+    },
+    "disposition": {
+      "title": "Disposición para",
+      "subtitle": "Elija qué debe ocurrir con las prendas observadas.",
+      "rework": {
+        "title": "Enviar a Reproceso",
+        "desc": "Prenda reparable.",
+        "foot": "Mantiene el inventario proyectado."
+      },
+      "discard": {
+        "title": "Descarte Definitivo",
+        "desc": "Prenda irreparable.",
+        "foot": "Reduce el saldo comercializable del lote."
+      },
+      "correction": "Corrección",
+      "quantity": "Cantidad",
+      "btnRework": "Confirmar Reproceso",
+      "btnDiscard": "Confirmar Descarte",
+      "callout": "Reproceso → cola de ajuste pendiente, sin deducción de inventario. Descarte → saldo vendible reducido y costo de merma acumulado."
+    },
+    "evidence": {
+      "back": "Volver a Defectos",
+      "title": "Adjuntar Evidencia",
+      "subtitle": "Adjunte y registre evidencia para el defecto de prenda detectado.",
+      "defectInfo": {
+        "title": "Información del Defecto",
+        "defectId": "ID de Defecto",
+        "status": "Estado",
+        "batch": "Lote",
+        "defectType": "Tipo de Defecto",
+        "quantity": "Cantidad",
+        "associatedMachine": "Máquina Asociada",
+        "garment": "Prenda"
+      },
+      "details": {
+        "title": "Detalles de la Evidencia",
+        "type": "Tipo de Evidencia *",
+        "date": "Fecha de Evidencia *",
+        "description": "Descripción *",
+        "descriptionPlaceholder": "Describa lo que muestra la evidencia...",
+        "action": "Acción Correctiva Tomada",
+        "actionPlaceholder": "Describa la acción correctiva tomada o planificada.",
+        "types": {
+          "photo": "Foto",
+          "labReport": "Informe de Laboratorio",
+          "inspectionSheet": "Hoja de Inspección"
+        }
+      },
+      "upload": {
+        "title": "Cargar Evidencia",
+        "dragText": "Arrastre y suelte archivos aquí",
+        "clickText": "o haga clic para cargar",
+        "note": "Formatos aceptados: JPG, PNG, PDF - Tamaño máx: 10 MB cada uno",
+        "uploadedTitle": "Evidencias Cargadas",
+        "empty": "Aún no hay evidencias adjuntas a este defecto.",
+        "photoBadge": "FOTO"
+      },
+      "actions": {
+        "cancel": "Cancelar",
+        "save": "Guardar Evidencia"
+      },
+      "errors": {
+        "sizeLimit": "El tamaño del archivo supera el límite de 10 MB."
+      }
+    }
   },
 
   "alerts": {
