@@ -12,7 +12,7 @@ import {
     ConfirmationService,
     ConfirmDialog,
     DataTable, Dialog, IconField, InputIcon,
-    InputText, Menu, Select,
+    InputText, Menu, ProgressBar, Select,
     SelectButton, Tag, Textarea,
     Toast,
     ToastService
@@ -37,6 +37,7 @@ app
     .component('pv-confirm-dialog', ConfirmDialog)
     .component('pv-select', Select)
     .component('pv-select-button', SelectButton)
+    .component('pv-progress-bar', ProgressBar)
     .use(ToastService)
     .use(ConfirmationService)
     .use(i18n)
