@@ -5,6 +5,7 @@ import StatCard from '../components/StatCard.vue'
 import ProductionChart from '../components/ProductionChart.vue'
 import BatchesStage from '../components/BatchesStage.vue'
 import BatchProgress from '../components/BatchProgress.vue'
+import {useProductionStore} from "../../../stores/production.js";
 
 const selectedDate = ref('2026-10-04')
 const selectedBatch = ref('All batches')
@@ -20,11 +21,14 @@ const error = ref(null)
 
 const reportService = new ReportAnalyticsApiService()
 
+const productionStore = useProductionStore()
+
 const loadDashboardData = async () => {
   try {
     loading.value = true
     const data = await reportService.getDashboardData(selectedDate.value)
     metrics.value = data
+    await productionStore.loadDashboard(selectedDate.value)
   } catch (err) {
     console.error('Error loading dashboard:', err)
     error.value = 'Failed to load report analytics.'
@@ -32,6 +36,17 @@ const loadDashboardData = async () => {
     loading.value = false
   }
 }
+
+const productionHistory = ref([])
+
+onMounted(async () => {
+  await loadDashboardData()
+  try {
+    productionHistory.value = await reportService.getDashboardHistory()
+  } catch (err) {
+    console.error('Error loading production history:', err)
+  }
+})
 
 onMounted(() => {
   loadDashboardData()
@@ -97,7 +112,7 @@ onMounted(() => {
       </section>
 
       <section class="dashboard-grid">
-        <ProductionChart />
+        <ProductionChart :data="productionHistory" />
         <BatchesStage />
       </section>
 

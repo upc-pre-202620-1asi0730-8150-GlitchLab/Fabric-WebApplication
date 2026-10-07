@@ -43,14 +43,16 @@ const useMachineStore = defineStore('machine-registration', () => {
     }
 
     function addMachine(machine) {
-        machine.id = generateNextId();
-        machine.status = 'operational';
-        machine.currentDowntime = null;
-        machine.lastFailure = null;
+        return fetchMachines().then(() => {
+            machine.id = generateNextId();
+            machine.status = 'operational';
+            machine.currentDowntime = null;
+            machine.lastFailure = null;
 
-        machineApi.createMachine(machine).then(response => {
-            machines.value.push(MachineAssembler.toEntityFromResource(response.data));
-            return fetchMachines();
+            return machineApi.createMachine(machine).then(response => {
+                machines.value.push(MachineAssembler.toEntityFromResource(response.data));
+                return fetchMachines();
+            });
         }).catch(error => errors.value.push(error));
     }
 

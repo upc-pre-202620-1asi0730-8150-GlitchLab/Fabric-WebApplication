@@ -2,7 +2,7 @@
   "machines": [
     {
       "id": "1",
-      "type": "straight-stitch",
+      "type": "overlock",
       "batchId": "LOT-020",
       "status": "operational",
       "currentDowntime": null,
@@ -11,17 +11,7 @@
       "downtimeStartedAt": null
     }
   ],
-  "stopEvents": [
-    {
-      "machineId": "1",
-      "cause": "mechanical-jam",
-      "stoppedAt": "2026-10-07T07:12:00.000Z",
-      "resumedAt": null,
-      "durationMinutes": null,
-      "failureDescription": null,
-      "id": 3
-    }
-  ],
+  "stopEvents": [],
   "maintenanceRecords": [],
   "defects": [],
   "dashboard": [

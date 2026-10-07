@@ -42,18 +42,22 @@ const routes = [
         component: batchDetail,
         meta: { title: 'Batch Detail' }
     },
+
     {
         path: '/production-batches/:id/operators',
         name: 'batch-operator-assignment',
         component: batchOperatorAssignment,
         meta: { title: 'Assign Operators' }
     },
+
     {
         path: '/production-batches/:id/traceability',
         alias: ['/production-batches/:id/history'],
         name: 'traceability-history',
         component: traceabilityHistory,
-        meta: { title: 'Traceability History' }
+        meta: {
+            title: 'Traceability History'
+        }
     },
     {
         path: '/production-batches/:id/history',
