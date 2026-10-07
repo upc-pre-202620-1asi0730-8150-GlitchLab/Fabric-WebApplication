@@ -1,5 +1,5 @@
 <script setup>
-import { useProductionStore } from '../stores/production'
+import { useProductionStore } from '../../../stores/production.js'
 
 const productionStore = useProductionStore()
 </script>

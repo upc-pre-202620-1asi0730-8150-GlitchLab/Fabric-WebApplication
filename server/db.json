@@ -81,5 +81,193 @@
       "technician": "swsws",
       "id": 1
     }
+  ],
+  "defects": [
+    {
+      "id": "DEF-031",
+      "batchId": "LOT-024",
+      "garmentModel": "T-Shirt Basic",
+      "defectType": "Open stitches",
+      "quantity": 6,
+      "machineId": "MC-014 ??? Overlock",
+      "origin": "Machine",
+      "status": "Pending Decision",
+      "observation": "Open stitches along sleeve seam",
+      "disposition": null,
+      "correctionType": null,
+      "date": "Sep 16, 2026",
+      "evidences": [
+        {
+          "id": "EVD-001",
+          "fileName": "evidence_01.jpg",
+          "fileSize": "2.4 MB",
+          "date": "Sep 16, 2026",
+          "description": "Open stitches in left sleeve",
+          "type": "Photo",
+          "correctiveAction": "Adjust needle thread tension"
+        },
+        {
+          "id": "EVD-002",
+          "fileName": "evidence_02.jpg",
+          "fileSize": "1.8 MB",
+          "date": "Sep 16, 2026",
+          "description": "Detail of defect",
+          "type": "Photo",
+          "correctiveAction": ""
+        },
+        {
+          "id": "EVD-003",
+          "fileName": "evidence_03.jpg",
+          "fileSize": "3.1 MB",
+          "date": "Sep 16, 2026",
+          "description": "Location of defect",
+          "type": "Photo",
+          "correctiveAction": ""
+        }
+      ]
+    },
+    {
+      "id": "DEF-032",
+      "batchId": "LOT-024",
+      "garmentModel": "T-Shirt Basic",
+      "defectType": "Torn fabric",
+      "quantity": 2,
+      "machineId": "MC-014 ??? Overlock",
+      "origin": "Fabric",
+      "status": "Pending Decision",
+      "observation": "Small cut near collar",
+      "disposition": null,
+      "correctionType": null,
+      "date": "Sep 16, 2026",
+      "evidences": []
+    }
+  ],
+  "dashboard": [
+    {
+      "id": 1,
+      "date": "2026-10-04",
+      "totalProduced": 1450,
+      "averagePerHour": 181,
+      "dailyCompliance": 92
+    },
+    {
+      "id": 2,
+      "date": "2026-10-03",
+      "totalProduced": 1380,
+      "averagePerHour": 172,
+      "dailyCompliance": 88
+    },
+    {
+      "id": 3,
+      "date": "2026-10-02",
+      "totalProduced": 1520,
+      "averagePerHour": 190,
+      "dailyCompliance": 95
+    }
+  ],
+  "alerts": [
+    {
+      "id": 1,
+      "status": "CRITICAL",
+      "type": "Machine Downtime",
+      "reference": "MC-014",
+      "title": "Machine downtime above limit",
+      "description": "Accumulated downtime: 47 min ?? Maximum allowed: 30 min",
+      "action": "View Machine",
+      "accumulated": "47 min",
+      "limit": "30 min",
+      "excess": "17 min",
+      "machine": "MC-014 ??? Overlock",
+      "batch": "All batches"
+    },
+    {
+      "id": 2,
+      "status": "CRITICAL",
+      "type": "Defect Rate",
+      "reference": "LOT-024",
+      "title": "Defect rate above tolerance",
+      "description": "Accumulated defective garments: 5.6% ?? Maximum allowed: 5%",
+      "action": "View Batch",
+      "accumulated": "5.6%",
+      "limit": "5%",
+      "excess": "0.6%",
+      "machine": "LOT-024",
+      "batch": "LOT-024"
+    },
+    {
+      "id": 3,
+      "status": "WARNING",
+      "type": "Rework Rate",
+      "reference": "LOT-021",
+      "title": "Rework rate within target",
+      "description": "Current rework rate: 1.7% ?? Optimal flow threshold: below 2%",
+      "action": "View Batch",
+      "accumulated": "1.7%",
+      "limit": "2%",
+      "excess": "0%",
+      "machine": "LOT-021",
+      "batch": "LOT-021"
+    },
+    {
+      "id": 4,
+      "status": "OPTIMAL",
+      "type": "Machine Downtime",
+      "reference": "MC-008",
+      "title": "Machine downtime normalized",
+      "description": "Accumulated downtime: 12 min ?? Maximum allowed: 30 min",
+      "action": "View Machine",
+      "accumulated": "12 min",
+      "limit": "30 min",
+      "excess": "0 min",
+      "machine": "MC-008 ??? Sewing",
+      "batch": "All batches"
+    }
+  ],
+  "fabricInspections": [
+    {
+      "id": "1",
+      "rollId": "ROLL-001",
+      "supplier": "Textile A",
+      "inspectionDate": "2026-09-16",
+      "initialResult": "Conforming",
+      "shrinkageTest": "Approved",
+      "rollStatus": "Available for Cutting"
+    },
+    {
+      "id": "2",
+      "rollId": "ROLL-002",
+      "supplier": "Supplier B",
+      "inspectionDate": "2026-09-16",
+      "initialResult": "Observed",
+      "shrinkageTest": "Pending",
+      "rollStatus": "Blocked"
+    },
+    {
+      "id": "3",
+      "rollId": "ROLL-003",
+      "supplier": "Textile A",
+      "inspectionDate": "2026-09-15",
+      "initialResult": "Conforming",
+      "shrinkageTest": "Approved",
+      "rollStatus": "Available for Cutting"
+    },
+    {
+      "id": "4",
+      "rollId": "ROLL-004",
+      "supplier": "Supplier C",
+      "inspectionDate": "2026-09-15",
+      "initialResult": "Conforming",
+      "shrinkageTest": "Non-Compliant",
+      "rollStatus": "Not Available"
+    },
+    {
+      "id": "5",
+      "rollId": "ROLL-005",
+      "supplier": "Supplier B",
+      "inspectionDate": "2026-09-14",
+      "initialResult": "Observed",
+      "shrinkageTest": null,
+      "rollStatus": "Blocked"
+    }
   ]
 }

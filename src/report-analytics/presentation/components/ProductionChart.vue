@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { Chart, registerables } from 'chart.js'
-import { useProductionStore } from '../stores/production'
+import { useProductionStore } from '../../../stores/production.js'
 
 Chart.register(...registerables)
 
