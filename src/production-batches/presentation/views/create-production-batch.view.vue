@@ -88,8 +88,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { ProductionBatchesApiService } from '../../infrastructure/services/production-batches-api.service'
 
 const router = useRouter()
+const batchesService = new ProductionBatchesApiService()
 
 const form = ref({
   garmentModel: '',
@@ -126,11 +128,7 @@ const createBatch = async () => {
   }
 
   try {
-    await fetch('http://localhost:3000/batches', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newBatch)
-    })
+    await batchesService.createBatch(newBatch)
     router.push('/production-batches')
   } catch (err) {
     console.error('Error creating batch:', err)
