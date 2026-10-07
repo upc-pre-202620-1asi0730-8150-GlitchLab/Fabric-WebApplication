@@ -154,7 +154,6 @@ const createBatch = async () => {
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
 .form-group label { display: block; font-size: 14px; font-weight: 600; color: #374151; margin-bottom: 6px; }
 
-/* Normalización idéntica de altura, tipografía y tamaño de letra (14px) */
 .custom-input, .custom-select, .custom-textarea {
   width: 100%;
   border: 1px solid #E5E7EB;
@@ -170,13 +169,11 @@ const createBatch = async () => {
   background-color: #ffffff;
 }
 
-/* Opciones del menú desplegable */
 .custom-select option {
   font-size: 14px;
   padding: 8px;
 }
 
-/* Ajustes explícitos para el input de fecha */
 .custom-date-input {
   display: flex;
   align-items: center;

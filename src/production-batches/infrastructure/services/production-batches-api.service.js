@@ -11,7 +11,6 @@ import { BatchObservation } from '../../domain/model/batch-observation.entity.js
 
 
 const http = axios.create({
-    // Ejemplo de baseUrl en production-batches-api.service.js
     baseURL: 'http://localhost:3000',
     headers: {
         'Content-Type': 'application/json'

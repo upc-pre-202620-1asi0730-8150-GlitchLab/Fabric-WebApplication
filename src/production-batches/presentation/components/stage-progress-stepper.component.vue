@@ -60,11 +60,11 @@ export default {
     getStepClass(stage, index) {
       const currentIndex = this.getCurrentIndex();
       if (index < currentIndex) {
-        return 'bg-green-600 text-white'; // Etapa completada
+        return 'bg-green-600 text-white';
       } else if (index === currentIndex) {
-        return 'custom-active-step text-white'; // Etapa actual
+        return 'custom-active-step text-white';
       } else {
-        return 'bg-gray-200 text-600'; // Etapa pendiente
+        return 'bg-gray-200 text-600';
       }
     }
   }

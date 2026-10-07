@@ -232,6 +232,14 @@
       "stage": "Quality Check",
       "assignedAt": "6/10/2026, 19:08:40",
       "id": "TIwgAZlMHPo"
+    },
+    {
+      "batchId": "1",
+      "operatorName": "Maria Lopez",
+      "specialty": "Quality Control",
+      "stage": "Sewing",
+      "assignedAt": "6/10/2026, 23:00:18",
+      "id": "tHW1BFG0cX0"
     }
   ],
   "traceabilityHistory": [

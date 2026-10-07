@@ -60,7 +60,6 @@ body {
   color: var(--text-main);
 }
 
-/* Botón Verde Oliva Principal */
 .btn-olive {
   background-color: var(--olive-primary) !important;
   border-color: var(--olive-primary) !important;
@@ -74,7 +73,6 @@ body {
   border-color: var(--olive-hover) !important;
 }
 
-/* Botón Cancelar / Secundario Outline */
 .btn-outline-cancel {
   background-color: #ffffff !important;
   border: 1px solid #D1D5DB !important;
@@ -83,7 +81,6 @@ body {
   font-weight: 600 !important;
 }
 
-/* Badges de Estado */
 .status-badge-in-production {
   background-color: #EAEFE3 !important;
   color: #4D5628 !important;

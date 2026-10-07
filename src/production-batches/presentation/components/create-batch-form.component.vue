@@ -149,7 +149,6 @@ export default {
 </script>
 
 <style>
-/* Reglas globales no-scoped para garantizar el diseño en las opciones del dropdown desplegado */
 .p-dropdown-panel .p-dropdown-items {
   padding: 0.5rem 0 !important;
 }
