@@ -16,11 +16,116 @@
 
   "dashboard": {
     "title": "Dashboard",
+    "subtitle": "Overview of today's production",
+    "date": "Date",
+    "today": "Today",
+    "october3": "October 3, 2026",
+    "october2": "October 2, 2026",
+    "batch": "Batch",
+    "allBatches": "All batches",
+    "exportReport": "Export Report",
+    "loading": "Loading production analytics...",
+    "loadError": "Failed to load report analytics.",
+    "stats": {
+      "totalProduced": "Total produced today",
+      "garments": "garments",
+      "averagePerHour": "Average per hour",
+      "garmentsPerHour": "garments / hour",
+      "dailyCompliance": "Daily compliance",
+      "dailyTarget": "daily production target"
+    },
+    "chart": {
+      "title": "Production by day",
+      "subtitle": "Garments produced over the last days",
+      "series": "Garments produced",
+      "garments": "garments",
+      "empty": "No production data available"
+    },
+    "stages": {
+      "title": "Batches by stage",
+      "subtitle": "Current operational stage",
+      "empty": "No batches available",
+      "unknown": "Unknown",
+      "cutting": "Cutting",
+      "sewing": "Sewing",
+      "finishing": "Finishing"
+    },
+    "progress": {
+      "title": "Batch progress",
+      "subtitle": "Progress of current production batches",
+      "empty": "No batches available"
+    },
+    "export": {
+      "title": "Export Production & Quality Report",
+      "subtitle": "Select the period, information and format for your report.",
+      "reportType": "Report type",
+      "productionQuality": "Production & Quality",
+      "production": "Production",
+      "quality": "Quality",
+      "period": "Period",
+      "include": "Include in the report",
+      "productionSummary": "Production summary",
+      "qualityIndicators": "Quality indicators",
+      "batchProductivity": "Batch productivity",
+      "defectsRework": "Defects and rework",
+      "machineDowntime": "Machine downtime",
+      "waste": "Waste",
+      "format": "Format",
+      "pdf": "PDF",
+      "excel": "Excel (.xlsx)",
+      "cancel": "Cancel",
+      "submit": "Export Report"
+    },
     "placeholder": "Dashboard view — content coming soon."
   },
 
   "productionBatches": {
     "title": "Production Batches",
+    "subtitle": "Track every batch, its stage and delivery status.",
+    "create": "Create Batch",
+    "loading": "Loading production batches...",
+    "loadError": "Could not load the production batches.",
+    "search": "Search by Batch ID",
+    "searchPlaceholder": "e.g. LOT-024",
+    "status": "Status",
+    "allStatuses": "All statuses",
+    "allDates": "All dates",
+    "date": "Date",
+    "today": "Today",
+    "thisWeek": "This Week",
+    "thisMonth": "This Month",
+    "garmentModel": "Garment Model",
+    "allModels": "All models",
+    "table": {
+      "batchId": "Batch ID",
+      "projectedQuantity": "Projected Quantity",
+      "currentStage": "Current Stage",
+      "progress": "Progress",
+      "deliveryDate": "Delivery Date",
+      "actions": "Actions",
+      "detail": "Batch Detail",
+      "assignOperators": "Assign Operators",
+      "history": "History",
+      "observations": "Observations"
+    },
+    "statuses": {
+      "inProduction": "In Production",
+      "atRisk": "At Risk",
+      "completed": "Completed",
+      "delayed": "Delayed"
+    },
+    "models": {
+      "tshirtBasic": "T-Shirt Basic",
+      "hoodie": "Hoodie",
+      "poloShirt": "Polo Shirt",
+      "joggerPants": "Jogger Pants",
+      "crewneck": "Crewneck"
+    },
+    "stages": {
+      "cutting": "Cutting",
+      "sewing": "Sewing",
+      "finishing": "Finishing"
+    },
     "placeholder": "Production Batches view — content coming soon."
   },
 
@@ -165,6 +270,41 @@
 
   "alerts": {
     "title": "Alerts",
+    "subtitle": "Monitor waste, rework and machine downtime across the production line.",
+    "loading": "Loading alerts...",
+    "loadError": "Failed to load alerts from server.",
+    "status": "Status",
+    "allAlerts": "All alerts",
+    "critical": "Critical",
+    "warning": "Warning",
+    "optimal": "Optimal",
+    "batch": "Batch",
+    "allBatches": "All batches",
+    "type": "Alert Type",
+    "allTypes": "All types",
+    "machineDowntime": "Machine Downtime",
+    "defectRate": "Defect Rate",
+    "reworkRate": "Rework Rate",
+    "criticalAlerts": "Critical Alerts",
+    "requireIntervention": "require intervention",
+    "batchesAtRisk": "Batches at Risk",
+    "aboveTolerance": "above tolerance",
+    "optimalFlow": "Optimal Flow",
+    "batchesWithinTarget": "batches within target",
+    "productionAlerts": "Production Alerts",
+    "generatedAutomatically": "Alerts are generated automatically when operational tolerance thresholds are exceeded.",
+    "empty": "No alerts found.",
+    "detail": "Alert Detail",
+    "detailSubtitle": "Operational indicators for the selected alert.",
+    "accumulatedDowntime": "ACCUMULATED DOWNTIME",
+    "configuredLimit": "CONFIGURED LIMIT",
+    "excessTime": "EXCESS TIME",
+    "machine": "MACHINE",
+    "review": "Review",
+    "selectAlert": "Select an alert to view its details.",
+    "viewMachine": "View Machine",
+    "machineDowntimeTitle": "Machine downtime above limit",
+    "downtimeDescription": "Accumulated downtime: {accumulated} · Maximum allowed: {limit}",
     "placeholder": "Alerts view — content coming soon."
   },
 

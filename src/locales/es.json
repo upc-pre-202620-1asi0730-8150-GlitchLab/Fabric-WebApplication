@@ -16,11 +16,116 @@
 
   "dashboard": {
     "title": "Panel de Control",
+    "subtitle": "Resumen de la producción de hoy",
+    "date": "Fecha",
+    "today": "Hoy",
+    "october3": "3 de octubre de 2026",
+    "october2": "2 de octubre de 2026",
+    "batch": "Lote",
+    "allBatches": "Todos los lotes",
+    "exportReport": "Exportar informe",
+    "loading": "Cargando analíticas de producción...",
+    "loadError": "No se pudieron cargar las analíticas del informe.",
+    "stats": {
+      "totalProduced": "Total producido hoy",
+      "garments": "prendas",
+      "averagePerHour": "Promedio por hora",
+      "garmentsPerHour": "prendas / hora",
+      "dailyCompliance": "Cumplimiento diario",
+      "dailyTarget": "objetivo de producción diario"
+    },
+    "chart": {
+      "title": "Producción por día",
+      "subtitle": "Prendas producidas durante los últimos días",
+      "series": "Prendas producidas",
+      "garments": "prendas",
+      "empty": "No hay datos de producción disponibles"
+    },
+    "stages": {
+      "title": "Lotes por etapa",
+      "subtitle": "Etapa operativa actual",
+      "empty": "No hay lotes disponibles",
+      "unknown": "Desconocida",
+      "cutting": "Corte",
+      "sewing": "Costura",
+      "finishing": "Acabado"
+    },
+    "progress": {
+      "title": "Progreso de lotes",
+      "subtitle": "Progreso de los lotes de producción actuales",
+      "empty": "No hay lotes disponibles"
+    },
+    "export": {
+      "title": "Exportar informe de Producción y Calidad",
+      "subtitle": "Selecciona el período, la información y el formato del informe.",
+      "reportType": "Tipo de informe",
+      "productionQuality": "Producción y Calidad",
+      "production": "Producción",
+      "quality": "Calidad",
+      "period": "Período",
+      "include": "Incluir en el informe",
+      "productionSummary": "Resumen de producción",
+      "qualityIndicators": "Indicadores de calidad",
+      "batchProductivity": "Productividad de lotes",
+      "defectsRework": "Defectos y reprocesos",
+      "machineDowntime": "Tiempo de inactividad de máquinas",
+      "waste": "Merma",
+      "format": "Formato",
+      "pdf": "PDF",
+      "excel": "Excel (.xlsx)",
+      "cancel": "Cancelar",
+      "submit": "Exportar informe"
+    },
     "placeholder": "Vista de Dashboard — contenido próximamente."
   },
 
   "productionBatches": {
     "title": "Lotes de Producción",
+    "subtitle": "Controla cada lote, su etapa y el estado de entrega.",
+    "create": "Crear lote",
+    "loading": "Cargando lotes de producción...",
+    "loadError": "No se pudieron cargar los lotes de producción.",
+    "search": "Buscar por ID de lote",
+    "searchPlaceholder": "p. ej. LOT-024",
+    "status": "Estado",
+    "allStatuses": "Todos los estados",
+    "allDates": "Todas las fechas",
+    "date": "Fecha",
+    "today": "Hoy",
+    "thisWeek": "Esta semana",
+    "thisMonth": "Este mes",
+    "garmentModel": "Modelo de prenda",
+    "allModels": "Todos los modelos",
+    "table": {
+      "batchId": "ID de lote",
+      "projectedQuantity": "Cantidad proyectada",
+      "currentStage": "Etapa actual",
+      "progress": "Progreso",
+      "deliveryDate": "Fecha de entrega",
+      "actions": "Acciones",
+      "detail": "Detalle del lote",
+      "assignOperators": "Asignar operarios",
+      "history": "Historial",
+      "observations": "Observaciones"
+    },
+    "statuses": {
+      "inProduction": "En producción",
+      "atRisk": "En riesgo",
+      "completed": "Completado",
+      "delayed": "Retrasado"
+    },
+    "models": {
+      "tshirtBasic": "Camiseta básica",
+      "hoodie": "Sudadera con capucha",
+      "poloShirt": "Polo",
+      "joggerPants": "Pantalón jogger",
+      "crewneck": "Sudadera cuello redondo"
+    },
+    "stages": {
+      "cutting": "Corte",
+      "sewing": "Costura",
+      "finishing": "Acabado"
+    },
     "placeholder": "Vista de Lotes de Producción — contenido próximamente."
   },
 
@@ -165,6 +270,41 @@
 
   "alerts": {
     "title": "Alertas",
+    "subtitle": "Supervisa mermas, reprocesos e inactividad de máquinas en la línea de producción.",
+    "loading": "Cargando alertas...",
+    "loadError": "No se pudieron cargar las alertas del servidor.",
+    "status": "Estado",
+    "allAlerts": "Todas las alertas",
+    "critical": "Crítica",
+    "warning": "Advertencia",
+    "optimal": "Óptimo",
+    "batch": "Lote",
+    "allBatches": "Todos los lotes",
+    "type": "Tipo de alerta",
+    "allTypes": "Todos los tipos",
+    "machineDowntime": "Inactividad de máquina",
+    "defectRate": "Tasa de defectos",
+    "reworkRate": "Tasa de reprocesos",
+    "criticalAlerts": "Alertas críticas",
+    "requireIntervention": "requieren intervención",
+    "batchesAtRisk": "Lotes en riesgo",
+    "aboveTolerance": "por encima de la tolerancia",
+    "optimalFlow": "Flujo óptimo",
+    "batchesWithinTarget": "lotes dentro del objetivo",
+    "productionAlerts": "Alertas de producción",
+    "generatedAutomatically": "Las alertas se generan automáticamente cuando se superan los límites de tolerancia operativa.",
+    "empty": "No se encontraron alertas.",
+    "detail": "Detalle de alerta",
+    "detailSubtitle": "Indicadores operativos de la alerta seleccionada.",
+    "accumulatedDowntime": "INACTIVIDAD ACUMULADA",
+    "configuredLimit": "LÍMITE CONFIGURADO",
+    "excessTime": "TIEMPO EXCEDIDO",
+    "machine": "MÁQUINA",
+    "review": "Revisar",
+    "selectAlert": "Selecciona una alerta para ver sus detalles.",
+    "viewMachine": "Ver máquina",
+    "machineDowntimeTitle": "Inactividad de máquina por encima del límite",
+    "downtimeDescription": "Inactividad acumulada: {accumulated} · Máximo permitido: {limit}",
     "placeholder": "Vista de Alertas — contenido próximamente."
   },
 
