@@ -7,7 +7,9 @@ import BatchesStage from '../components/BatchesStage.vue'
 import BatchProgress from '../components/BatchProgress.vue'
 import ExportReportModal from '../components/ExportReportModal.vue'
 import { useProductionStore } from '../../../stores/production.js'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const selectedDate = ref('2026-10-04')
 const selectedBatch = ref('All batches')
 
@@ -37,7 +39,7 @@ const loadDashboardData = async () => {
     productionHistory.value = history
   } catch (err) {
     console.error('Error loading dashboard:', err)
-    error.value = 'Failed to load report analytics.'
+    error.value = 'dashboard.loadError'
   } finally {
     loading.value = false
   }
@@ -62,7 +64,7 @@ const downloadCsv = (rows, filename) => {
 
 const onExport = (options) => {
   if (options.format === 'excel') {
-    const rows = [['Date', 'Total produced', 'Average per hour', 'Daily compliance (%)']]
+    const rows = [[t('dashboard.date'), t('dashboard.stats.totalProduced'), t('dashboard.stats.averagePerHour'), `${t('dashboard.stats.dailyCompliance')} (%)`]]
     productionHistory.value
         .filter(r => r.date >= options.startDate && r.date <= options.endDate)
         .forEach(r => rows.push([r.date, r.totalProduced, r.averagePerHour, r.dailyCompliance]))
@@ -78,57 +80,57 @@ const onExport = (options) => {
   <div class="dashboard-container">
     <header class="dashboard-header">
       <div class="dashboard-title">
-        <h1>Dashboard</h1>
-        <p>Overview of today's production</p>
+        <h1>{{ t('dashboard.title') }}</h1>
+        <p>{{ t('dashboard.subtitle') }}</p>
 
         <div class="filters">
           <div class="filter-group">
-            <label>Date</label>
+            <label>{{ t('dashboard.date') }}</label>
             <select v-model="selectedDate" @change="loadDashboardData">
-              <option value="2026-10-04">Today</option>
-              <option value="2026-10-03">October 3, 2026</option>
-              <option value="2026-10-02">October 2, 2026</option>
+              <option value="2026-10-04">{{ t('dashboard.today') }}</option>
+              <option value="2026-10-03">{{ t('dashboard.october3') }}</option>
+              <option value="2026-10-02">{{ t('dashboard.october2') }}</option>
             </select>
           </div>
 
           <div class="filter-group">
-            <label>Batch</label>
+            <label>{{ t('dashboard.batch') }}</label>
             <select v-model="selectedBatch">
-              <option>All batches</option>
+              <option>{{ t('dashboard.allBatches') }}</option>
             </select>
           </div>
         </div>
       </div>
 
       <button class="export-report-button" @click="showExport = true">
-        ↓ Export Report
+        ↓ {{ t('dashboard.exportReport') }}
       </button>
     </header>
 
     <div v-if="loading" class="state-message">
-      Loading production analytics...
+      {{ t('dashboard.loading') }}
     </div>
 
     <div v-else-if="error" class="state-message error">
-      {{ error }}
+      {{ t(error) }}
     </div>
 
     <template v-else>
       <section class="stats-grid">
         <StatCard
-            title="Total produced today"
+            :title="t('dashboard.stats.totalProduced')"
             :value="metrics.totalProduced"
-            description="garments"
+            :description="t('dashboard.stats.garments')"
         />
         <StatCard
-            title="Average per hour"
+            :title="t('dashboard.stats.averagePerHour')"
             :value="metrics.averagePerHour"
-            description="garments / hour"
+            :description="t('dashboard.stats.garmentsPerHour')"
         />
         <StatCard
-            title="Daily compliance"
+            :title="t('dashboard.stats.dailyCompliance')"
             :value="`${metrics.dailyCompliance}%`"
-            description="daily production target"
+            :description="t('dashboard.stats.dailyTarget')"
         />
       </section>
 
