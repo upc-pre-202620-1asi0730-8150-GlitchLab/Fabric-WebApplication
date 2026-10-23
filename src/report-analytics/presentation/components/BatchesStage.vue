@@ -1,7 +1,19 @@
 <script setup>
 import { useProductionStore } from '../../../stores/production.js'
+import { useI18n } from 'vue-i18n'
 
 const productionStore = useProductionStore()
+const { t } = useI18n()
+
+const translateStage = (stage) => {
+  const stageKeys = {
+    Cutting: 'dashboard.stages.cutting',
+    Sewing: 'dashboard.stages.sewing',
+    Finishing: 'dashboard.stages.finishing',
+    Unknown: 'dashboard.stages.unknown'
+  }
+  return stageKeys[stage] ? t(stageKeys[stage]) : stage
+}
 </script>
 
 <template>
@@ -9,13 +21,9 @@ const productionStore = useProductionStore()
 
     <div class="card-header">
 
-      <h2>
-        Batches by stage
-      </h2>
+      <h2>{{ t('dashboard.stages.title') }}</h2>
 
-      <p>
-        Current operational stage
-      </p>
+      <p>{{ t('dashboard.stages.subtitle') }}</p>
 
     </div>
 
@@ -23,7 +31,7 @@ const productionStore = useProductionStore()
         v-if="!Object.keys(productionStore.batchesByStage).length"
         class="stage-empty"
     >
-      No batches available
+      {{ t('dashboard.stages.empty') }}
     </div>
 
     <div
@@ -38,7 +46,7 @@ const productionStore = useProductionStore()
       >
 
         <span>
-          {{ stage }}
+          {{ translateStage(stage) }}
         </span>
 
         <strong>
