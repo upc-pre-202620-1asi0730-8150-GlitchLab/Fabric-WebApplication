@@ -7,11 +7,11 @@
     <div class="grid p-fluid">
       <!-- Search by Batch ID -->
       <div class="col-12 md:col-3">
-        <label for="search-id" class="font-semibold block mb-2 text-700">Search by Batch ID</label>
+        <label for="search-id" class="font-semibold block mb-2 text-700">{{ $t('productionBatches.search') }}</label>
         <pv-input-text
             id="search-id"
             v-model="filters.batchId"
-            placeholder="e.g. LOT-024"
+            :placeholder="$t('productionBatches.searchPlaceholder')"
             class="w-full"
             @input="emitFilterChange"
         />
@@ -19,14 +19,14 @@
 
       <!-- Filter by Status -->
       <div class="col-12 md:col-3">
-        <label for="filter-status" class="font-semibold block mb-2 text-700">Status</label>
+        <label for="filter-status" class="font-semibold block mb-2 text-700">{{ $t('productionBatches.status') }}</label>
         <pv-dropdown
             id="filter-status"
             v-model="filters.status"
             :options="statusOptions"
             optionLabel="label"
             optionValue="value"
-            placeholder="All statuses"
+            :placeholder="$t('productionBatches.allStatuses')"
             class="w-full"
             @change="emitFilterChange"
         />
@@ -34,14 +34,14 @@
 
       <!-- Filter by Date -->
       <div class="col-12 md:col-3">
-        <label for="filter-date" class="font-semibold block mb-2 text-700">Date</label>
+        <label for="filter-date" class="font-semibold block mb-2 text-700">{{ $t('productionBatches.date') }}</label>
         <pv-dropdown
             id="filter-date"
             v-model="filters.date"
             :options="dateOptions"
             optionLabel="label"
             optionValue="value"
-            placeholder="All dates"
+            :placeholder="$t('productionBatches.allDates')"
             class="w-full"
             @change="emitFilterChange"
         />
@@ -49,14 +49,14 @@
 
       <!-- Filter by Garment Model -->
       <div class="col-12 md:col-3">
-        <label for="filter-model" class="font-semibold block mb-2 text-700">Garment Model</label>
+        <label for="filter-model" class="font-semibold block mb-2 text-700">{{ $t('productionBatches.garmentModel') }}</label>
         <pv-dropdown
             id="filter-model"
             v-model="filters.garmentModel"
             :options="modelOptions"
             optionLabel="label"
             optionValue="value"
-            placeholder="All models"
+            :placeholder="$t('productionBatches.allModels')"
             class="w-full"
             @change="emitFilterChange"
         />
@@ -77,28 +77,36 @@ export default {
         date: null,
         garmentModel: null
       },
-      statusOptions: [
-        { label: 'All statuses', value: null },
-        { label: 'In Production', value: 'In Production' },
-        { label: 'At Risk', value: 'At Risk' },
-        { label: 'Completed', value: 'Completed' },
-        { label: 'Delayed', value: 'Delayed' }
-      ],
-      dateOptions: [
-        { label: 'All dates', value: null },
-        { label: 'Today', value: 'today' },
-        { label: 'This Week', value: 'week' },
-        { label: 'This Month', value: 'month' }
-      ],
-      modelOptions: [
-        { label: 'All models', value: null },
-        { label: 'T-Shirt Basic', value: 'T-Shirt Basic' },
-        { label: 'Hoodie', value: 'Hoodie' },
-        { label: 'Polo Shirt', value: 'Polo Shirt' },
-        { label: 'Jogger Pants', value: 'Jogger Pants' },
-        { label: 'Crewneck', value: 'Crewneck' }
-      ]
     };
+  },
+  computed: {
+    statusOptions() {
+      return [
+        { label: this.$t('productionBatches.allStatuses'), value: null },
+        { label: this.$t('productionBatches.statuses.inProduction'), value: 'In Production' },
+        { label: this.$t('productionBatches.statuses.atRisk'), value: 'At Risk' },
+        { label: this.$t('productionBatches.statuses.completed'), value: 'Completed' },
+        { label: this.$t('productionBatches.statuses.delayed'), value: 'Delayed' }
+      ];
+    },
+    dateOptions() {
+      return [
+        { label: this.$t('productionBatches.allDates'), value: null },
+        { label: this.$t('productionBatches.today'), value: 'today' },
+        { label: this.$t('productionBatches.thisWeek'), value: 'week' },
+        { label: this.$t('productionBatches.thisMonth'), value: 'month' }
+      ];
+    },
+    modelOptions() {
+      return [
+        { label: this.$t('productionBatches.allModels'), value: null },
+        { label: this.$t('productionBatches.models.tshirtBasic'), value: 'T-Shirt Basic' },
+        { label: this.$t('productionBatches.models.hoodie'), value: 'Hoodie' },
+        { label: this.$t('productionBatches.models.poloShirt'), value: 'Polo Shirt' },
+        { label: this.$t('productionBatches.models.joggerPants'), value: 'Jogger Pants' },
+        { label: this.$t('productionBatches.models.crewneck'), value: 'Crewneck' }
+      ];
+    }
   },
   methods: {
     emitFilterChange() {
