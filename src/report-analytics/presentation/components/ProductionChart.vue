@@ -1,8 +1,10 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { Chart, registerables } from 'chart.js'
+import { useI18n } from 'vue-i18n'
 
 Chart.register(...registerables)
+const { t, locale } = useI18n()
 
 const props = defineProps({
   data: {
@@ -27,7 +29,7 @@ const createChart = () => {
       labels: props.data.map(item => item.date),
       datasets: [
         {
-          label: 'Garments produced',
+          label: t('dashboard.chart.series'),
           data: props.data.map(item => Number(item.totalProduced)),
           borderWidth: 2,
           tension: 0.35,
@@ -44,7 +46,7 @@ const createChart = () => {
         legend: { display: false },
         tooltip: {
           callbacks: {
-            label: (context) => `${context.parsed.y} garments`
+            label: (context) => `${context.parsed.y} ${t('dashboard.chart.garments')}`
           }
         }
       },
@@ -56,7 +58,7 @@ const createChart = () => {
   })
 }
 
-watch(() => props.data, () => {
+watch([() => props.data, locale], () => {
   if (props.data.length > 0) createChart()
 }, { deep: true, flush: 'post' })
 
@@ -72,12 +74,12 @@ onBeforeUnmount(() => {
 <template>
   <div class="card production-card">
     <div class="card-header">
-      <h2>Production by day</h2>
-      <p>Garments produced over the last days</p>
+      <h2>{{ t('dashboard.chart.title') }}</h2>
+      <p>{{ t('dashboard.chart.subtitle') }}</p>
     </div>
 
     <div v-if="!data.length" class="chart-message">
-      No production data available
+      {{ t('dashboard.chart.empty') }}
     </div>
 
     <div v-else class="chart-container">

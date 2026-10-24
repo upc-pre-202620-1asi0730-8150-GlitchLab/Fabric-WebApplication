@@ -1,16 +1,24 @@
 ﻿<template>
   <div class="surface-card border-round-xl p-0 shadow-1 overflow-hidden">
     <pv-data-table :value="batches" responsiveLayout="scroll" class="p-datatable-sm" paginator :rows="8">
-      <pv-column field="batchNumber" header="Batch ID" sortable class="font-bold text-900"></pv-column>
-      <pv-column field="garmentModel" header="Garment Model" sortable class="text-700"></pv-column>
-      <pv-column field="projectedQuantity" header="Projected Quantity" sortable class="text-700">
+      <pv-column field="batchNumber" :header="$t('productionBatches.table.batchId')" sortable class="font-bold text-900"></pv-column>
+      <pv-column field="garmentModel" :header="$t('productionBatches.garmentModel')" sortable class="text-700">
+        <template #body="slotProps">
+          {{ translateValue(slotProps.data.garmentModel, 'models') }}
+        </template>
+      </pv-column>
+      <pv-column field="projectedQuantity" :header="$t('productionBatches.table.projectedQuantity')" sortable class="text-700">
         <template #body="slotProps">
           {{ slotProps.data.projectedQuantity ? slotProps.data.projectedQuantity.toLocaleString() : 0 }}
         </template>
       </pv-column>
-      <pv-column field="currentStage" header="Current Stage" class="text-700"></pv-column>
+      <pv-column field="currentStage" :header="$t('productionBatches.table.currentStage')" class="text-700">
+        <template #body="slotProps">
+          {{ translateValue(slotProps.data.currentStage, 'stages') }}
+        </template>
+      </pv-column>
 
-      <pv-column header="Progress" style="min-width: 180px;">
+      <pv-column :header="$t('productionBatches.table.progress')" style="min-width: 180px;">
         <template #body="slotProps">
           <div class="flex align-items-center gap-2">
             <pv-progress-bar :value="slotProps.data.progressPercentage || 0" :showValue="false" style="height: 8px; flex: 1;" />
@@ -19,17 +27,17 @@
         </template>
       </pv-column>
 
-      <pv-column field="deliveryDate" header="Delivery Date" class="text-700"></pv-column>
+      <pv-column field="deliveryDate" :header="$t('productionBatches.table.deliveryDate')" class="text-700"></pv-column>
 
-      <pv-column header="Status">
+      <pv-column :header="$t('productionBatches.status')">
         <template #body="slotProps">
           <span :class="['px-3 py-1 border-round-pill text-xs font-semibold', getBadgeClass(slotProps.data.status)]">
-            {{ slotProps.data.status }}
+            {{ translateValue(slotProps.data.status, 'statuses') }}
           </span>
         </template>
       </pv-column>
 
-      <pv-column header="Actions" style="width: 50px; text-align: center;">
+      <pv-column :header="$t('productionBatches.table.actions')" style="width: 50px; text-align: center;">
         <template #body="slotProps">
           <pv-button
               icon="pi pi-ellipsis-v"
@@ -55,9 +63,13 @@ export default {
   data() {
     return {
       selectedBatch: null,
-      menuItems: [
+    };
+  },
+  computed: {
+    menuItems() {
+      return [
         {
-          label: 'Batch Detail',
+          label: this.$t('productionBatches.table.detail'),
           icon: 'pi pi-eye',
           command: () => {
             if (this.selectedBatch) {
@@ -66,7 +78,7 @@ export default {
           }
         },
         {
-          label: 'Assign Operators',
+          label: this.$t('productionBatches.table.assignOperators'),
           icon: 'pi pi-users',
           command: () => {
             if (this.selectedBatch) {
@@ -75,7 +87,7 @@ export default {
           }
         },
         {
-          label: 'History',
+          label: this.$t('productionBatches.table.history'),
           icon: 'pi pi-history',
           command: () => {
             if (this.selectedBatch) {
@@ -84,7 +96,7 @@ export default {
           }
         },
         {
-          label: 'Observations',
+          label: this.$t('productionBatches.table.observations'),
           icon: 'pi pi-comment',
           command: () => {
             if (this.selectedBatch) {
@@ -92,8 +104,8 @@ export default {
             }
           }
         }
-      ]
-    };
+      ];
+    }
   },
   methods: {
     toggleMenu(event, batch) {
@@ -109,6 +121,30 @@ export default {
         case 'Delayed': return 'status-badge-delayed';
         default: return 'bg-gray-100 text-gray-700';
       }
+    },
+    translateValue(value, category) {
+      const keys = {
+        models: {
+          'T-Shirt Basic': 'tshirtBasic',
+          Hoodie: 'hoodie',
+          'Polo Shirt': 'poloShirt',
+          'Jogger Pants': 'joggerPants',
+          Crewneck: 'crewneck'
+        },
+        stages: {
+          Cutting: 'cutting',
+          Sewing: 'sewing',
+          Finishing: 'finishing'
+        },
+        statuses: {
+          'In Production': 'inProduction',
+          'At Risk': 'atRisk',
+          Completed: 'completed',
+          Delayed: 'delayed'
+        }
+      };
+      const key = keys[category]?.[value];
+      return key ? this.$t(`productionBatches.${category}.${key}`) : value;
     }
   }
 }

@@ -3,8 +3,10 @@ import { computed, onMounted, ref } from 'vue'
 import { useProductionStore } from '../../../stores/production.js'
 import BatchFilters from '../components/batch-filters.component.vue'
 import BatchListTable from '../components/batch-list-table.component.vue'
+import { useI18n } from 'vue-i18n'
 
 const productionStore = useProductionStore()
+const { t } = useI18n()
 const filters = ref({ batchId: '', status: null, date: null, garmentModel: null })
 
 onMounted(() => {
@@ -49,16 +51,16 @@ const filteredBatches = computed(() => {
   <div class="page-container">
     <div class="page-header">
       <div>
-        <h1 class="page-title">Production Batches</h1>
-        <p class="page-subtitle">Track every batch, its stage and delivery status.</p>
+        <h1 class="page-title">{{ t('productionBatches.title') }}</h1>
+        <p class="page-subtitle">{{ t('productionBatches.subtitle') }}</p>
       </div>
-      <router-link to="/production-batches/create" class="create-link">+ Create Batch</router-link>
+      <router-link to="/production-batches/create" class="create-link">+ {{ t('productionBatches.create') }}</router-link>
     </div>
 
     <BatchFilters @filter-change="onFilterChange" />
 
-    <div v-if="productionStore.loading" class="state-text">Loading production batches...</div>
-    <div v-else-if="productionStore.error" class="state-text state-error">{{ productionStore.error }}</div>
+    <div v-if="productionStore.loading" class="state-text">{{ t('productionBatches.loading') }}</div>
+    <div v-else-if="productionStore.error" class="state-text state-error">{{ t('productionBatches.loadError') }}</div>
     <BatchListTable v-else :batches="filteredBatches" :total-batches="filteredBatches.length" />
   </div>
 </template>
