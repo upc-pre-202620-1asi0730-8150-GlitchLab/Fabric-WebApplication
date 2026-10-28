@@ -142,6 +142,10 @@
       "create": "Could not register the defect.",
       "disposition": "Could not apply the disposition."
     },
+    "inspection": {
+      "title": "Fabric Inspections",
+      "rolls": "Fabric Rolls"
+    },
     "form": {
       "title": "Register Garment Defect",
       "subtitle": "Record a defect detected on the production line.",

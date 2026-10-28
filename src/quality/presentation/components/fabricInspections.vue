@@ -1,12 +1,11 @@
 <template>
   <div class="fabric-inspections">
 
-    <h2>Fabric Inspections</h2>
+    <h2>{{ $t('quality.inspection.title') }}</h2>
 
-    <!-- KPI CARDS -->
     <div class="stats-grid">
       <div class="stat-card">
-        <p class="stat-title">Fabric Rolls</p>
+        <p class="stat-title">{{ $t('quality.inspection.rolls')}}</p>
         <h3>{{ totalRolls }}</h3>
         <span>registered</span>
       </div>
@@ -30,7 +29,6 @@
       </div>
     </div>
 
-    <!-- FILTERS -->
     <div class="filters-row">
       <div class="filter-field">
         <label>Search Roll ID</label>
@@ -78,7 +76,6 @@
       </button>
     </div>
 
-    <!-- TABLE -->
     <div class="table-container">
       <table class="inspections-table">
 
@@ -199,8 +196,6 @@ const supplierFilter = ref('')
 const resultFilter = ref('')
 const dateFilter = ref('')
 
-
-// GET FABRIC INSPECTIONS
 const loadFabricInspections = async () => {
   const data = await FabricInspectionService.getAll()
 
@@ -209,8 +204,6 @@ const loadFabricInspections = async () => {
   console.log('FABRIC INSPECTIONS:', data)
 }
 
-
-// SUPPLIERS
 const suppliers = computed(() => {
   return [
     ...new Set(
@@ -221,8 +214,6 @@ const suppliers = computed(() => {
   ]
 })
 
-
-// KPI
 const totalRolls = computed(() => {
   return fabricInspections.value.length
 })
@@ -248,8 +239,6 @@ const pendingTests = computed(() => {
   ).length
 })
 
-
-// FILTERS
 const filteredInspections = computed(() => {
 
   return fabricInspections.value.filter(inspection => {
@@ -300,9 +289,6 @@ onMounted(() => {
   color: #171717;
 }
 
-
-/* KPI */
-
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -335,9 +321,6 @@ onMounted(() => {
   font-size: 14px;
   color: #73808c;
 }
-
-
-/* FILTERS */
 
 .filters-row {
   display: flex;
@@ -396,9 +379,6 @@ onMounted(() => {
   opacity: 0.9;
 }
 
-
-/* TABLE */
-
 .table-container {
   width: 100%;
   margin-top: 22px;
@@ -434,9 +414,6 @@ onMounted(() => {
   font-weight: 600;
 }
 
-
-/* STATUS */
-
 .badge {
   display: inline-block;
   padding: 5px 9px;
@@ -461,9 +438,6 @@ onMounted(() => {
   color: #a33a3a;
 }
 
-
-/* ACTIONS */
-
 .action-btn {
   border: none;
   background: transparent;
@@ -481,9 +455,6 @@ onMounted(() => {
   color: #73808c !important;
   padding: 30px !important;
 }
-
-
-/* RESPONSIVE */
 
 @media (max-width: 900px) {
 

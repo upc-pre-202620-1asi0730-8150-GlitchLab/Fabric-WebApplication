@@ -2,22 +2,10 @@
   "machines": [
     {
       "id": "1",
-      "code": "MC-014",
-      "type": "overlock",
-      "batchId": "1",
-      "status": "machine-stopped",
-      "currentDowntime": 47,
-      "lastFailure": "Open stitches",
-      "failureDescription": "Falla en tensión de hilo en costura lateral",
-      "downtimeStartedAt": "2026-10-07T10:00:00Z"
-    },
-    {
-      "id": "2",
-      "code": "MC-008",
       "type": "straight-stitch",
-      "batchId": "2",
+      "batchId": "LOT-025",
       "status": "operational",
-      "currentDowntime": 12,
+      "currentDowntime": null,
       "lastFailure": null,
       "failureDescription": null,
       "downtimeStartedAt": null
@@ -25,25 +13,33 @@
   ],
   "stopEvents": [
     {
-      "id": "1",
       "machineId": "1",
-      "batchId": "1",
-      "cause": "Mechanical failure",
-      "stoppedAt": "10:00 AM",
-      "durationMinutes": 47,
-      "failureDescription": "Overlock needle breakage and thread tension error."
+      "cause": "mechanical-jam",
+      "stoppedAt": "2026-10-28T13:30:00.000Z",
+      "resumedAt": "2026-10-28T14:27:00.000Z",
+      "durationMinutes": 57,
+      "failureDescription": "aguja fallida",
+      "id": 1
     }
   ],
   "maintenanceRecords": [
     {
-      "id": "1",
       "machineId": "1",
-      "date": "2026-10-06",
+      "date": "2026-10-27",
+      "maintenanceType": "preventive",
+      "interventionPerformed": "npmrundev",
+      "partsReplaced": "Aguja",
+      "technician": "Alan",
+      "id": 1
+    },
+    {
+      "machineId": "1",
+      "date": "2026-10-28",
       "maintenanceType": "corrective",
-      "interventionPerformed": "Cambio de aguja y calibración de garfio.",
-      "partsReplaced": "Aguja industrial DBx1",
-      "technician": "Carlos Mendoza",
-      "observations": "Operativa tras pruebas de planta."
+      "interventionPerformed": "correa",
+      "partsReplaced": "Correa",
+      "technician": "Diego",
+      "id": 2
     }
   ],
   "batches": [
@@ -68,37 +64,53 @@
       "deliveryDate": "2026-04-28",
       "status": "In Production",
       "notes": "Lote secundario en proceso de corte."
-    }
-  ],
-  "defects": [
-    {
-      "id": "DEF-031",
-      "batchId": "1",
-      "machineId": "1",
-      "defectType": "Open stitches",
-      "quantity": 6,
-      "origin": "Machine",
-      "status": "Send to Rework",
-      "observation": "Detectado en control de calidad intermedio.",
-      "garmentModel": "T-Shirt Basic",
-      "date": "2026-10-07",
-      "disposition": "Send to Rework",
-      "correctionType": "ST-04 — Ironing / Pressing"
     },
     {
-      "id": "DEF-032",
-      "batchId": "LOT-024",
-      "defectType": "Open stitches",
-      "quantity": 6,
-      "machineId": "MC-014 — Overlock",
-      "origin": "Machine",
-      "status": "Pending Decision",
-      "observation": "",
-      "garmentModel": "T-Shirt Basic",
-      "date": "Oct 22, 2026",
-      "evidences": []
+      "batchNumber": "LOT-025",
+      "garmentModel": "Hoodie",
+      "projectedQuantity": 500,
+      "currentStage": "Quality Check",
+      "progressPercentage": 80,
+      "deliveryDate": "2026-11-20",
+      "status": "In Production",
+      "notes": "detalle",
+      "id": "SJHPVWI"
+    },
+    {
+      "batchNumber": "LOT-026",
+      "garmentModel": "Crewneck",
+      "projectedQuantity": 100,
+      "currentStage": "Sewing",
+      "progressPercentage": 40,
+      "deliveryDate": "2017-03-05",
+      "status": "In Production",
+      "notes": "detalle",
+      "id": "3H-ugH1"
+    },
+    {
+      "batchNumber": "LOT-027",
+      "garmentModel": "Leggings",
+      "projectedQuantity": 1000,
+      "currentStage": "Cutting",
+      "progressPercentage": 10,
+      "deliveryDate": "2028-05-05",
+      "status": "In Production",
+      "notes": "",
+      "id": "TvKdnJU"
+    },
+    {
+      "batchNumber": "LOT-028",
+      "garmentModel": "Jogger Pants",
+      "projectedQuantity": 200,
+      "currentStage": "Cutting",
+      "progressPercentage": 10,
+      "deliveryDate": "2028-06-06",
+      "status": "In Production",
+      "notes": "",
+      "id": "16EkTzp"
     }
   ],
+  "defects": [],
   "operators": [
     {
       "id": "1",
@@ -142,6 +154,50 @@
       "difference": -8,
       "responsiblePerson": "Ana Torres",
       "timestamp": "2026-09-15 14:20"
+    },
+    {
+      "batchId": "SJHPVWI",
+      "stage": "Cutting",
+      "dateTime": "Oct 28, 2026, 10:19",
+      "qtyIn": 500,
+      "qtyOut": 50,
+      "difference": -450,
+      "responsible": "Supervisor",
+      "status": "Completed",
+      "id": "ZOXJb31"
+    },
+    {
+      "batchId": "3H-ugH1",
+      "stage": "Cutting",
+      "dateTime": "Oct 28, 2026, 10:19",
+      "qtyIn": 100,
+      "qtyOut": 70,
+      "difference": -30,
+      "responsible": "Supervisor",
+      "status": "Current",
+      "id": "tlKjEzK"
+    },
+    {
+      "batchId": "SJHPVWI",
+      "stage": "Sewing",
+      "dateTime": "Oct 28, 2026, 10:19",
+      "qtyIn": 50,
+      "qtyOut": 2,
+      "difference": -48,
+      "responsible": "Supervisor",
+      "status": "Completed",
+      "id": "L3kkYgn"
+    },
+    {
+      "batchId": "SJHPVWI",
+      "stage": "Cutting",
+      "dateTime": "Oct 28, 2026, 10:20",
+      "qtyIn": 2,
+      "qtyOut": 500,
+      "difference": 498,
+      "responsible": "Supervisor",
+      "status": "Current",
+      "id": "4HXRnRX"
     }
   ],
   "observations": [
@@ -152,6 +208,13 @@
       "category": "Delay",
       "content": "Production paused for 15 minutes while material availability was confirmed.",
       "createdAt": "16/09/2026 · 11:42"
+    },
+    {
+      "batchId": "1",
+      "timestamp": "28/10/2026 · 10:21",
+      "text": "hola",
+      "author": "Registered by Supervisor",
+      "id": "Wxih9Go"
     }
   ],
   "dashboard": [
