@@ -126,6 +126,10 @@
       "sewing": "Costura",
       "finishing": "Acabado"
     },
+    "createBatch": {
+      "title": "Crear Lote de Producción",
+      "subtitle": "Añade la Informacion del lote para iniciar su trazabilidad."
+    },
     "placeholder": "Vista de Lotes de Producción — contenido próximamente."
   },
 

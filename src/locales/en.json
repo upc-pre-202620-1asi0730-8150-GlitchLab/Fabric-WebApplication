@@ -126,6 +126,10 @@
       "sewing": "Sewing",
       "finishing": "Finishing"
     },
+    "createBatch": {
+      "title": "Create Production Batch",
+      "subtitle": "Add the batch information to start its traceability."
+    },
     "placeholder": "Production Batches view — content coming soon."
   },
 
