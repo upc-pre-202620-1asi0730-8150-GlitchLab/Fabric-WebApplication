@@ -243,14 +243,5 @@
     }
   ],
   "fabricInspections": [
-    {
-      "id": "1",
-      "rollId": "ROLL-001",
-      "supplier": "Textile A",
-      "inspectionDate": "2026-09-16",
-      "initialResult": "Conforming",
-      "shrinkageTest": "Approved",
-      "rollStatus": "Available for Cutting"
-    }
   ]
 }

@@ -3,8 +3,13 @@ import machineRegistrationRoutes from "./machine-registration/presentation/machi
 
 const pageNotFound = () => import('./shared/presentation/views/page-not-found.vue');
 const dashboard = () => import('./report-analytics/presentation/views/report-analytics.vue');
-const qualityView = () => import('./quality/presentation/views/quality.vue');
 const alerts = () => import('./alerts/presentation/views/alerts.vue');
+
+// Quality
+const qualityView = () => import('./quality/presentation/views/quality.vue');
+const newFabricInspectionView = () => import('./quality/presentation/views/NewFabricInspectionView.vue');
+const shrinkageTestView = () => import('./quality/presentation/views/ShrinkageTestView.vue');
+const inspectionParametersView = () => import('./quality/presentation/views/InspectionParametersView.vue');
 
 // Production Batches
 const productionBatchesList = () => import('./production-batches/presentation/views/production-batches-list.view.vue');
@@ -42,14 +47,12 @@ const routes = [
         component: batchDetail,
         meta: { title: 'Batch Detail' }
     },
-
     {
         path: '/production-batches/:id/operators',
         name: 'batch-operator-assignment',
         component: batchOperatorAssignment,
         meta: { title: 'Assign Operators' }
     },
-
     {
         path: '/production-batches/:id/traceability',
         alias: ['/production-batches/:id/history'],
@@ -77,6 +80,24 @@ const routes = [
         name: 'quality',
         component: qualityView,
         meta: { title: 'Quality Control' }
+    },
+    {
+        path: '/quality/inspections/new',
+        name: 'new-fabric-inspection',
+        component: newFabricInspectionView,
+        meta: { title: 'New Fabric Inspection' }
+    },
+    {
+        path: '/quality/inspections/:id/shrinkage-test',
+        name: 'shrinkage-test',
+        component: shrinkageTestView,
+        meta: { title: 'Shrinkage Test' }
+    },
+    {
+        path: '/quality/inspections/:id/parameters',
+        name: 'inspection-parameters',
+        component: inspectionParametersView,
+        meta: { title: 'Inspection Parameters' }
     },
 
     // Machine Registration
