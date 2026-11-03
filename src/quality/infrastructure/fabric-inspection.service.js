@@ -8,6 +8,11 @@ export class FabricInspectionService {
         return data
     }
 
+    static async getById(inspectionId) {
+        const { data } = await http.get(`${PATH}/${encodeURIComponent(inspectionId)}`)
+        return data
+    }
+
     static async create(inspection) {
         const { data } = await http.post(PATH, inspection)
         return data

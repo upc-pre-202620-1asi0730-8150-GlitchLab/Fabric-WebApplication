@@ -142,6 +142,10 @@
       "create": "No se pudo registrar el defecto.",
       "disposition": "No se pudo aplicar la disposición."
     },
+    "inspection": {
+      "title": "Inspección de Tela",
+      "rolls": "Rollo de Tela"
+    },
     "form": {
       "title": "Registrar Defecto de Prenda",
       "subtitle": "Registre un defecto detectado en la línea de producción.",
