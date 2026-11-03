@@ -13,7 +13,7 @@
       </div>
 
       <router-link to="/production-batches" class="back-link">
-        &larr; Back to Production Batches
+        &larr; {{ $t('productionBatches.createBatch.back') }}
       </router-link>
     </div>
 

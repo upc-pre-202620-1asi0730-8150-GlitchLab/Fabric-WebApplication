@@ -128,7 +128,27 @@
     },
     "createBatch": {
       "title": "Crear Lote de Producción",
-      "subtitle": "Añade la Informacion del lote para iniciar su trazabilidad."
+      "subtitle": "Añade la Informacion del lote para iniciar su trazabilidad.",
+      "back": "Volver a Lotes de Producción",
+      "createBatchTable": {
+        "basicInfo": "Información Básica",
+        "basicInfoDesc": "Ingresa los detalles principales del lote de producción.",
+        "garmentModel": "Modelo de Prenda *",
+        "garmentModelPlaceholder": "Selecciona el modelo de prenda",
+        "projectedQuantity": "Cantidad Proyectada *",
+        "projectedQuantityPlaceholder": "ej. 500",
+        "projectedQuantityUnits": "unidades",
+        "deliveryDate": "Fecha de Entrega *",
+        "technicalSheet": "Hoja Técnica *",
+        "technicalSheetPlaceholder": "Sube la hoja técnica (PDF, JPG, PNG)",
+        "additionalInfo": "Información Adicional",
+        "additionalInfoDesc": "Agrega cualquier nota relevante sobre el lote de producción. (opcional)",
+        "notes": "Notas",
+        "notesPlaceholder": "Ej. Instrucciones especiales para el lote, detalles de calidad, clientes, etc.",
+        "submit": "Crear Lote",
+        "creating": "Subiendo...",
+        "cancel": "Cancelar"
+      }
     },
     "placeholder": "Vista de Lotes de Producción — contenido próximamente."
   },

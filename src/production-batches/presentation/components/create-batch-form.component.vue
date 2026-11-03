@@ -7,9 +7,9 @@
       <div class="step-number">1</div>
 
       <div>
-        <h2 class="section-title">Basic Information</h2>
+        <h2 class="section-title">{{ $t('productionBatches.createBatch.createBatchTable.basicInfo') }}</h2>
         <p class="section-subtitle">
-          Enter the main details of the production batch.
+          {{ $t('productionBatches.createBatch.createBatchTable.basicInfoDesc') }}
         </p>
       </div>
     </div>
@@ -18,7 +18,7 @@
 
       <!-- Garment Model -->
       <div class="form-group">
-        <label for="garmentModel">Garment Model *</label>
+        <label for="garmentModel">{{ $t('productionBatches.createBatch.createBatchTable.garmentModel') }}</label>
 
         <select
             id="garmentModel"
@@ -27,7 +27,7 @@
             class="custom-select"
         >
           <option value="" disabled>
-            Select a garment model
+            {{ $t('productionBatches.createBatch.createBatchTable.garmentModelPlaceholder') }}
           </option>
 
           <option
@@ -42,7 +42,7 @@
 
       <!-- Projected Quantity -->
       <div class="form-group">
-        <label for="projectedQuantity">Projected Quantity *</label>
+        <label for="projectedQuantity">{{ $t('productionBatches.createBatch.createBatchTable.projectedQuantity') }}</label>
 
         <div class="input-with-suffix">
           <input
@@ -50,18 +50,18 @@
               type="number"
               min="1"
               v-model.number="form.projectedQuantity"
-              placeholder="e.g. 500"
               required
               class="custom-input"
+              :placeholder="$t('productionBatches.createBatch.createBatchTable.projectedQuantityPlaceholder')"
           />
 
-          <span class="suffix">units</span>
+          <span class="suffix">{{ $t('productionBatches.createBatch.createBatchTable.projectedQuantityUnits') }}</span>
         </div>
       </div>
 
       <!-- Delivery Date -->
       <div class="form-group">
-        <label for="deliveryDate">Delivery Date *</label>
+        <label for="deliveryDate">{{ $t('productionBatches.createBatch.createBatchTable.deliveryDate') }}</label>
 
         <input
             id="deliveryDate"
@@ -74,7 +74,7 @@
 
       <!-- Technical Sheet -->
       <div class="form-group">
-        <label for="technicalSheet">Technical Sheet *</label>
+        <label for="technicalSheet">{{ $t('productionBatches.createBatch.createBatchTable.technicalSheet') }}</label>
 
         <div
             class="upload-box"
@@ -94,7 +94,7 @@
           <div class="upload-icon">↑</div>
 
           <p class="upload-main">
-            {{ selectedFile ? selectedFile.name : 'Click to upload or drag and drop' }}
+            {{ selectedFile ? selectedFile.name : $t('productionBatches.createBatch.createBatchTable.technicalSheetPlaceholder') }}
           </p>
 
           <p class="upload-sub">
@@ -112,22 +112,22 @@
       <div class="step-number">2</div>
 
       <div>
-        <h2 class="section-title">Additional Information</h2>
+        <h2 class="section-title">{{ $t('productionBatches.createBatch.createBatchTable.additionalInfo') }}</h2>
         <p class="section-subtitle">
-          Add any relevant notes for the batch (optional).
+          {{ $t('productionBatches.createBatch.createBatchTable.additionalInfoDesc') }}
         </p>
       </div>
     </div>
 
     <!-- Notes -->
     <div class="form-group mb-28">
-      <label for="notes">Notes</label>
+      <label for="notes">{{ $t('productionBatches.createBatch.createBatchTable.notes') }}</label>
 
       <textarea
           id="notes"
           v-model="form.notes"
           rows="4"
-          placeholder="e.g. special instructions, fabric details, client, etc."
+          :placeholder="$t('productionBatches.createBatch.createBatchTable.notesPlaceholder')"
           class="custom-textarea"
       ></textarea>
     </div>
@@ -141,7 +141,7 @@
           :disabled="saving"
           @click="$emit('cancel')"
       >
-        Cancel
+        {{ $t('productionBatches.createBatch.createBatchTable.cancel') }}
       </button>
 
       <button
@@ -149,7 +149,7 @@
           class="btn-olive"
           :disabled="saving"
       >
-        {{ saving ? 'Creating...' : 'Create Batch' }}
+        {{ saving ? $t('productionBatches.createBatch.createBatchTable.creating') : $t('productionBatches.createBatch.createBatchTable.submit') }}
       </button>
 
     </div>

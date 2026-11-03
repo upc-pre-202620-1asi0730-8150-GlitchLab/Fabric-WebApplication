@@ -128,7 +128,27 @@
     },
     "createBatch": {
       "title": "Create Production Batch",
-      "subtitle": "Add the batch information to start its traceability."
+      "subtitle": "Add the batch information to start its traceability.",
+      "back": "Back to Production Batches",
+      "createBatchTable": {
+        "basicInfo": "Basic Information",
+        "basicInfoDesc": "Enter the main details of the production batch.",
+        "garmentModel": "Garment Model *",
+        "garmentModelPlaceholder": "Select the garment model",
+        "projectedQuantity": "Projected Quantity *",
+        "projectedQuantityPlaceholder": "e.g. 500",
+        "projectedQuantityUnits": "units",
+        "deliveryDate": "Delivery Date *",
+        "technicalSheet": "Technical Sheet *",
+        "technicalSheetPlaceholder": "Upload the technical sheet (PDF, JPG, PNG)",
+        "additionalInfo": "Additional Information",
+        "additionalInfoDesc": "Add any relevant notes for the batch (optional).",
+        "notes": "Notes",
+        "notesPlaceholder": "e.g. special instructions, fabric details, client, etc.",
+        "submit": "Create Batch",
+        "creating": "Creating...",
+        "cancel": "Cancel"
+      }
     },
     "placeholder": "Production Batches view — content coming soon."
   },
