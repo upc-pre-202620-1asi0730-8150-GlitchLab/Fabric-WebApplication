@@ -51,7 +51,8 @@ const createBatch = async (form) => {
     await productionStore.fetchBatches()
 
     if (productionStore.error) {
-      throw new Error(productionStore.error)
+      alert(productionStore.error)
+      return
     }
 
     // Create the new production batch
