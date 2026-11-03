@@ -76,7 +76,7 @@ import { DefectService } from '../../infrastructure/defect.service.js'
 const { t } = useI18n()
 
 const currentView = ref('defects')
-const currentTab = ref('defects')
+const currentTab = ref('fabric')
 const defectList = ref([])
 
 const selectedDefect = ref(null)
