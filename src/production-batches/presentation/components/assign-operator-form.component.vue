@@ -1,79 +1,67 @@
-﻿<!--
-  @summary Presentation component for assigning operators to a batch stage.
-  @author Diego Sebastian Reategui Galarcep (u20201F165)
--->
 <template>
-  <div class="surface-card p-4 border-round shadow-1 mb-4">
-    <h3 class="m-0 text-xl font-bold text-900 mb-1">Assign Operators</h3>
-    <p class="m-0 text-sm text-600 mb-4">Assign one or more operators to the current production stage.</p>
+  <div class="card">
+    <h3 class="card-title">Assign Operators</h3>
+    <p class="card-subtitle">Assign one or more operators to the current production stage.</p>
 
-    <form @submit.prevent="handleAssign">
-      <div class="grid p-fluid align-items-end">
-        <!-- Stage -->
-        <div class="col-12 md:col-4">
-          <label for="stage" class="font-semibold block mb-2 text-700">Production Stage *</label>
-          <pv-input-text id="stage" v-model="form.stage" disabled class="bg-gray-100" />
-        </div>
-
-        <!-- Operators Selection -->
-        <div class="col-12 md:col-5">
-          <label for="operators" class="font-semibold block mb-2 text-700">Operators *</label>
-          <pv-dropdown
-              id="operators"
-              v-model="form.selectedOperator"
-              :options="operatorsList"
-              optionLabel="name"
-              placeholder="Select operators"
-              required
-          />
-        </div>
-
-        <!-- Submit Button -->
-        <div class="col-12 md:col-3">
-          <pv-button label="Assign Operators" type="submit" class="custom-olive-btn w-full" />
-        </div>
+    <div class="assign-row">
+      <div class="form-group flex-1">
+        <label for="stage">Production Stage *</label>
+        <input id="stage" type="text" :value="currentStage" disabled class="custom-input disabled" />
       </div>
-
-      <!-- Warning Duplicate Banner -->
-      <div v-if="duplicateWarning" class="p-3 bg-gray-100 border-round text-sm text-600 mt-3 flex align-items-center gap-2">
-        <i class="pi pi-exclamation-circle text-gray-500"></i>
-        <span><strong>Duplicate assignment</strong> &rarr; Operator is already assigned to this batch and stage.</span>
+      <div class="form-group flex-2">
+        <label for="operators">Operators *</label>
+        <select id="operators" v-model="selectedOperatorId" class="custom-select">
+          <option value="" disabled>Select operators</option>
+          <option v-for="operator in operators" :key="operator.id" :value="operator.id">
+            {{ operator.name }} ({{ operator.specialty }})
+          </option>
+        </select>
       </div>
-    </form>
+      <button type="button" class="btn-olive self-end" @click="$emit('assign-operator')">Assign Operators</button>
+    </div>
+
+    <div v-if="errorMessage" class="warning-banner">
+      {{ errorMessage }}
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'assign-operator-form',
-  emits: ['assign-operator'],
-  data() {
-    return {
-      form: {
-        stage: 'Sewing',
-        selectedOperator: null
-      },
-      duplicateWarning: true,
-      operatorsList: [
-        { id: 1, name: 'Carlos Mendoza', specialty: 'Overlock' },
-        { id: 2, name: 'Ana Torres', specialty: 'Straight Stitch' },
-        { id: 3, name: 'Luis Ramos', specialty: 'Finishing' }
-      ]
-    };
-  },
-  methods: {
-    handleAssign() {
-      if (this.form.selectedOperator) {
-        this.$emit('assign-operator', { ...this.form });
-      }
+  props: {
+    currentStage: {
+      type: String,
+      required: true
+    },
+    operators: {
+      type: Array,
+      default: () => []
+    },
+    modelValue: {
+      type: [String, Number],
+      default: ''
+    },
+    errorMessage: {
+      type: String,
+      default: ''
     }
-  }
+  },
+  emits: ['assign-operator', 'update:modelValue']
 };
 </script>
 
 <style scoped>
-.custom-olive-btn {
-  background-color: #536228 !important;
-  border-color: #536228 !important;
-}
+.card { border: 1px solid #E5E7EB; border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+.card-title { font-size: 16px; font-weight: 700; margin: 0; color: #111827; }
+.card-subtitle { font-size: 13px; color: #6B7280; margin: 4px 0 20px 0; }
+.assign-row { display: flex; gap: 16px; align-items: flex-end; margin-bottom: 16px; }
+.flex-1 { flex: 1; }
+.flex-2 { flex: 2; }
+.self-end { align-self: flex-end; }
+.form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #374151; }
+.custom-input, .custom-select { width: 100%; height: 44px; border: 1px solid #E5E7EB; border-radius: 8px; padding: 0 14px; box-sizing: border-box; font-size: 14px; color: #374151; outline: none; background-color: #ffffff; }
+.custom-input.disabled { background-color: #F9FAFB; }
+.warning-banner { background: #FDF2F2; color: #B93838; padding: 12px 16px; border-radius: 8px; font-size: 13px; margin-top: 12px; }
+.btn-olive { background: #48532B; color: #ffffff; border: none; padding: 0 24px; border-radius: 8px; font-weight: 600; cursor: pointer; height: 44px; font-size: 14px; }
 </style>
