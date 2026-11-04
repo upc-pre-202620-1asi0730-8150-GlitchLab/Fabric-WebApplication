@@ -1,31 +1,15 @@
-﻿<!--
-  @summary Presentation component displaying the 4 operational stages in a horizontal stepper.
-  @author Diego Sebastian Reategui Galarcep (u20201F165)
--->
 <template>
-  <div class="surface-card p-4 border-round shadow-1 mb-4">
-    <h3 class="m-0 text-xl font-bold text-900 mb-1">Production Stages</h3>
-    <p class="m-0 text-sm text-600 mb-4">Current operational progress of the batch.</p>
+  <div class="card">
+    <h3 class="card-title">Production Stages</h3>
+    <p class="card-subtitle">Current operational progress of the batch.</p>
 
-    <div class="flex align-items-center justify-content-between relative px-4 py-2">
-      <div
-          v-for="(stage, index) in stages"
-          :key="stage.name"
-          class="flex flex-column align-items-center z-1"
-      >
-        <div
-            class="border-circle w-2rem h-2rem flex align-items-center justify-content-center font-bold text-sm mb-2 transition-colors"
-            :class="getStepClass(stage, index)"
-        >
-          <i v-if="isCompleted(index)" class="pi pi-check text-white text-xs"></i>
-          <span v-else>{{ index + 1 }}</span>
+    <div class="stepper">
+      <div v-for="(stage, idx) in stages" :key="stage" class="step-wrapper">
+        <div :class="['step-item', getStageStatus(stage)]">
+          <div class="step-circle">{{ getStageStatus(stage) === 'completed' ? '✓' : idx + 1 }}</div>
+          <span :class="['step-label', { bold: stage === currentStage }]">{{ stage }}</span>
         </div>
-        <span
-            class="text-sm font-semibold"
-            :class="stage.name === currentStage ? 'text-primary font-bold' : 'text-600'"
-        >
-          {{ stage.name }}
-        </span>
+        <div v-if="idx < stages.length - 1" :class="['step-line', { active: idx < currentStageIndex }]"></div>
       </div>
     </div>
   </div>
@@ -37,42 +21,42 @@ export default {
   props: {
     currentStage: {
       type: String,
-      default: 'Sewing'
+      default: ''
+    },
+    stages: {
+      type: Array,
+      default: () => ['Cutting', 'Sewing', 'Finishing', 'Quality Check', 'Completed']
     }
   },
-  data() {
-    return {
-      stages: [
-        { name: 'Cutting' },
-        { name: 'Sewing' },
-        { name: 'Finishing' },
-        { name: 'Completed' }
-      ]
-    };
+  computed: {
+    currentStageIndex() {
+      return this.stages.indexOf(this.currentStage);
+    }
   },
   methods: {
-    getCurrentIndex() {
-      return this.stages.findIndex(s => s.name === this.currentStage);
-    },
-    isCompleted(index) {
-      return index < this.getCurrentIndex();
-    },
-    getStepClass(stage, index) {
-      const currentIndex = this.getCurrentIndex();
-      if (index < currentIndex) {
-        return 'bg-green-600 text-white';
-      } else if (index === currentIndex) {
-        return 'custom-active-step text-white';
-      } else {
-        return 'bg-gray-200 text-600';
-      }
+    getStageStatus(stage) {
+      const index = this.stages.indexOf(stage);
+      if (index < this.currentStageIndex) return 'completed';
+      if (index === this.currentStageIndex) return 'current';
+      return 'future';
     }
   }
 };
 </script>
 
 <style scoped>
-.custom-active-step {
-  background-color: #536228 !important;
-}
+.card { border: 1px solid #E5E7EB; border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+.card-title { font-size: 16px; font-weight: 700; margin: 0; }
+.card-subtitle { font-size: 13px; color: #6B7280; margin: 4px 0 24px 0; }
+.stepper { display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+.step-wrapper { display: flex; align-items: center; flex: 1; }
+.step-wrapper:last-child { flex: 0; }
+.step-item { text-align: center; }
+.step-circle { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; margin: 0 auto 8px auto; }
+.completed .step-circle, .current .step-circle { background-color: #48532B; color: #ffffff; }
+.future .step-circle { background-color: #E5E7EB; color: #6B7280; }
+.step-line { flex: 1; height: 2px; background-color: #E5E7EB; margin: 0 12px -20px 12px; }
+.step-line.active { background-color: #48532B; }
+.step-label { font-size: 13px; color: #6B7280; }
+.step-label.bold { font-weight: 700; color: #111827; }
 </style>
