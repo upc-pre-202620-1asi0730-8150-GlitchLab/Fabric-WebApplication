@@ -1,11 +1,12 @@
 ﻿<template>
   <div class="page-container" v-if="batch">
     <div class="page-header">
-      <h1 class="page-title">Batch Operator Assignment</h1>
-      <p class="page-subtitle">Assign operators to a production batch and stage.</p>
+      <div>
+        <h1 class="page-title">Batch Operator Assignment</h1>
+        <p class="page-subtitle">Assign operators to a production batch and stage.</p>
+      </div>
+      <router-link to="/production-batches" class="back-link mb-20">&larr; Back to Production Batches</router-link>
     </div>
-
-    <router-link to="/production-batches" class="back-link mb-20">&larr; Back to Production Batches</router-link>
 
     <!-- Info Card -->
     <div class="info-card">
