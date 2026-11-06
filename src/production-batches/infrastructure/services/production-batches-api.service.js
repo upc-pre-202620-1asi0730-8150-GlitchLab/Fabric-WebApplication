@@ -25,4 +25,32 @@ export class ProductionBatchesApiService extends BaseEndpoint {
     getBatchMovements(batchId) {
         return http.get('/traceabilityHistory', { params: { batchId } });
     }
+
+    addBatchMovement(movement) {
+        return http.post('/traceabilityHistory', movement);
+    }
+
+    updateBatchMovement(id, partial) {
+        return http.patch(`/traceabilityHistory/${id}`, partial);
+    }
+
+    getOperators() {
+        return http.get('/operators');
+    }
+
+    getAssignedOperators(batchId) {
+        return http.get('/assignedOperators', { params: { batchId } });
+    }
+
+    assignOperator(assignment) {
+        return http.post('/assignedOperators', assignment);
+    }
+
+    getBatchObservations(batchId) {
+        return http.get('/observations', { params: { batchId } });
+    }
+
+    addObservation(observation) {
+        return http.post('/observations', observation);
+    }
 }
