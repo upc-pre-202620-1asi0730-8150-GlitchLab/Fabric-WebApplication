@@ -39,20 +39,23 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useProductionStore } from '../../application/store/production.js'
 import MovementHistoryTable from '../components/movement-history-table.component.vue'
 import TraceabilitySummaryCard from '../components/traceability-summary-card.component.vue'
 
 const route = useRoute()
+const productionStore = useProductionStore()
 const batch = ref(null)
 const history = ref([])
 
 const fetchData = async () => {
   try {
-    const batchRes = await fetch(`http://localhost:3000/batches/${route.params.id}`)
-    batch.value = await batchRes.json()
-
-    const histRes = await fetch(`http://localhost:3000/traceabilityHistory?batchId=${route.params.id}`)
-    history.value = await histRes.json()
+    const [batchData, movements] = await Promise.all([
+      productionStore.loadBatch(route.params.id),
+      productionStore.loadBatchMovements(route.params.id)
+    ])
+    batch.value = batchData
+    history.value = movements
   } catch (err) {
     console.error('Error fetching traceability history:', err)
   }
