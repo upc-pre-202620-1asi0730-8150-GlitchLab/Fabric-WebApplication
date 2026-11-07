@@ -32,19 +32,21 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { http } from '../../../shared/infrastructure/base-api.js'
+import { useProductionStore } from '../../application/store/production.js'
 import BatchObservationsTimeline from '../components/batch-observations-timeline.component.vue'
 
 const route = useRoute()
+const productionStore = useProductionStore()
 const batch = ref(null)
 const observations = ref([])
 
 const fetchData = async () => {
   try {
-    const { data: batchData } = await http.get(`/batches/${route.params.id}`)
+    const [batchData, obsData] = await Promise.all([
+      productionStore.loadBatch(route.params.id),
+      productionStore.loadObservations(route.params.id)
+    ])
     batch.value = batchData
-
-    const { data: obsData } = await http.get('/observations', { params: { batchId: route.params.id } })
     observations.value = obsData.slice().reverse()
   } catch (err) {
     console.error('Error fetching observations:', err)
@@ -59,15 +61,12 @@ const addObservation = async (text) => {
   const now = new Date()
   const timestamp = `${now.toLocaleDateString()} · ${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')}`
 
-  const newObs = {
-    batchId: route.params.id,
-    timestamp,
-    text: text.trim(),
-    author: 'Registered by Supervisor'
-  }
-
   try {
-    const { data: savedObs } = await http.post('/observations', newObs)
+    const savedObs = await productionStore.addObservation({
+      batchId: route.params.id,
+      timestamp,
+      text: text.trim()
+    })
     observations.value.unshift(savedObs)
   } catch (err) {
     console.error('Error adding observation:', err)

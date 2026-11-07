@@ -79,12 +79,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { http } from '../../../shared/infrastructure/base-api.js'
+import { useProductionStore } from '../../application/store/production.js'
 import AssignOperatorForm from '../components/assign-operator-form.component.vue'
 import AssignedOperatorsTable from '../components/assigned-operators-table.component.vue'
 
 const route = useRoute()
 const router = useRouter()
+const productionStore = useProductionStore()
 
 const batch = ref(null)
 const operators = ref([])
@@ -98,13 +99,13 @@ const showErrorModal = ref(false)
 
 const fetchData = async () => {
   try {
-    const { data: batchData } = await http.get(`/batches/${route.params.id}`)
+    const [batchData, opData, assignedData] = await Promise.all([
+      productionStore.loadBatch(route.params.id),
+      productionStore.loadOperators(),
+      productionStore.loadAssignedOperators(route.params.id)
+    ])
     batch.value = batchData
-
-    const { data: opData } = await http.get('/operators')
     operators.value = opData
-
-    const { data: assignedData } = await http.get('/assignedOperators', { params: { batchId: route.params.id } })
     assignedList.value = assignedData
   } catch (err) {
     console.error('Error fetching operator data:', err)
@@ -142,7 +143,7 @@ const assignOperator = async () => {
   }
 
   try {
-    const { data: saved } = await http.post('/assignedOperators', newAssignment)
+    const saved = await productionStore.assignOperator(newAssignment)
     assignedList.value.push(saved)
     selectedOperatorId.value = ''
 
