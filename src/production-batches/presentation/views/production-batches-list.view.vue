@@ -1,6 +1,6 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import { useProductionStore } from '../../../stores/production.js'
+import { useProductionStore } from '../../application/store/production.js'
 import BatchFilters from '../components/batch-filters.component.vue'
 import BatchListTable from '../components/batch-list-table.component.vue'
 import { useI18n } from 'vue-i18n'

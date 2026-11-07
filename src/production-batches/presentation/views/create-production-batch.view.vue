@@ -29,7 +29,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useProductionStore } from '../../../stores/production.js'
+import { useProductionStore } from '../../application/store/production.js'
 
 import CreateBatchForm from '../components/create-batch-form.component.vue'
 

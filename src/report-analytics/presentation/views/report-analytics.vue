@@ -6,7 +6,7 @@ import ProductionChart from '../components/ProductionChart.vue'
 import BatchesStage from '../components/BatchesStage.vue'
 import BatchProgress from '../components/BatchProgress.vue'
 import ExportReportModal from '../components/ExportReportModal.vue'
-import { useProductionStore } from '../../../stores/production.js'
+import { useProductionStore } from '../../../production-batches/application/store/production.js'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
