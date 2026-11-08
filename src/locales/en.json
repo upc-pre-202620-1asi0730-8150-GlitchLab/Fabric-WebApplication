@@ -119,12 +119,16 @@
       "hoodie": "Hoodie",
       "poloShirt": "Polo Shirt",
       "joggerPants": "Jogger Pants",
-      "crewneck": "Crewneck"
+      "crewneck": "Crewneck",
+      "tankTop": "Tank Top",
+      "leggings": "Leggings"
     },
     "stages": {
       "cutting": "Cutting",
       "sewing": "Sewing",
-      "finishing": "Finishing"
+      "finishing": "Finishing",
+      "qualityCheck": "Quality Check",
+      "completed": "Completed"
     },
     "createBatch": {
       "title": "Create Production Batch",
@@ -147,8 +151,104 @@
         "notesPlaceholder": "e.g. special instructions, fabric details, client, etc.",
         "submit": "Create Batch",
         "creating": "Creating...",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "uploadFormats": "PDF, JPG or PNG (Max. 5 MB)"
       }
+    },
+    "batchInfo": {
+      "batchId": "Batch ID",
+      "garmentModel": "Garment Model",
+      "currentStage": "Current Stage",
+      "projectedQuantity": "Projected Qty",
+      "pieces": "pieces"
+    },
+    "assignment": {
+      "title": "Assign Operators",
+      "subtitle": "Assign one or more operators to the current production stage.",
+      "stage": "Production Stage *",
+      "operators": "Operators *",
+      "selectOperators": "Select operators",
+      "assignOperators": "Assign Operators",
+      "assignedTitle": "Assigned Operators",
+      "assignedSubtitle": "Operators assigned to this batch, grouped by production stage.",
+      "table": {
+        "operator": "OPERATOR",
+        "specialty": "SPECIALTY",
+        "stage": "STAGE",
+        "assignedAt": "ASSIGNED AT"
+      },
+      "successTitle": "Operators Assigned Successfully",
+      "successDescription": "The selected operators have been assigned to {batch} in the {stage} stage.",
+      "viewBatch": "View Batch",
+      "ok": "OK",
+      "errorTitle": "Unable to Assign Operators",
+      "errorNoOperators": "No operators have been selected.",
+      "errorSelectOperator": "Please select at least one operator to continue.",
+      "duplicate": "Duplicate assignment → Operator is already assigned to this batch and stage."
+    },
+    "observations": {
+      "addTitle": "Add Observation",
+      "addDescription": "Document incidents or agreements that are not formal defects.",
+      "observation": "Observation *",
+      "placeholder": "Write an observation about this production batch...",
+      "emptyHint": "Empty text or spaces only → observation cannot be saved.",
+      "save": "Save Observation",
+      "historyTitle": "Observation History",
+      "historyDescription": "Most recent observations appear first.",
+      "viewTitle": "Batch Observations",
+      "viewDescription": "Register and review notes associated with a production batch."
+    },
+    "movement": {
+      "title": "Movement History",
+      "subtitle": "Chronological record of batch movements, quantities and responsible operators.",
+      "stage": "STAGE",
+      "dateTime": "DATE & TIME",
+      "qtyIn": "QTY IN",
+      "qtyOut": "QTY OUT",
+      "difference": "DIFFERENCE",
+      "responsible": "RESPONSIBLE",
+      "status": "STATUS"
+    },
+    "stageProgress": {
+      "title": "Production Stages",
+      "subtitle": "Current operational progress of the batch.",
+      "updateTitle": "Update Production Stage",
+      "updateSubtitle": "Register the quantity processed and move the batch to its next stage.",
+      "newStage": "New Stage *",
+      "processedQuantity": "Processed Quantity *",
+      "processedQuantityPlaceholder": "e.g. 640",
+      "garments": "garments",
+      "notes": "Notes",
+      "notesPlaceholder": "Optional production notes",
+      "cancel": "Cancel",
+      "update": "Update Stage"
+    },
+    "traceability": {
+      "alertTitle": "Quantity difference detected",
+      "alertDescription": "A total difference of {quantity} pieces was recorded across stages.",
+      "summaryTitle": "Traceability Summary",
+      "projected": "Projected:",
+      "current": "Current:",
+      "totalDifference": "Total Difference:",
+      "currentStage": "Current Stage:"
+    },
+    "views": {
+      "batchDetailTitle": "Batch Detail",
+      "batchDetailSubtitle": "Update the operational stage and register production progress.",
+      "backToBatches": "Back to Production Batches",
+      "backToBatchDetail": "Back to Batch Detail",
+      "traceabilityTitle": "Traceability History",
+      "traceabilitySubtitle": "View the complete movement history of the selected production batch.",
+      "operatorAssignmentTitle": "Batch Operator Assignment",
+      "operatorAssignmentSubtitle": "Assign operators to a production batch and stage.",
+      "batchStatus": "In Production"
+    },
+    "validation": {
+      "fileType": "Please select a PDF, JPG or PNG file.",
+      "fileSize": "The file must not exceed 5 MB.",
+      "quantity": "Projected quantity must be greater than 0.",
+      "createFailure": "Could not create the batch. Please try again.",
+      "updateFailure": "Could not update the stage. Please try again."
     },
     "placeholder": "Production Batches view — content coming soon."
   },

@@ -119,12 +119,16 @@
       "hoodie": "Sudadera con capucha",
       "poloShirt": "Polo",
       "joggerPants": "Pantalón jogger",
-      "crewneck": "Sudadera cuello redondo"
+      "crewneck": "Sudadera cuello redondo",
+      "tankTop": "Camiseta sin mangas",
+      "leggings": "Mallas"
     },
     "stages": {
       "cutting": "Corte",
       "sewing": "Costura",
-      "finishing": "Acabado"
+      "finishing": "Acabado",
+      "qualityCheck": "Control de calidad",
+      "completed": "Completado"
     },
     "createBatch": {
       "title": "Crear Lote de Producción",
@@ -147,8 +151,104 @@
         "notesPlaceholder": "Ej. Instrucciones especiales para el lote, detalles de calidad, clientes, etc.",
         "submit": "Crear Lote",
         "creating": "Subiendo...",
-        "cancel": "Cancelar"
+        "cancel": "Cancelar",
+        "uploadFormats": "PDF, JPG o PNG (Máx. 5 MB)"
       }
+    },
+    "batchInfo": {
+      "batchId": "ID de lote",
+      "garmentModel": "Modelo de prenda",
+      "currentStage": "Etapa actual",
+      "projectedQuantity": "Cant. proyectada",
+      "pieces": "unidades"
+    },
+    "assignment": {
+      "title": "Asignar operarios",
+      "subtitle": "Asigna uno o más operarios a la etapa de producción actual.",
+      "stage": "Etapa de producción *",
+      "operators": "Operarios *",
+      "selectOperators": "Selecciona operarios",
+      "assignOperators": "Asignar operarios",
+      "assignedTitle": "Operarios asignados",
+      "assignedSubtitle": "Operarios asignados a este lote, agrupados por etapa de producción.",
+      "table": {
+        "operator": "OPERARIO",
+        "specialty": "ESPECIALIDAD",
+        "stage": "ETAPA",
+        "assignedAt": "ASIGNADO EL"
+      },
+      "successTitle": "Operarios asignados correctamente",
+      "successDescription": "Los operarios seleccionados se han asignado al lote {batch} en la etapa de {stage}.",
+      "viewBatch": "Ver lote",
+      "ok": "Aceptar",
+      "errorTitle": "No se pudieron asignar los operarios",
+      "errorNoOperators": "No se ha seleccionado ningún operario.",
+      "errorSelectOperator": "Selecciona al menos un operario para continuar.",
+      "duplicate": "Asignación duplicada → El operario ya está asignado a este lote y etapa."
+    },
+    "observations": {
+      "addTitle": "Agregar observación",
+      "addDescription": "Documenta incidentes o acuerdos que no sean defectos formales.",
+      "observation": "Observación *",
+      "placeholder": "Escribe una observación sobre este lote de producción...",
+      "emptyHint": "El texto vacío o compuesto solo por espacios no se puede guardar como observación.",
+      "save": "Guardar observación",
+      "historyTitle": "Historial de observaciones",
+      "historyDescription": "Las observaciones más recientes aparecen primero.",
+      "viewTitle": "Observaciones del lote",
+      "viewDescription": "Registra y consulta las notas asociadas a un lote de producción."
+    },
+    "movement": {
+      "title": "Historial de movimientos",
+      "subtitle": "Registro cronológico de movimientos del lote, cantidades y operarios responsables.",
+      "stage": "ETAPA",
+      "dateTime": "FECHA Y HORA",
+      "qtyIn": "CANT. ENTRADA",
+      "qtyOut": "CANT. SALIDA",
+      "difference": "DIFERENCIA",
+      "responsible": "RESPONSABLE",
+      "status": "ESTADO"
+    },
+    "stageProgress": {
+      "title": "Etapas de producción",
+      "subtitle": "Progreso operativo actual del lote.",
+      "updateTitle": "Actualizar etapa de producción",
+      "updateSubtitle": "Registra la cantidad procesada y avanza el lote a la siguiente etapa.",
+      "newStage": "Nueva etapa *",
+      "processedQuantity": "Cantidad procesada *",
+      "processedQuantityPlaceholder": "p. ej. 640",
+      "garments": "prendas",
+      "notes": "Notas",
+      "notesPlaceholder": "Notas opcionales de producción",
+      "cancel": "Cancelar",
+      "update": "Actualizar etapa"
+    },
+    "traceability": {
+      "alertTitle": "Se detectó una diferencia de cantidad",
+      "alertDescription": "Se registró una diferencia total de {quantity} unidades en las etapas.",
+      "summaryTitle": "Resumen de trazabilidad",
+      "projected": "Proyectado:",
+      "current": "Actual:",
+      "totalDifference": "Diferencia total:",
+      "currentStage": "Etapa actual:"
+    },
+    "views": {
+      "batchDetailTitle": "Detalle del lote",
+      "batchDetailSubtitle": "Actualiza la etapa operativa y registra el progreso de producción.",
+      "backToBatches": "Volver a Lotes de Producción",
+      "backToBatchDetail": "Volver al detalle del lote",
+      "traceabilityTitle": "Historial de trazabilidad",
+      "traceabilitySubtitle": "Consulta el historial completo de movimientos del lote de producción seleccionado.",
+      "operatorAssignmentTitle": "Asignación de operarios al lote",
+      "operatorAssignmentSubtitle": "Asigna operarios a un lote de producción y a una etapa.",
+      "batchStatus": "En producción"
+    },
+    "validation": {
+      "fileType": "Selecciona un archivo PDF, JPG o PNG.",
+      "fileSize": "El archivo no debe superar los 5 MB.",
+      "quantity": "La cantidad proyectada debe ser mayor que 0.",
+      "createFailure": "No se pudo crear el lote. Inténtalo de nuevo.",
+      "updateFailure": "No se pudo actualizar la etapa. Inténtalo de nuevo."
     },
     "placeholder": "Vista de Lotes de Producción — contenido próximamente."
   },
