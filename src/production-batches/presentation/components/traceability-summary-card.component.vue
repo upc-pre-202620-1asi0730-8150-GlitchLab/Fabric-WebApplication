@@ -6,18 +6,18 @@
   <div>
     <!-- Warning Banner (Conditional if total difference exists) -->
     <div v-if="totalDifference < 0" class="alert-card">
-      <h4 class="alert-title">Quantity difference detected</h4>
-      <p class="alert-sub">A total difference of {{ totalDifference }} pieces was recorded across stages.</p>
+      <h4 class="alert-title">{{ $t('productionBatches.traceability.alertTitle') }}</h4>
+      <p class="alert-sub">{{ $t('productionBatches.traceability.alertDescription', { quantity: totalDifference }) }}</p>
     </div>
 
     <!-- Summary Box -->
     <div class="card">
-      <h3 class="card-title">Traceability Summary</h3>
+      <h3 class="card-title">{{ $t('productionBatches.traceability.summaryTitle') }}</h3>
       <div class="summary-grid">
-        <div>Projected: <strong class="text-dark">{{ projectedQuantity }} pieces</strong></div>
-        <div>Current: <strong class="text-dark">{{ currentQty }} pieces</strong></div>
-        <div class="text-red font-bold">Total Difference: {{ totalDifference }} pieces</div>
-        <div>Current Stage: <strong class="text-dark">{{ currentStage }}</strong></div>
+        <div>{{ $t('productionBatches.traceability.projected') }} <strong class="text-dark">{{ projectedQuantity }} {{ $t('productionBatches.batchInfo.pieces') }}</strong></div>
+        <div>{{ $t('productionBatches.traceability.current') }} <strong class="text-dark">{{ currentQty }} {{ $t('productionBatches.batchInfo.pieces') }}</strong></div>
+        <div class="text-red font-bold">{{ $t('productionBatches.traceability.totalDifference') }} {{ totalDifference }} {{ $t('productionBatches.batchInfo.pieces') }}</div>
+        <div>{{ $t('productionBatches.traceability.currentStage') }} <strong class="text-dark">{{ translateStage(currentStage) }}</strong></div>
       </div>
     </div>
   </div>
@@ -42,6 +42,18 @@ export default {
     currentStage: {
       type: String,
       default: ''
+    }
+  },
+  methods: {
+    translateStage(stage) {
+      const keys = {
+        Cutting: 'cutting',
+        Sewing: 'sewing',
+        Finishing: 'finishing',
+        'Quality Check': 'qualityCheck',
+        Completed: 'completed'
+      };
+      return keys[stage] ? this.$t(`productionBatches.stages.${keys[stage]}`) : stage;
     }
   }
 };

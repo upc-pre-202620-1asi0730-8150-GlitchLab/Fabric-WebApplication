@@ -4,24 +4,24 @@
 -->
 <template>
   <div class="card">
-    <h3 class="card-title">Movement History</h3>
-    <p class="card-subtitle">Chronological record of batch movements, quantities and responsible operators.</p>
+    <h3 class="card-title">{{ $t('productionBatches.movement.title') }}</h3>
+    <p class="card-subtitle">{{ $t('productionBatches.movement.subtitle') }}</p>
 
     <table class="custom-table">
       <thead>
       <tr>
-        <th>STAGE</th>
-        <th>DATE & TIME</th>
-        <th>QTY IN</th>
-        <th>QTY OUT</th>
-        <th>DIFFERENCE</th>
-        <th>RESPONSIBLE</th>
-        <th>STATUS</th>
+        <th>{{ $t('productionBatches.movement.stage') }}</th>
+        <th>{{ $t('productionBatches.movement.dateTime') }}</th>
+        <th>{{ $t('productionBatches.movement.qtyIn') }}</th>
+        <th>{{ $t('productionBatches.movement.qtyOut') }}</th>
+        <th>{{ $t('productionBatches.movement.difference') }}</th>
+        <th>{{ $t('productionBatches.movement.responsible') }}</th>
+        <th>{{ $t('productionBatches.movement.status') }}</th>
       </tr>
       </thead>
       <tbody>
       <tr v-for="item in movements" :key="item.id || item.stage">
-        <td>{{ item.stage }}</td>
+        <td>{{ translateStage(item.stage) }}</td>
         <td>{{ item.dateTime }}</td>
         <td>{{ item.qtyIn }}</td>
         <td>{{ item.qtyOut }}</td>
@@ -30,7 +30,7 @@
           <span v-else>{{ item.difference }}</span>
         </td>
         <td>{{ item.responsible }}</td>
-        <td>{{ item.status }}</td>
+        <td>{{ translateStatus(item.status) }}</td>
       </tr>
       </tbody>
     </table>
@@ -45,6 +45,27 @@ export default {
       type: Array,
       required: true,
       default: () => []
+    }
+  },
+  methods: {
+    translateStage(stage) {
+      const keys = {
+        Cutting: 'cutting',
+        Sewing: 'sewing',
+        Finishing: 'finishing',
+        'Quality Check': 'qualityCheck',
+        Completed: 'completed'
+      };
+      return keys[stage] ? this.$t(`productionBatches.stages.${keys[stage]}`) : stage;
+    },
+    translateStatus(status) {
+      const keys = {
+        'In Production': 'inProduction',
+        'At Risk': 'atRisk',
+        Completed: 'completed',
+        Delayed: 'delayed'
+      };
+      return keys[status] ? this.$t(`productionBatches.statuses.${keys[status]}`) : status;
     }
   }
 };

@@ -6,20 +6,20 @@
   <div class="page-container" v-if="batch">
     <div class="page-header">
       <div>
-        <h1 class="page-title">Traceability History</h1>
-        <p class="page-subtitle">View the complete movement history of the selected production batch.</p>
+        <h1 class="page-title">{{ t('productionBatches.views.traceabilityTitle') }}</h1>
+        <p class="page-subtitle">{{ t('productionBatches.views.traceabilitySubtitle') }}</p>
       </div>
-      <router-link :to="`/production-batches/${batch.id}`" class="back-link">&larr; Back to Batch Detail</router-link>
+      <router-link :to="`/production-batches/${batch.id}`" class="back-link">&larr; {{ t('productionBatches.views.backToBatchDetail') }}</router-link>
     </div>
 
     <!-- Info Card -->
     <div class="info-card">
       <div class="info-grid">
-        <div><span class="info-label">Batch ID</span><span class="info-value">{{ batch.batchNumber }}</span></div>
-        <div><span class="info-label">Garment Model</span><span class="info-value">{{ batch.garmentModel }}</span></div>
-        <div><span class="info-label">Projected Quantity</span><span class="info-value">{{ batch.projectedQuantity }} pieces</span></div>
-        <div><span class="info-label">Current Stage</span><span class="info-value">{{ batch.currentStage }}</span></div>
-        <div><span class="badge-in-production">{{ batch.status }}</span></div>
+        <div><span class="info-label">{{ t('productionBatches.batchInfo.batchId') }}</span><span class="info-value">{{ batch.batchNumber }}</span></div>
+        <div><span class="info-label">{{ t('productionBatches.batchInfo.garmentModel') }}</span><span class="info-value">{{ translateModel(batch.garmentModel) }}</span></div>
+        <div><span class="info-label">{{ t('productionBatches.table.projectedQuantity') }}</span><span class="info-value">{{ batch.projectedQuantity }} {{ t('productionBatches.batchInfo.pieces') }}</span></div>
+        <div><span class="info-label">{{ t('productionBatches.batchInfo.currentStage') }}</span><span class="info-value">{{ translateStage(batch.currentStage) }}</span></div>
+        <div><span class="badge-in-production">{{ translateStatus(batch.status) }}</span></div>
       </div>
     </div>
 
@@ -39,14 +39,50 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useProductionStore } from '../../application/store/production.js'
 import MovementHistoryTable from '../components/movement-history-table.component.vue'
 import TraceabilitySummaryCard from '../components/traceability-summary-card.component.vue'
 
 const route = useRoute()
+const { t } = useI18n()
 const productionStore = useProductionStore()
 const batch = ref(null)
 const history = ref([])
+
+const translateModel = (model) => {
+  const keys = {
+    'T-Shirt Basic': 'tshirtBasic',
+    Hoodie: 'hoodie',
+    'Polo Shirt': 'poloShirt',
+    'Jogger Pants': 'joggerPants',
+    Crewneck: 'crewneck',
+    'Tank Top': 'tankTop',
+    Leggings: 'leggings'
+  }
+  return keys[model] ? t(`productionBatches.models.${keys[model]}`) : model
+}
+
+const translateStage = (stage) => {
+  const keys = {
+    Cutting: 'cutting',
+    Sewing: 'sewing',
+    Finishing: 'finishing',
+    'Quality Check': 'qualityCheck',
+    Completed: 'completed'
+  }
+  return keys[stage] ? t(`productionBatches.stages.${keys[stage]}`) : stage
+}
+
+const translateStatus = (status) => {
+  const keys = {
+    'In Production': 'inProduction',
+    'At Risk': 'atRisk',
+    Completed: 'completed',
+    Delayed: 'delayed'
+  }
+  return keys[status] ? t(`productionBatches.statuses.${keys[status]}`) : status
+}
 
 const fetchData = async () => {
   try {
