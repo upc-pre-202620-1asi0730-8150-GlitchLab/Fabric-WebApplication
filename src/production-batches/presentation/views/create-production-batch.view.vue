@@ -5,15 +5,15 @@
     <div class="page-header">
       <div>
         <h1 class="page-title">
-          {{ $t('productionBatches.createBatch.title') }}
+          {{ t('productionBatches.createBatch.title') }}
         </h1>
         <p class="page-subtitle">
-          {{ $t('productionBatches.createBatch.subtitle') }}
+          {{ t('productionBatches.createBatch.subtitle') }}
         </p>
       </div>
 
       <router-link to="/production-batches" class="back-link">
-        &larr; {{ $t('productionBatches.createBatch.back') }}
+        &larr; {{ t('productionBatches.createBatch.back') }}
       </router-link>
     </div>
 
@@ -29,18 +29,20 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useProductionStore } from '../../application/store/production.js'
 
 import CreateBatchForm from '../components/create-batch-form.component.vue'
 
 const router = useRouter()
+const { t } = useI18n()
 const productionStore = useProductionStore()
 
 const saving = ref(false)
 
 const createBatch = async (form) => {
   if (!form.projectedQuantity || form.projectedQuantity <= 0) {
-    alert('Projected quantity must be greater than 0.')
+    alert(t('productionBatches.validation.quantity'))
     return
   }
 
@@ -51,7 +53,7 @@ const createBatch = async (form) => {
     await productionStore.fetchBatches()
 
     if (productionStore.error) {
-      alert(productionStore.error)
+      alert(t('productionBatches.loadError'))
       return
     }
 
@@ -72,7 +74,7 @@ const createBatch = async (form) => {
 
   } catch (err) {
     console.error('Error creating batch:', err)
-    alert('Could not create the batch. Please try again.')
+    alert(t('productionBatches.validation.createFailure'))
 
   } finally {
     saving.value = false

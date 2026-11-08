@@ -35,7 +35,7 @@
               :key="model"
               :value="model"
           >
-            {{ model }}
+            {{ translateModel(model) }}
           </option>
         </select>
       </div>
@@ -98,7 +98,7 @@
           </p>
 
           <p class="upload-sub">
-            PDF, JPG or PNG (Max. 5 MB)
+            {{ $t('productionBatches.createBatch.createBatchTable.uploadFormats') }}
           </p>
         </div>
       </div>
@@ -194,6 +194,18 @@ export default {
   },
 
   methods: {
+    translateModel(model) {
+      const keys = {
+        'T-Shirt Basic': 'tshirtBasic',
+        Hoodie: 'hoodie',
+        'Polo Shirt': 'poloShirt',
+        'Jogger Pants': 'joggerPants',
+        Crewneck: 'crewneck',
+        'Tank Top': 'tankTop',
+        Leggings: 'leggings'
+      };
+      return keys[model] ? this.$t(`productionBatches.models.${keys[model]}`) : model;
+    },
     handleFileChange(event) {
       const file = event.target.files[0]
 
@@ -220,12 +232,12 @@ export default {
       const maxSize = 5 * 1024 * 1024
 
       if (!allowedTypes.includes(file.type)) {
-        alert('Please select a PDF, JPG or PNG file.')
+        alert(this.$t('productionBatches.validation.fileType'))
         return
       }
 
       if (file.size > maxSize) {
-        alert('The file must not exceed 5 MB.')
+        alert(this.$t('productionBatches.validation.fileSize'))
         return
       }
 
