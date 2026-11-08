@@ -1,45 +1,16 @@
-﻿<!--
-  @summary Presentation component displaying top summary header for a selected batch.
-  @author Diego Sebastian Reategui Galarcep (u20201F165)
--->
 <template>
-  <div class="surface-card p-4 border-round shadow-1 mb-4 flex flex-column md:flex-row align-items-start md:align-items-center justify-content-between gap-3">
-    <div class="grid w-full">
-      <div class="col-6 md:col-3">
-        <span class="text-xs text-500 uppercase font-semibold">Batch ID</span>
-        <div class="text-lg font-bold text-900 mt-1">{{ batch.batchNumber }}</div>
-      </div>
-      <div class="col-6 md:col-3">
-        <span class="text-xs text-500 uppercase font-semibold">Garment Model</span>
-        <div class="text-lg font-bold text-900 mt-1">{{ batch.garmentModel }}</div>
-      </div>
-      <div class="col-6 md:col-3">
-        <span class="text-xs text-500 uppercase font-semibold">Current Stage</span>
-        <div class="text-lg font-bold text-900 mt-1">{{ batch.currentStage }}</div>
-      </div>
-      <div class="col-6 md:col-3">
-        <span class="text-xs text-500 uppercase font-semibold">Quantity / Status</span>
-        <div class="flex align-items-center gap-2 mt-1">
-          <span class="text-lg font-bold text-900">{{ batch.projectedQuantity }} pieces</span>
-          <pv-tag v-if="batch.status" :value="batch.status" severity="info" class="text-xs" />
-        </div>
-      </div>
+  <div class="info-card">
+    <div class="info-grid">
+      <div><span class="info-label">{{ $t('productionBatches.batchInfo.batchId') }}</span><span class="info-value">{{ batch.batchNumber }}</span></div>
+      <div><span class="info-label">{{ $t('productionBatches.batchInfo.garmentModel') }}</span><span class="info-value">{{ translateValue(batch.garmentModel, 'models') }}</span></div>
+      <div><span class="info-label">{{ $t('productionBatches.batchInfo.currentStage') }}</span><span class="info-value">{{ translateValue(batch.currentStage, 'stages') }}</span></div>
+      <div><span class="info-label">{{ $t('productionBatches.batchInfo.projectedQuantity') }}</span><span class="info-value">{{ batch.projectedQuantity }} {{ $t('productionBatches.batchInfo.pieces') }}</span></div>
     </div>
-
-    <!-- Optional Action Button -->
-    <div v-if="showAssignButton" class="whitespace-nowrap">
-      <pv-button
-          label="Assign Operators"
-          class="custom-olive-btn p-button-sm px-3"
-          @click="$emit('assign-click')"
-      />
-    </div>
+    <button v-if="showAssignButton" class="btn-olive" @click="$emit('assign-click')">{{ $t('productionBatches.assignment.assignOperators') }}</button>
   </div>
 </template>
 
 <script>
-import { ProductionBatch } from '../../domain/model/production-batch.entity.js';
-
 export default {
   name: 'batch-info-card',
   props: {
@@ -52,13 +23,38 @@ export default {
       default: false
     }
   },
-  emits: ['assign-click']
+  emits: ['assign-click'],
+  methods: {
+    translateValue(value, category) {
+      const keys = {
+        models: {
+          'T-Shirt Basic': 'tshirtBasic',
+          Hoodie: 'hoodie',
+          'Polo Shirt': 'poloShirt',
+          'Jogger Pants': 'joggerPants',
+          Crewneck: 'crewneck',
+          'Tank Top': 'tankTop',
+          Leggings: 'leggings'
+        },
+        stages: {
+          Cutting: 'cutting',
+          Sewing: 'sewing',
+          Finishing: 'finishing',
+          'Quality Check': 'qualityCheck',
+          Completed: 'completed'
+        }
+      };
+      const key = keys[category]?.[value];
+      return key ? this.$t(`productionBatches.${category}.${key}`) : value;
+    }
+  }
 };
 </script>
 
 <style scoped>
-.custom-olive-btn {
-  background-color: #536228 !important;
-  border-color: #536228 !important;
-}
+.info-card { border: 1px solid #E5E7EB; border-radius: 12px; padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.info-grid { display: flex; gap: 48px; }
+.info-label { display: block; font-size: 12px; color: #6B7280; margin-bottom: 4px; }
+.info-value { font-size: 15px; font-weight: 700; color: #111827; }
+.btn-olive { background: #48532B; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; }
 </style>

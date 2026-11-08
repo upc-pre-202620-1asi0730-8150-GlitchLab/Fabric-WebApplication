@@ -10,15 +10,21 @@ export class BatchObservation {
                     id = 0,
                     batchId = 0,
                     authorName = '',
+                    author = '',
                     category = 'General',
                     content = '',
-                    createdAt = ''
+                    text = '',
+                    createdAt = '',
+                    timestamp = ''
                 } = {}) {
         this.id = id;
         this.batchId = batchId;
-        this.authorName = authorName;
+        this.authorName = authorName || author;
+        this.author = author || authorName;
         this.category = category; // 'General', 'Quality', 'Delay', 'Machine'
-        this.content = content;
-        this.createdAt = createdAt || new Date().toLocaleString();
+        this.content = content || text;
+        this.text = text || content;
+        this.createdAt = createdAt || timestamp || new Date().toLocaleString();
+        this.timestamp = timestamp || createdAt || this.createdAt;
     }
 }

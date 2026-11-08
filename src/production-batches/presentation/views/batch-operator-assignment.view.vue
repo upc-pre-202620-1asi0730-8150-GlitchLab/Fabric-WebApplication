@@ -1,73 +1,32 @@
 ﻿<template>
   <div class="page-container" v-if="batch">
     <div class="page-header">
-      <h1 class="page-title">Batch Operator Assignment</h1>
-      <p class="page-subtitle">Assign operators to a production batch and stage.</p>
+      <div>
+        <h1 class="page-title">{{ t('productionBatches.views.operatorAssignmentTitle') }}</h1>
+        <p class="page-subtitle">{{ t('productionBatches.views.operatorAssignmentSubtitle') }}</p>
+      </div>
+      <router-link to="/production-batches" class="back-link mb-20">&larr; {{ t('productionBatches.views.backToBatches') }}</router-link>
     </div>
-
-    <router-link to="/production-batches" class="back-link mb-20">&larr; Back to Production Batches</router-link>
 
     <!-- Info Card -->
     <div class="info-card">
       <div class="info-grid">
-        <div><span class="info-label">Batch ID</span><span class="info-value">{{ batch.batchNumber }}</span></div>
-        <div><span class="info-label">Garment Model</span><span class="info-value">{{ batch.garmentModel }}</span></div>
-        <div><span class="info-label">Current Stage</span><span class="info-value">{{ batch.currentStage }}</span></div>
-        <div><span class="badge-in-production">{{ batch.status }}</span></div>
+        <div><span class="info-label">{{ t('productionBatches.batchInfo.batchId') }}</span><span class="info-value">{{ batch.batchNumber }}</span></div>
+        <div><span class="info-label">{{ t('productionBatches.batchInfo.garmentModel') }}</span><span class="info-value">{{ translateModel(batch.garmentModel) }}</span></div>
+        <div><span class="info-label">{{ t('productionBatches.batchInfo.currentStage') }}</span><span class="info-value">{{ translateStage(batch.currentStage) }}</span></div>
+        <div><span class="badge-in-production">{{ translateStatus(batch.status) }}</span></div>
       </div>
     </div>
 
-    <!-- Form Assign -->
-    <div class="card">
-      <h3 class="card-title">Assign Operators</h3>
-      <p class="card-subtitle">Assign one or more operators to the current production stage.</p>
+    <assign-operator-form
+      v-model="selectedOperatorId"
+      :current-stage="batch.currentStage"
+      :operators="operators"
+      :error-message="errorMessage"
+      @assign-operator="assignOperator"
+    />
 
-      <div class="assign-row">
-        <div class="form-group flex-1">
-          <label>Production Stage *</label>
-          <input type="text" :value="batch.currentStage" disabled class="custom-input disabled" />
-        </div>
-        <div class="form-group flex-2">
-          <label>Operators *</label>
-          <select v-model="selectedOperatorId" class="custom-select">
-            <option value="" disabled selected>Select operators</option>
-            <option v-for="op in operators" :key="op.id" :value="op.id">
-              {{ op.name }} ({{ op.specialty }})
-            </option>
-          </select>
-        </div>
-        <button class="btn-olive self-end" @click="assignOperator">Assign Operators</button>
-      </div>
-
-      <div v-if="errorMessage" class="warning-banner">
-        {{ errorMessage }}
-      </div>
-    </div>
-
-    <!-- Assigned Operators Table -->
-    <div class="card">
-      <h3 class="card-title">Assigned Operators</h3>
-      <p class="card-subtitle">Operators assigned to this batch, grouped by production stage.</p>
-
-      <table class="custom-table">
-        <thead>
-        <tr>
-          <th>OPERATOR</th>
-          <th>SPECIALTY</th>
-          <th>STAGE</th>
-          <th>ASSIGNED AT</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="assigned in assignedList" :key="assigned.id">
-          <td class="font-bold">{{ assigned.operatorName }}</td>
-          <td>{{ assigned.specialty }}</td>
-          <td>{{ assigned.stage }}</td>
-          <td>{{ assigned.assignedAt }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+    <assigned-operators-table :operators="assignedList" />
 
     <!-- Modal de Éxito -->
     <div v-if="showSuccessModal" class="modal-overlay" @click.self="showSuccessModal = false">
@@ -80,14 +39,14 @@
           </svg>
         </div>
 
-        <h2 class="modal-title">Operators Assigned Successfully</h2>
+        <h2 class="modal-title">{{ t('productionBatches.assignment.successTitle') }}</h2>
         <p class="modal-description">
-          The selected operators have been assigned to <strong>{{ batch.batchNumber }}</strong> in the <strong>{{ batch.currentStage }}</strong> stage.
+          {{ t('productionBatches.assignment.successDescription', { batch: batch.batchNumber, stage: translateStage(batch.currentStage) }) }}
         </p>
 
         <div class="modal-actions">
-          <button type="button" class="btn-outline-olive" @click="goToBatch">View Batch</button>
-          <button type="button" class="btn-olive modal-btn" @click="showSuccessModal = false">OK</button>
+          <button type="button" class="btn-outline-olive" @click="goToBatch">{{ t('productionBatches.assignment.viewBatch') }}</button>
+          <button type="button" class="btn-olive modal-btn" @click="showSuccessModal = false">{{ t('productionBatches.assignment.ok') }}</button>
         </div>
       </div>
     </div>
@@ -104,13 +63,13 @@
           </svg>
         </div>
 
-        <h2 class="modal-title">Unable to Assign Operators</h2>
+        <h2 class="modal-title">{{ t('productionBatches.assignment.errorTitle') }}</h2>
         <p class="modal-description">
-          No operators have been selected.<br />Please select at least one operator to continue.
+          {{ t('productionBatches.assignment.errorNoOperators') }}<br />{{ t('productionBatches.assignment.errorSelectOperator') }}
         </p>
 
         <div class="modal-actions">
-          <button type="button" class="btn-olive modal-btn full-width" @click="showErrorModal = false">OK</button>
+          <button type="button" class="btn-olive modal-btn full-width" @click="showErrorModal = false">{{ t('productionBatches.assignment.ok') }}</button>
         </div>
       </div>
     </div>
@@ -120,10 +79,15 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { http } from '../../../shared/infrastructure/base-api.js'
+import { useI18n } from 'vue-i18n'
+import { useProductionStore } from '../../application/store/production.js'
+import AssignOperatorForm from '../components/assign-operator-form.component.vue'
+import AssignedOperatorsTable from '../components/assigned-operators-table.component.vue'
 
 const route = useRoute()
 const router = useRouter()
+const { t } = useI18n()
+const productionStore = useProductionStore()
 
 const batch = ref(null)
 const operators = ref([])
@@ -131,19 +95,53 @@ const assignedList = ref([])
 const selectedOperatorId = ref('')
 const errorMessage = ref('')
 
+const translateModel = (model) => {
+  const keys = {
+    'T-Shirt Basic': 'tshirtBasic',
+    Hoodie: 'hoodie',
+    'Polo Shirt': 'poloShirt',
+    'Jogger Pants': 'joggerPants',
+    Crewneck: 'crewneck',
+    'Tank Top': 'tankTop',
+    Leggings: 'leggings'
+  }
+  return keys[model] ? t(`productionBatches.models.${keys[model]}`) : model
+}
+
+const translateStage = (stage) => {
+  const keys = {
+    Cutting: 'cutting',
+    Sewing: 'sewing',
+    Finishing: 'finishing',
+    'Quality Check': 'qualityCheck',
+    Completed: 'completed'
+  }
+  return keys[stage] ? t(`productionBatches.stages.${keys[stage]}`) : stage
+}
+
+const translateStatus = (status) => {
+  const keys = {
+    'In Production': 'inProduction',
+    'At Risk': 'atRisk',
+    Completed: 'completed',
+    Delayed: 'delayed'
+  }
+  return keys[status] ? t(`productionBatches.statuses.${keys[status]}`) : status
+}
+
 // Estados para los modales
 const showSuccessModal = ref(false)
 const showErrorModal = ref(false)
 
 const fetchData = async () => {
   try {
-    const { data: batchData } = await http.get(`/batches/${route.params.id}`)
+    const [batchData, opData, assignedData] = await Promise.all([
+      productionStore.loadBatch(route.params.id),
+      productionStore.loadOperators(),
+      productionStore.loadAssignedOperators(route.params.id)
+    ])
     batch.value = batchData
-
-    const { data: opData } = await http.get('/operators')
     operators.value = opData
-
-    const { data: assignedData } = await http.get('/assignedOperators', { params: { batchId: route.params.id } })
     assignedList.value = assignedData
   } catch (err) {
     console.error('Error fetching operator data:', err)
@@ -168,7 +166,7 @@ const assignOperator = async () => {
   )
 
   if (duplicate) {
-    errorMessage.value = 'Duplicate assignment → Operator is already assigned to this batch and stage.'
+    errorMessage.value = t('productionBatches.assignment.duplicate')
     return
   }
 
@@ -181,7 +179,7 @@ const assignOperator = async () => {
   }
 
   try {
-    const { data: saved } = await http.post('/assignedOperators', newAssignment)
+    const saved = await productionStore.assignOperator(newAssignment)
     assignedList.value.push(saved)
     selectedOperatorId.value = ''
 
@@ -210,26 +208,6 @@ const goToBatch = () => {
 .info-value { font-size: 15px; font-weight: 700; color: #111827; }
 .badge-in-production { background: #ECEFE6; color: #48532B; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; }
 
-.card { border: 1px solid #E5E7EB; border-radius: 12px; padding: 24px; margin-bottom: 20px; }
-.card-title { font-size: 16px; font-weight: 700; margin: 0; color: #111827; }
-.card-subtitle { font-size: 13px; color: #6B7280; margin: 4px 0 20px 0; }
-
-.assign-row { display: flex; gap: 16px; align-items: flex-end; margin-bottom: 16px; }
-.flex-1 { flex: 1; }
-.flex-2 { flex: 2; }
-.self-end { align-self: flex-end; }
-
-.form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #374151; }
-.custom-input, .custom-select { width: 100%; height: 44px; border: 1px solid #E5E7EB; border-radius: 8px; padding: 0 14px; box-sizing: border-box; font-size: 14px; color: #374151; outline: none; background-color: #ffffff; }
-.custom-input.disabled { background-color: #F9FAFB; }
-
-.warning-banner { background: #FDF2F2; color: #B93838; padding: 12px 16px; border-radius: 8px; font-size: 13px; margin-top: 12px; }
-
-.custom-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
-.custom-table th { padding: 12px; color: #374151; font-weight: 700; border-bottom: 1px solid #E5E7EB; }
-.custom-table td { padding: 14px 12px; border-bottom: 1px solid #F3F4F6; color: #6B7280; }
-.font-bold { font-weight: 700; color: #111827; }
-.btn-olive { background: #48532B; color: #ffffff; border: none; padding: 0 24px; border-radius: 8px; font-weight: 600; cursor: pointer; height: 44px; font-size: 14px; }
 
 /* Estilos de Modales */
 .modal-overlay {

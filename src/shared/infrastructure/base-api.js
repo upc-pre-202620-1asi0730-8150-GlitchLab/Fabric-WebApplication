@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 /**
- * Single source of truth for the backend URL.
+ * Single store of truth for the backend URL.
  * Reads VITE_FABRIC_API_URL first, then VITE_API_BASE_URL, then falls back to localhost.
  */
 export const API_BASE_URL = (

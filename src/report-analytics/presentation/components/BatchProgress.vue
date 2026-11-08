@@ -1,5 +1,5 @@
 <script setup>
-import { useProductionStore } from '../../../stores/production.js'
+import { useProductionStore } from '../../../production-batches/application/store/production.js'
 import { useI18n } from 'vue-i18n'
 
 const productionStore = useProductionStore()

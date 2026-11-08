@@ -10,6 +10,7 @@ export class BatchStage {
                     id = 0,
                     batchId = 0,
                     name = '',
+                    stage = '',
                     order = 1,
                     status = 'Pending',
                     processedQuantity = 0,
@@ -17,7 +18,8 @@ export class BatchStage {
                 } = {}) {
         this.id = id;
         this.batchId = batchId;
-        this.name = name; // 'Cutting', 'Sewing', 'Finishing', 'Completed'
+        this.name = name || stage; // 'Cutting', 'Sewing', 'Finishing', 'Completed'
+        this.stage = stage || name;
         this.order = Number(order);
         this.status = status; // 'Pending', 'In Progress', 'Completed'
         this.processedQuantity = Number(processedQuantity);

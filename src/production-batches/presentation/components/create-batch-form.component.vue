@@ -1,131 +1,186 @@
-﻿<!--
-  @summary Presentation component for creating a new production batch with technical sheet drag-and-drop.
-  @author Diego Sebastian Reategui Galarcep (u20201F165)
--->
+﻿
 <template>
-  <div class="surface-card p-5 border-round shadow-1 w-full mx-auto">
-    <form @submit.prevent="handleSubmit">
-      <!-- Section 1: Basic Information -->
-      <div class="mb-5">
-        <div class="flex align-items-center gap-3 mb-3">
-          <div class="border-circle bg-gray-200 text-800 font-bold w-2rem h-2rem flex align-items-center justify-content-center">1</div>
-          <div>
-            <h3 class="m-0 text-xl font-bold text-900">Basic Information</h3>
-            <p class="m-0 text-sm text-600">Enter the main details of the production batch.</p>
-          </div>
-        </div>
+  <form @submit.prevent="handleSubmit" class="form-card">
 
-        <div class="grid p-fluid">
-          <!-- Garment Model -->
-          <div class="col-12 md:col-6">
-            <label for="garmentModel" class="font-semibold block mb-2 text-700">Garment Model *</label>
-            <pv-dropdown
-                id="garmentModel"
-                v-model="form.garmentModel"
-                :options="garmentModels"
-                placeholder="Select a garment model"
-                class="w-full"
-                style="height: 44px !important; display: flex !important; align-items: center !important;"
-                :inputStyle="{ height: '44px', display: 'flex', alignItems: 'center', fontSize: '0.95rem', padding: '0 0.85rem' }"
-                :panelStyle="{ maxHeight: '280px' }"
-                scrollHeight="280px"
-                appendTo="body"
-                required
-            />
-          </div>
+    <!-- Section 1: Basic Information -->
+    <div class="section-header">
+      <div class="step-number">1</div>
 
-          <!-- Projected Quantity -->
-          <div class="col-12 md:col-6">
-            <label for="projectedQuantity" class="font-semibold block mb-2 text-700">Projected Quantity *</label>
-            <div class="p-inputgroup" style="height: 44px !important;">
-              <pv-input-text
-                  id="projectedQuantity"
-                  v-model.number="form.projectedQuantity"
-                  type="number"
-                  placeholder="e.g. 500"
-                  style="height: 44px !important; font-size: 0.95rem !important; padding: 0 0.85rem !important;"
-                  required
-              />
-              <span class="p-inputgroup-addon" style="height: 44px !important; display: flex !important; align-items: center !important;">units</span>
-            </div>
-          </div>
+      <div>
+        <h2 class="section-title">{{ $t('productionBatches.createBatch.createBatchTable.basicInfo') }}</h2>
+        <p class="section-subtitle">
+          {{ $t('productionBatches.createBatch.createBatchTable.basicInfoDesc') }}
+        </p>
+      </div>
+    </div>
 
-          <!-- Delivery Date -->
-          <div class="col-12 md:col-6">
-            <label for="deliveryDate" class="font-semibold block mb-2 text-700">Delivery Date *</label>
-            <pv-input-text
-                id="deliveryDate"
-                v-model="form.deliveryDate"
-                type="date"
-                class="w-full"
-                style="height: 44px !important; font-size: 0.95rem !important; padding: 0 0.85rem !important; box-sizing: border-box !important;"
-                required
-            />
-          </div>
+    <div class="form-grid">
 
-          <!-- Technical Sheet Dropzone -->
-          <div class="col-12 md:col-6">
-            <label class="font-semibold block mb-2 text-700">Technical Sheet *</label>
-            <div
-                class="border-2 border-dashed border-300 border-round p-4 text-center cursor-pointer hover:surface-hover transition-colors flex flex-column align-items-center justify-content-center"
-                style="min-height: 110px;"
-                @click="triggerFileUpload"
-            >
-              <i class="pi pi-upload text-3xl text-500 mb-2"></i>
-              <p class="m-0 text-sm font-semibold text-700">Click to upload or drag and drop</p>
-              <span class="text-xs text-500">PDF, JPG or PNG (Max. 5 MB)</span>
-            </div>
-          </div>
+      <!-- Garment Model -->
+      <div class="form-group">
+        <label for="garmentModel">{{ $t('productionBatches.createBatch.createBatchTable.garmentModel') }}</label>
+
+        <select
+            id="garmentModel"
+            v-model="form.garmentModel"
+            required
+            class="custom-select"
+        >
+          <option value="" disabled>
+            {{ $t('productionBatches.createBatch.createBatchTable.garmentModelPlaceholder') }}
+          </option>
+
+          <option
+              v-for="model in garmentModels"
+              :key="model"
+              :value="model"
+          >
+            {{ translateModel(model) }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Projected Quantity -->
+      <div class="form-group">
+        <label for="projectedQuantity">{{ $t('productionBatches.createBatch.createBatchTable.projectedQuantity') }}</label>
+
+        <div class="input-with-suffix">
+          <input
+              id="projectedQuantity"
+              type="number"
+              min="1"
+              v-model.number="form.projectedQuantity"
+              required
+              class="custom-input"
+              :placeholder="$t('productionBatches.createBatch.createBatchTable.projectedQuantityPlaceholder')"
+          />
+
+          <span class="suffix">{{ $t('productionBatches.createBatch.createBatchTable.projectedQuantityUnits') }}</span>
         </div>
       </div>
 
-      <hr class="border-top-1 border-300 my-4" />
+      <!-- Delivery Date -->
+      <div class="form-group">
+        <label for="deliveryDate">{{ $t('productionBatches.createBatch.createBatchTable.deliveryDate') }}</label>
 
-      <!-- Section 2: Additional Information -->
-      <div class="mb-5">
-        <div class="flex align-items-center gap-3 mb-3">
-          <div class="border-circle bg-gray-200 text-800 font-bold w-2rem h-2rem flex align-items-center justify-content-center">2</div>
-          <div>
-            <h3 class="m-0 text-xl font-bold text-900">Additional Information</h3>
-            <p class="m-0 text-sm text-600">Add any relevant notes for the batch (optional).</p>
-          </div>
-        </div>
+        <input
+            id="deliveryDate"
+            type="date"
+            v-model="form.deliveryDate"
+            required
+            class="custom-input custom-date-input"
+        />
+      </div>
 
-        <div>
-          <label for="notes" class="font-semibold block mb-2 text-700">Notes</label>
-          <textarea
-              id="notes"
-              v-model="form.notes"
-              rows="4"
-              class="p-inputtext w-full"
-              style="font-size: 0.95rem !important; padding: 0.75rem !important;"
-              placeholder="e.g. special instructions, fabric details, client, etc."
-          ></textarea>
+      <!-- Technical Sheet -->
+      <div class="form-group">
+        <label for="technicalSheet">{{ $t('productionBatches.createBatch.createBatchTable.technicalSheet') }}</label>
+
+        <div
+            class="upload-box"
+            @click="$refs.fileInput.click()"
+            @dragover.prevent
+            @drop.prevent="handleFileDrop"
+        >
+          <input
+              ref="fileInput"
+              id="technicalSheet"
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png"
+              hidden
+              @change="handleFileChange"
+          />
+
+          <div class="upload-icon">↑</div>
+
+          <p class="upload-main">
+            {{ selectedFile ? selectedFile.name : $t('productionBatches.createBatch.createBatchTable.technicalSheetPlaceholder') }}
+          </p>
+
+          <p class="upload-sub">
+            {{ $t('productionBatches.createBatch.createBatchTable.uploadFormats') }}
+          </p>
         </div>
       </div>
 
-      <!-- Action Buttons -->
-      <div class="flex justify-content-end gap-3">
-        <pv-button label="Cancel" type="button" class="p-button-outlined p-button-secondary px-4" @click="$emit('cancel')" />
-        <pv-button label="Create Batch" type="submit" class="custom-olive-btn px-4" />
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Section 2: Additional Information -->
+    <div class="section-header">
+      <div class="step-number">2</div>
+
+      <div>
+        <h2 class="section-title">{{ $t('productionBatches.createBatch.createBatchTable.additionalInfo') }}</h2>
+        <p class="section-subtitle">
+          {{ $t('productionBatches.createBatch.createBatchTable.additionalInfoDesc') }}
+        </p>
       </div>
-    </form>
-  </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="form-group mb-28">
+      <label for="notes">{{ $t('productionBatches.createBatch.createBatchTable.notes') }}</label>
+
+      <textarea
+          id="notes"
+          v-model="form.notes"
+          rows="4"
+          :placeholder="$t('productionBatches.createBatch.createBatchTable.notesPlaceholder')"
+          class="custom-textarea"
+      ></textarea>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="form-actions">
+
+      <button
+          type="button"
+          class="btn-cancel"
+          :disabled="saving"
+          @click="$emit('cancel')"
+      >
+        {{ $t('productionBatches.createBatch.createBatchTable.cancel') }}
+      </button>
+
+      <button
+          type="submit"
+          class="btn-olive"
+          :disabled="saving"
+      >
+        {{ saving ? $t('productionBatches.createBatch.createBatchTable.creating') : $t('productionBatches.createBatch.createBatchTable.submit') }}
+      </button>
+
+    </div>
+
+  </form>
 </template>
 
 <script>
 export default {
-  name: 'create-batch-form',
+  name: 'CreateBatchForm',
+
   emits: ['save', 'cancel'],
+
+  props: {
+    saving: {
+      type: Boolean,
+      default: false
+    }
+  },
+
   data() {
     return {
       form: {
         garmentModel: '',
         projectedQuantity: null,
         deliveryDate: '',
-        technicalSheetUrl: 'https://example.com/spec.pdf',
         notes: ''
       },
+
+      selectedFile: null,
+
       garmentModels: [
         'T-Shirt Basic',
         'Hoodie',
@@ -135,34 +190,329 @@ export default {
         'Tank Top',
         'Leggings'
       ]
-    };
+    }
   },
+
   methods: {
-    triggerFileUpload() {
-      alert('File selector opened');
+    translateModel(model) {
+      const keys = {
+        'T-Shirt Basic': 'tshirtBasic',
+        Hoodie: 'hoodie',
+        'Polo Shirt': 'poloShirt',
+        'Jogger Pants': 'joggerPants',
+        Crewneck: 'crewneck',
+        'Tank Top': 'tankTop',
+        Leggings: 'leggings'
+      };
+      return keys[model] ? this.$t(`productionBatches.models.${keys[model]}`) : model;
     },
+    handleFileChange(event) {
+      const file = event.target.files[0]
+
+      if (file) {
+        this.validateFile(file)
+      }
+    },
+
+    handleFileDrop(event) {
+      const file = event.dataTransfer.files[0]
+
+      if (file) {
+        this.validateFile(file)
+      }
+    },
+
+    validateFile(file) {
+      const allowedTypes = [
+        'application/pdf',
+        'image/jpeg',
+        'image/png'
+      ]
+
+      const maxSize = 5 * 1024 * 1024
+
+      if (!allowedTypes.includes(file.type)) {
+        alert(this.$t('productionBatches.validation.fileType'))
+        return
+      }
+
+      if (file.size > maxSize) {
+        alert(this.$t('productionBatches.validation.fileSize'))
+        return
+      }
+
+      this.selectedFile = file
+    },
+
     handleSubmit() {
-      this.$emit('save', { ...this.form });
+      if (
+          !this.form.garmentModel ||
+          !this.form.projectedQuantity ||
+          this.form.projectedQuantity <= 0 ||
+          !this.form.deliveryDate
+      ) {
+        return
+      }
+
+      this.$emit('save', {
+        ...this.form,
+        technicalSheetFile: this.selectedFile
+      })
     }
   }
-};
+}
 </script>
 
-<style>
-.p-dropdown-panel .p-dropdown-items {
-  padding: 0.5rem 0 !important;
-}
-
-.p-dropdown-panel .p-dropdown-item {
-  padding: 0.65rem 1rem !important;
-  font-size: 0.95rem !important;
-}
-</style>
-
 <style scoped>
-.custom-olive-btn {
-  background-color: #536228 !important;
-  border-color: #536228 !important;
-  color: #ffffff !important;
+.form-card {
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 32px;
+  background: #ffffff;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.step-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #E5E7EB;
+  color: #374151;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+  color: #111827;
+}
+
+.section-subtitle {
+  font-size: 13px;
+  color: #6B7280;
+  margin-top: 2px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.custom-input,
+.custom-select,
+.custom-textarea {
+  width: 100%;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 0 14px;
+  height: 44px;
+  min-height: 44px;
+  font-size: 14px !important;
+  font-family: inherit;
+  color: #374151;
+  box-sizing: border-box;
+  outline: none;
+  background-color: #ffffff;
+}
+
+.custom-input:focus,
+.custom-select:focus,
+.custom-textarea:focus {
+  border-color: #48532B;
+}
+
+.custom-select option {
+  font-size: 14px;
+  padding: 8px;
+}
+
+.custom-date-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px !important;
+  font-family: inherit;
+  line-height: 44px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.custom-date-input::-webkit-date-and-time-value {
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 14px !important;
+}
+
+.custom-date-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.custom-textarea {
+  height: auto;
+  min-height: 100px;
+  padding: 10px 14px;
+  font-size: 14px !important;
+  resize: vertical;
+}
+
+.input-with-suffix {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.input-with-suffix .custom-input {
+  padding-right: 50px;
+}
+
+.suffix {
+  position: absolute;
+  right: 14px;
+  color: #9CA3AF;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.upload-box {
+  border: 2px dashed #E5E7EB;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  background: #FAFAFA;
+  cursor: pointer;
+  height: 110px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.upload-box:hover {
+  background-color: #F3F4F6;
+}
+
+.upload-icon {
+  font-size: 20px;
+  color: #6B7280;
+  margin-bottom: 4px;
+}
+
+.upload-main {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.upload-sub {
+  font-size: 12px;
+  color: #9CA3AF;
+  margin: 2px 0 0 0;
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid #E5E7EB;
+  margin: 28px 0;
+}
+
+.mb-28 {
+  margin-bottom: 28px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-olive {
+  background-color: #48532B;
+  color: #ffffff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  height: 44px;
+}
+
+.btn-olive:hover:not(:disabled) {
+  background-color: #394322;
+}
+
+.btn-cancel {
+  background-color: #ffffff;
+  color: #374151;
+  border: 1px solid #E5E7EB;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  height: 44px;
+}
+
+.btn-cancel:hover:not(:disabled) {
+  background-color: #F9FAFB;
+}
+
+.btn-olive:disabled,
+.btn-cancel:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .form-card {
+    padding: 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
 }
 </style>
