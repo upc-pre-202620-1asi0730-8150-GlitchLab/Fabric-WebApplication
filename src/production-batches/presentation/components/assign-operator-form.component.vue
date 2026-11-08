@@ -1,23 +1,23 @@
 <template>
   <div class="card">
-    <h3 class="card-title">Assign Operators</h3>
-    <p class="card-subtitle">Assign one or more operators to the current production stage.</p>
+    <h3 class="card-title">{{ $t('productionBatches.assignment.title') }}</h3>
+    <p class="card-subtitle">{{ $t('productionBatches.assignment.subtitle') }}</p>
 
     <div class="assign-row">
       <div class="form-group flex-1">
-        <label for="stage">Production Stage *</label>
+        <label for="stage">{{ $t('productionBatches.assignment.stage') }}</label>
         <input id="stage" type="text" :value="currentStage" disabled class="custom-input disabled" />
       </div>
       <div class="form-group flex-2">
-        <label for="operators">Operators *</label>
+        <label for="operators">{{ $t('productionBatches.assignment.operators') }}</label>
         <select id="operators" v-model="selectedOperatorId" class="custom-select">
-          <option value="" disabled>Select operators</option>
+          <option value="" disabled>{{ $t('productionBatches.assignment.selectOperators') }}</option>
           <option v-for="operator in operators" :key="operator.id" :value="operator.id">
             {{ operator.name }} ({{ operator.specialty }})
           </option>
         </select>
       </div>
-      <button type="button" class="btn-olive self-end" @click="$emit('assign-operator')">Assign Operators</button>
+      <button type="button" class="btn-olive self-end" @click="$emit('assign-operator')">{{ $t('productionBatches.assignment.assignOperators') }}</button>
     </div>
 
     <div v-if="errorMessage" class="warning-banner">

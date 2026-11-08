@@ -1,22 +1,22 @@
 <template>
   <div class="card">
-    <h3 class="card-title">Assigned Operators</h3>
-    <p class="card-subtitle">Operators assigned to this batch, grouped by production stage.</p>
+    <h3 class="card-title">{{ $t('productionBatches.assignment.assignedTitle') }}</h3>
+    <p class="card-subtitle">{{ $t('productionBatches.assignment.assignedSubtitle') }}</p>
 
     <table class="custom-table">
       <thead>
         <tr>
-          <th>OPERATOR</th>
-          <th>SPECIALTY</th>
-          <th>STAGE</th>
-          <th>ASSIGNED AT</th>
+          <th>{{ $t('productionBatches.assignment.table.operator') }}</th>
+          <th>{{ $t('productionBatches.assignment.table.specialty') }}</th>
+          <th>{{ $t('productionBatches.assignment.table.stage') }}</th>
+          <th>{{ $t('productionBatches.assignment.table.assignedAt') }}</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="assigned in operators" :key="assigned.id">
           <td class="font-bold">{{ assigned.operatorName }}</td>
           <td>{{ assigned.specialty }}</td>
-          <td>{{ assigned.stage }}</td>
+          <td>{{ translateStage(assigned.stage) }}</td>
           <td>{{ assigned.assignedAt }}</td>
         </tr>
       </tbody>
@@ -31,6 +31,18 @@ export default {
     operators: {
       type: Array,
       default: () => []
+    }
+  },
+  methods: {
+    translateStage(stage) {
+      const keys = {
+        Cutting: 'cutting',
+        Sewing: 'sewing',
+        Finishing: 'finishing',
+        'Quality Check': 'qualityCheck',
+        Completed: 'completed'
+      };
+      return keys[stage] ? this.$t(`productionBatches.stages.${keys[stage]}`) : stage;
     }
   }
 };

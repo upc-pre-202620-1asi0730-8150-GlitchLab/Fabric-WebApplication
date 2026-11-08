@@ -2,19 +2,19 @@
   <div class="page-container" v-if="batch">
     <div class="page-header">
       <div>
-        <h1 class="page-title">Batch Operator Assignment</h1>
-        <p class="page-subtitle">Assign operators to a production batch and stage.</p>
+        <h1 class="page-title">{{ t('productionBatches.views.operatorAssignmentTitle') }}</h1>
+        <p class="page-subtitle">{{ t('productionBatches.views.operatorAssignmentSubtitle') }}</p>
       </div>
-      <router-link to="/production-batches" class="back-link mb-20">&larr; Back to Production Batches</router-link>
+      <router-link to="/production-batches" class="back-link mb-20">&larr; {{ t('productionBatches.views.backToBatches') }}</router-link>
     </div>
 
     <!-- Info Card -->
     <div class="info-card">
       <div class="info-grid">
-        <div><span class="info-label">Batch ID</span><span class="info-value">{{ batch.batchNumber }}</span></div>
-        <div><span class="info-label">Garment Model</span><span class="info-value">{{ batch.garmentModel }}</span></div>
-        <div><span class="info-label">Current Stage</span><span class="info-value">{{ batch.currentStage }}</span></div>
-        <div><span class="badge-in-production">{{ batch.status }}</span></div>
+        <div><span class="info-label">{{ t('productionBatches.batchInfo.batchId') }}</span><span class="info-value">{{ batch.batchNumber }}</span></div>
+        <div><span class="info-label">{{ t('productionBatches.batchInfo.garmentModel') }}</span><span class="info-value">{{ translateModel(batch.garmentModel) }}</span></div>
+        <div><span class="info-label">{{ t('productionBatches.batchInfo.currentStage') }}</span><span class="info-value">{{ translateStage(batch.currentStage) }}</span></div>
+        <div><span class="badge-in-production">{{ translateStatus(batch.status) }}</span></div>
       </div>
     </div>
 
@@ -39,14 +39,14 @@
           </svg>
         </div>
 
-        <h2 class="modal-title">Operators Assigned Successfully</h2>
+        <h2 class="modal-title">{{ t('productionBatches.assignment.successTitle') }}</h2>
         <p class="modal-description">
-          The selected operators have been assigned to <strong>{{ batch.batchNumber }}</strong> in the <strong>{{ batch.currentStage }}</strong> stage.
+          {{ t('productionBatches.assignment.successDescription', { batch: batch.batchNumber, stage: translateStage(batch.currentStage) }) }}
         </p>
 
         <div class="modal-actions">
-          <button type="button" class="btn-outline-olive" @click="goToBatch">View Batch</button>
-          <button type="button" class="btn-olive modal-btn" @click="showSuccessModal = false">OK</button>
+          <button type="button" class="btn-outline-olive" @click="goToBatch">{{ t('productionBatches.assignment.viewBatch') }}</button>
+          <button type="button" class="btn-olive modal-btn" @click="showSuccessModal = false">{{ t('productionBatches.assignment.ok') }}</button>
         </div>
       </div>
     </div>
@@ -63,13 +63,13 @@
           </svg>
         </div>
 
-        <h2 class="modal-title">Unable to Assign Operators</h2>
+        <h2 class="modal-title">{{ t('productionBatches.assignment.errorTitle') }}</h2>
         <p class="modal-description">
-          No operators have been selected.<br />Please select at least one operator to continue.
+          {{ t('productionBatches.assignment.errorNoOperators') }}<br />{{ t('productionBatches.assignment.errorSelectOperator') }}
         </p>
 
         <div class="modal-actions">
-          <button type="button" class="btn-olive modal-btn full-width" @click="showErrorModal = false">OK</button>
+          <button type="button" class="btn-olive modal-btn full-width" @click="showErrorModal = false">{{ t('productionBatches.assignment.ok') }}</button>
         </div>
       </div>
     </div>
@@ -79,12 +79,14 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useProductionStore } from '../../application/store/production.js'
 import AssignOperatorForm from '../components/assign-operator-form.component.vue'
 import AssignedOperatorsTable from '../components/assigned-operators-table.component.vue'
 
 const route = useRoute()
 const router = useRouter()
+const { t } = useI18n()
 const productionStore = useProductionStore()
 
 const batch = ref(null)
@@ -92,6 +94,40 @@ const operators = ref([])
 const assignedList = ref([])
 const selectedOperatorId = ref('')
 const errorMessage = ref('')
+
+const translateModel = (model) => {
+  const keys = {
+    'T-Shirt Basic': 'tshirtBasic',
+    Hoodie: 'hoodie',
+    'Polo Shirt': 'poloShirt',
+    'Jogger Pants': 'joggerPants',
+    Crewneck: 'crewneck',
+    'Tank Top': 'tankTop',
+    Leggings: 'leggings'
+  }
+  return keys[model] ? t(`productionBatches.models.${keys[model]}`) : model
+}
+
+const translateStage = (stage) => {
+  const keys = {
+    Cutting: 'cutting',
+    Sewing: 'sewing',
+    Finishing: 'finishing',
+    'Quality Check': 'qualityCheck',
+    Completed: 'completed'
+  }
+  return keys[stage] ? t(`productionBatches.stages.${keys[stage]}`) : stage
+}
+
+const translateStatus = (status) => {
+  const keys = {
+    'In Production': 'inProduction',
+    'At Risk': 'atRisk',
+    Completed: 'completed',
+    Delayed: 'delayed'
+  }
+  return keys[status] ? t(`productionBatches.statuses.${keys[status]}`) : status
+}
 
 // Estados para los modales
 const showSuccessModal = ref(false)
@@ -130,7 +166,7 @@ const assignOperator = async () => {
   )
 
   if (duplicate) {
-    errorMessage.value = 'Duplicate assignment → Operator is already assigned to this batch and stage.'
+    errorMessage.value = t('productionBatches.assignment.duplicate')
     return
   }
 
