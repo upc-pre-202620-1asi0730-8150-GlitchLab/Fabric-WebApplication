@@ -6,18 +6,18 @@
   <div class="page-container" v-if="batch">
     <div class="page-header">
       <div>
-        <h1 class="page-title">Batch Observations</h1>
-        <p class="page-subtitle">Register and review notes associated with a production batch.</p>
+        <h1 class="page-title">{{ t('productionBatches.observations.viewTitle') }}</h1>
+        <p class="page-subtitle">{{ t('productionBatches.observations.viewDescription') }}</p>
       </div>
-      <router-link to="/production-batches" class="back-link">&larr; Back to Production Batches</router-link>
+      <router-link to="/production-batches" class="back-link">&larr; {{ t('productionBatches.views.backToBatches') }}</router-link>
     </div>
 
     <!-- Info Card (Mantenida localmente sin usar batch-info-card) -->
     <div class="info-card">
       <div class="info-grid">
-        <div><span class="info-label">Batch ID</span><span class="info-value">{{ batch.batchNumber }}</span></div>
-        <div><span class="info-label">Garment Model</span><span class="info-value">{{ batch.garmentModel }}</span></div>
-        <div><span class="info-label">Current Stage</span><span class="info-value">{{ batch.currentStage }}</span></div>
+        <div><span class="info-label">{{ t('productionBatches.batchInfo.batchId') }}</span><span class="info-value">{{ batch.batchNumber }}</span></div>
+        <div><span class="info-label">{{ t('productionBatches.batchInfo.garmentModel') }}</span><span class="info-value">{{ translateModel(batch.garmentModel) }}</span></div>
+        <div><span class="info-label">{{ t('productionBatches.batchInfo.currentStage') }}</span><span class="info-value">{{ translateStage(batch.currentStage) }}</span></div>
       </div>
     </div>
 
@@ -32,13 +32,39 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useProductionStore } from '../../application/store/production.js'
 import BatchObservationsTimeline from '../components/batch-observations-timeline.component.vue'
 
 const route = useRoute()
+const { t } = useI18n()
 const productionStore = useProductionStore()
 const batch = ref(null)
 const observations = ref([])
+
+const translateModel = (model) => {
+  const keys = {
+    'T-Shirt Basic': 'tshirtBasic',
+    Hoodie: 'hoodie',
+    'Polo Shirt': 'poloShirt',
+    'Jogger Pants': 'joggerPants',
+    Crewneck: 'crewneck',
+    'Tank Top': 'tankTop',
+    Leggings: 'leggings'
+  }
+  return keys[model] ? t(`productionBatches.models.${keys[model]}`) : model
+}
+
+const translateStage = (stage) => {
+  const keys = {
+    Cutting: 'cutting',
+    Sewing: 'sewing',
+    Finishing: 'finishing',
+    'Quality Check': 'qualityCheck',
+    Completed: 'completed'
+  }
+  return keys[stage] ? t(`productionBatches.stages.${keys[stage]}`) : stage
+}
 
 const fetchData = async () => {
   try {

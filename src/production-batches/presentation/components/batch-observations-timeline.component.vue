@@ -6,24 +6,24 @@
   <div>
     <!-- Add Observation Card -->
     <div class="card">
-      <h3 class="card-title">Add Observation</h3>
-      <p class="card-subtitle">Document incidents or agreements that are not formal defects.</p>
+      <h3 class="card-title">{{ $t('productionBatches.observations.addTitle') }}</h3>
+      <p class="card-subtitle">{{ $t('productionBatches.observations.addDescription') }}</p>
 
       <div class="form-group mb-16">
-        <label>Observation *</label>
-        <textarea v-model="localText" rows="3" placeholder="Write an observation about this production batch..." class="custom-textarea"></textarea>
+        <label>{{ $t('productionBatches.observations.observation') }}</label>
+        <textarea v-model="localText" rows="3" :placeholder="$t('productionBatches.observations.placeholder')" class="custom-textarea"></textarea>
       </div>
 
       <div class="card-footer">
-        <span class="help-text">Empty text or spaces only &rarr; observation cannot be saved.</span>
-        <button class="btn-olive" :disabled="!localText.trim()" @click="handleSave">Save Observation</button>
+        <span class="help-text">{{ $t('productionBatches.observations.emptyHint') }}</span>
+        <button class="btn-olive" :disabled="!localText.trim()" @click="handleSave">{{ $t('productionBatches.observations.save') }}</button>
       </div>
     </div>
 
     <!-- Timeline Card -->
     <div class="card">
-      <h3 class="card-title">Observation History</h3>
-      <p class="card-subtitle">Most recent observations appear first.</p>
+      <h3 class="card-title">{{ $t('productionBatches.observations.historyTitle') }}</h3>
+      <p class="card-subtitle">{{ $t('productionBatches.observations.historyDescription') }}</p>
 
       <div class="timeline">
         <div v-for="(obs, index) in observations" :key="obs.id">
