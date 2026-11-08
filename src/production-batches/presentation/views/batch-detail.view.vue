@@ -2,10 +2,10 @@
   <div class="page-container" v-if="batch">
     <div class="page-header">
       <div>
-        <h1 class="page-title">Batch Detail</h1>
-        <p class="page-subtitle">Update the operational stage and register production progress.</p>
+        <h1 class="page-title">{{ t('productionBatches.views.batchDetailTitle') }}</h1>
+        <p class="page-subtitle">{{ t('productionBatches.views.batchDetailSubtitle') }}</p>
       </div>
-      <router-link to="/production-batches" class="back-link">&larr; Back to Production Batches</router-link>
+      <router-link to="/production-batches" class="back-link">&larr; {{ t('productionBatches.views.backToBatches') }}</router-link>
     </div>
 
     <batch-info-card
@@ -28,6 +28,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useProductionStore } from '../../application/store/production.js'
 import BatchInfoCard from '../components/batch-info-card.component.vue'
 import StageProgressStepper from '../components/stage-progress-stepper.component.vue'
@@ -35,6 +36,7 @@ import UpdateStageForm from '../components/update-stage-form.component.vue'
 
 const route = useRoute()
 const router = useRouter()
+const { t } = useI18n()
 const productionStore = useProductionStore()
 const batch = ref(null)
 
@@ -58,7 +60,7 @@ const saveStageUpdate = async (updateForm) => {
     router.push('/production-batches')
   } catch (err) {
     console.error('Error updating stage:', err)
-    alert('Could not update the stage. Please try again.')
+    alert(t('productionBatches.validation.updateFailure'))
   }
 }
 </script>

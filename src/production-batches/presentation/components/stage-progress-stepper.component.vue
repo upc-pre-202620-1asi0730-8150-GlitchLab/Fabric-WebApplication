@@ -1,13 +1,13 @@
 <template>
   <div class="card">
-    <h3 class="card-title">Production Stages</h3>
-    <p class="card-subtitle">Current operational progress of the batch.</p>
+    <h3 class="card-title">{{ $t('productionBatches.stageProgress.title') }}</h3>
+    <p class="card-subtitle">{{ $t('productionBatches.stageProgress.subtitle') }}</p>
 
     <div class="stepper">
       <div v-for="(stage, idx) in stages" :key="stage" class="step-wrapper">
         <div :class="['step-item', getStageStatus(stage)]">
           <div class="step-circle">{{ getStageStatus(stage) === 'completed' ? '✓' : idx + 1 }}</div>
-          <span :class="['step-label', { bold: stage === currentStage }]">{{ stage }}</span>
+          <span :class="['step-label', { bold: stage === currentStage }]">{{ translateStage(stage) }}</span>
         </div>
         <div v-if="idx < stages.length - 1" :class="['step-line', { active: idx < currentStageIndex }]"></div>
       </div>
@@ -34,6 +34,16 @@ export default {
     }
   },
   methods: {
+    translateStage(stage) {
+      const keys = {
+        Cutting: 'cutting',
+        Sewing: 'sewing',
+        Finishing: 'finishing',
+        'Quality Check': 'qualityCheck',
+        Completed: 'completed'
+      };
+      return keys[stage] ? this.$t(`productionBatches.stages.${keys[stage]}`) : stage;
+    },
     getStageStatus(stage) {
       const index = this.stages.indexOf(stage);
       if (index < this.currentStageIndex) return 'completed';

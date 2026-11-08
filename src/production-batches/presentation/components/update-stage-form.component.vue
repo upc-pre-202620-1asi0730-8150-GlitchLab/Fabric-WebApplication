@@ -1,32 +1,32 @@
 <template>
   <div class="card">
-    <h3 class="card-title">Update Production Stage</h3>
-    <p class="card-subtitle">Register the quantity processed and move the batch to its next stage.</p>
+    <h3 class="card-title">{{ $t('productionBatches.stageProgress.updateTitle') }}</h3>
+    <p class="card-subtitle">{{ $t('productionBatches.stageProgress.updateSubtitle') }}</p>
 
     <div>
       <div class="form-grid">
         <div class="form-group">
-          <label for="newStage">New Stage *</label>
+          <label for="newStage">{{ $t('productionBatches.stageProgress.newStage') }}</label>
           <select id="newStage" v-model="form.newStage" class="custom-select">
-            <option v-for="stage in stages" :key="stage" :value="stage">{{ stage }}</option>
+            <option v-for="stage in stages" :key="stage" :value="stage">{{ translateStage(stage) }}</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="processedQuantity">Processed Quantity *</label>
+          <label for="processedQuantity">{{ $t('productionBatches.stageProgress.processedQuantity') }}</label>
           <div class="input-with-suffix">
-            <input id="processedQuantity" type="number" v-model.number="form.processedQuantity" placeholder="e.g. 640" class="custom-input" />
-            <span class="suffix">garments</span>
+            <input id="processedQuantity" type="number" v-model.number="form.processedQuantity" :placeholder="$t('productionBatches.stageProgress.processedQuantityPlaceholder')" class="custom-input" />
+            <span class="suffix">{{ $t('productionBatches.stageProgress.garments') }}</span>
           </div>
         </div>
         <div class="form-group full-width">
-          <label for="stageNotes">Notes</label>
-          <input id="stageNotes" type="text" v-model="form.notes" placeholder="Optional production notes" class="custom-input" />
+          <label for="stageNotes">{{ $t('productionBatches.stageProgress.notes') }}</label>
+          <input id="stageNotes" type="text" v-model="form.notes" :placeholder="$t('productionBatches.stageProgress.notesPlaceholder')" class="custom-input" />
         </div>
       </div>
 
       <div class="form-actions">
-        <button type="button" class="btn-cancel" @click="$emit('cancel')">Cancel</button>
-        <button type="button" class="btn-olive" @click="handleUpdate">Update Stage</button>
+        <button type="button" class="btn-cancel" @click="$emit('cancel')">{{ $t('productionBatches.stageProgress.cancel') }}</button>
+        <button type="button" class="btn-olive" @click="handleUpdate">{{ $t('productionBatches.stageProgress.update') }}</button>
       </div>
     </div>
   </div>
@@ -61,6 +61,16 @@ export default {
     }
   },
   methods: {
+    translateStage(stage) {
+      const keys = {
+        Cutting: 'cutting',
+        Sewing: 'sewing',
+        Finishing: 'finishing',
+        'Quality Check': 'qualityCheck',
+        Completed: 'completed'
+      };
+      return keys[stage] ? this.$t(`productionBatches.stages.${keys[stage]}`) : stage;
+    },
     handleUpdate() {
       this.$emit('update-stage', { ...this.form });
     }

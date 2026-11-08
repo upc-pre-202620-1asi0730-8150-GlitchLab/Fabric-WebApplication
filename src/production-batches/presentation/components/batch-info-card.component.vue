@@ -1,12 +1,12 @@
 <template>
   <div class="info-card">
     <div class="info-grid">
-      <div><span class="info-label">Batch ID</span><span class="info-value">{{ batch.batchNumber }}</span></div>
-      <div><span class="info-label">Garment Model</span><span class="info-value">{{ batch.garmentModel }}</span></div>
-      <div><span class="info-label">Current Stage</span><span class="info-value">{{ batch.currentStage }}</span></div>
-      <div><span class="info-label">Projected Qty</span><span class="info-value">{{ batch.projectedQuantity }} pieces</span></div>
+      <div><span class="info-label">{{ $t('productionBatches.batchInfo.batchId') }}</span><span class="info-value">{{ batch.batchNumber }}</span></div>
+      <div><span class="info-label">{{ $t('productionBatches.batchInfo.garmentModel') }}</span><span class="info-value">{{ translateValue(batch.garmentModel, 'models') }}</span></div>
+      <div><span class="info-label">{{ $t('productionBatches.batchInfo.currentStage') }}</span><span class="info-value">{{ translateValue(batch.currentStage, 'stages') }}</span></div>
+      <div><span class="info-label">{{ $t('productionBatches.batchInfo.projectedQuantity') }}</span><span class="info-value">{{ batch.projectedQuantity }} {{ $t('productionBatches.batchInfo.pieces') }}</span></div>
     </div>
-    <button v-if="showAssignButton" class="btn-olive" @click="$emit('assign-click')">Assign Operators</button>
+    <button v-if="showAssignButton" class="btn-olive" @click="$emit('assign-click')">{{ $t('productionBatches.assignment.assignOperators') }}</button>
   </div>
 </template>
 
@@ -23,7 +23,31 @@ export default {
       default: false
     }
   },
-  emits: ['assign-click']
+  emits: ['assign-click'],
+  methods: {
+    translateValue(value, category) {
+      const keys = {
+        models: {
+          'T-Shirt Basic': 'tshirtBasic',
+          Hoodie: 'hoodie',
+          'Polo Shirt': 'poloShirt',
+          'Jogger Pants': 'joggerPants',
+          Crewneck: 'crewneck',
+          'Tank Top': 'tankTop',
+          Leggings: 'leggings'
+        },
+        stages: {
+          Cutting: 'cutting',
+          Sewing: 'sewing',
+          Finishing: 'finishing',
+          'Quality Check': 'qualityCheck',
+          Completed: 'completed'
+        }
+      };
+      const key = keys[category]?.[value];
+      return key ? this.$t(`productionBatches.${category}.${key}`) : value;
+    }
+  }
 };
 </script>
 
