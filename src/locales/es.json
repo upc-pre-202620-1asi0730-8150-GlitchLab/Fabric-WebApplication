@@ -166,7 +166,8 @@
       "excel": "Excel (.xlsx)",
       "cancel": "Cancelar",
       "submit": "Exportar informe"
-    }
+    },
+    "placeholder": "Vista del Dashboard — contenido próximamente."
   },
 
   "productionBatches": {

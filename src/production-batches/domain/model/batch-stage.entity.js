@@ -1,4 +1,4 @@
-export class BatchStage {
+﻿export class BatchStage {
     constructor({
                     id = 0,
                     batchId = 0,

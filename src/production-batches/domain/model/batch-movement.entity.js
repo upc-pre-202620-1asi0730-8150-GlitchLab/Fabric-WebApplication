@@ -1,4 +1,4 @@
-export class BatchMovement {
+﻿export class BatchMovement {
     constructor({
                     id = 0,
                     batchId = 0,

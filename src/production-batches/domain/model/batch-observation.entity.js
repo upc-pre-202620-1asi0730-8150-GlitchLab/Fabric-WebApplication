@@ -1,4 +1,4 @@
-export class BatchObservation {
+﻿export class BatchObservation {
     constructor({
                     id = 0,
                     batchId = 0,

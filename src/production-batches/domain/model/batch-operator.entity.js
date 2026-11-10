@@ -1,4 +1,4 @@
-export class BatchOperator {
+﻿export class BatchOperator {
     constructor({
                     id = 0,
                     batchId = 0,

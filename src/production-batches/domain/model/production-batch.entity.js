@@ -1,4 +1,4 @@
-export class ProductionBatch {
+﻿export class ProductionBatch {
     constructor({
                     id = 0,
                     batchNumber = '',
