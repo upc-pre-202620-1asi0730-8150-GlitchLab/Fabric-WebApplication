@@ -3,6 +3,21 @@
     "occurred": "An error occurred"
   },
 
+  "identityAccess": {
+    "roleSelection": {
+      "title": "Welcome to Fabric",
+      "subtitle": "Choose how you want to sign in",
+      "roles": {
+        "qualityInspector": "Sign in as quality inspector",
+        "productionSupervisor": "Sign in as production supervisor"
+      }
+    },
+    "qualityInspectorHome": {
+      "title": "Quality inspector area",
+      "comingSoon": "This view is under construction."
+    }
+  },
+
   "sidebar": {
     "companyName": "Fabric",
     "dashboard": "Dashboard",

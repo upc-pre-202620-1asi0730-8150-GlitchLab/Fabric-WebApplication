@@ -3,6 +3,21 @@
     "occurred": "Ocurrió un error"
   },
 
+  "identityAccess": {
+    "roleSelection": {
+      "title": "Bienvenido a Fabric",
+      "subtitle": "Elige cómo quieres iniciar sesión",
+      "roles": {
+        "qualityInspector": "Iniciar sesión como inspector de calidad",
+        "productionSupervisor": "Iniciar sesión como supervisor de producción"
+      }
+    },
+    "qualityInspectorHome": {
+      "title": "Área del inspector de calidad",
+      "comingSoon": "Esta vista está en construcción."
+    }
+  },
+
   "sidebar": {
     "companyName": "Fabric",
     "dashboard": "Panel de Control",
@@ -76,7 +91,64 @@
       "cancel": "Cancelar",
       "submit": "Exportar informe"
     },
-    "placeholder": "Vista de Dashboard — contenido próximamente."
+    "subtitle": "Resumen de la producción de hoy",
+    "filters": {
+      "date": "Fecha",
+      "today": "Hoy",
+      "batch": "Lote",
+      "allBatches": "Todos los lotes"
+    },
+    "exportButton": "Exportar Reporte",
+    "loading": "Cargando análisis de producción...",
+    "errorMessage": "No se pudo cargar el análisis del panel.",
+    "stats": {
+      "totalProduced": { "title": "Total producido hoy", "description": "prendas" },
+      "averagePerHour": { "title": "Promedio por hora", "description": "prendas / hora" },
+      "dailyCompliance": { "title": "Cumplimiento diario", "description": "meta de producción diaria" }
+    },
+    "productionChart": {
+      "title": "Producción por día",
+      "subtitle": "Prendas producidas en los últimos días",
+      "noData": "No hay datos de producción disponibles",
+      "datasetLabel": "Prendas producidas",
+      "tooltipUnit": "prendas"
+    },
+    "batchesByStage": {
+      "title": "Lotes por etapa",
+      "subtitle": "Etapa operativa actual",
+      "empty": "No hay lotes disponibles"
+    },
+    "batchProgress": {
+      "title": "Progreso de lotes",
+      "subtitle": "Progreso de los lotes de producción actuales",
+      "empty": "No hay lotes disponibles"
+    },
+    "export": {
+      "title": "Exportar Reporte de Producción y Calidad",
+      "subtitle": "Selecciona el periodo, la información y el formato del reporte.",
+      "reportType": "Tipo de reporte",
+      "reportTypes": {
+        "productionQuality": "Producción y Calidad",
+        "production": "Producción",
+        "quality": "Calidad"
+      },
+      "period": "Periodo",
+      "batch": "Lote",
+      "allBatches": "Todos los lotes",
+      "include": "Incluir en el reporte",
+      "fields": {
+        "productionSummary": "Resumen de producción",
+        "qualityIndicators": "Indicadores de calidad",
+        "batchProductivity": "Productividad de lotes",
+        "defectsRework": "Defectos y reprocesos",
+        "machineDowntime": "Tiempo de inactividad de máquinas",
+        "waste": "Desperdicio"
+      },
+      "format": "Formato",
+      "formats": { "pdf": "PDF", "excel": "Excel (.xlsx)" },
+      "cancel": "Cancelar",
+      "exportButton": "Exportar Reporte"
+    }
   },
 
   "productionBatches": {
