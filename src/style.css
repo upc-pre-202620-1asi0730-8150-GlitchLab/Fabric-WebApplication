@@ -689,9 +689,6 @@ input {
 }
 
 
-/* =========================================
-   ALERT FILTERS
-   ========================================= */
 
 .alerts-filters {
   display: grid;
@@ -932,66 +929,45 @@ label {
 .alert-filter select:focus {
   border-color: #aeb4b8;
 }
-/* =========================================
-   ALERT SUMMARY
-   ========================================= */
 
 .alerts-summary {
   display: grid;
-
   grid-template-columns: repeat(3, 1fr);
-
   gap: 10px;
-
   margin-bottom: 15px;
 }
 
 .alert-summary-card {
   min-height: 67px;
-
   background: white;
-
   border: 1px solid #dce1e4;
   border-radius: 5px;
-
   display: flex;
   align-items: center;
-
   padding: 9px;
-
   gap: 14px;
 }
 
 
-/* =========================================
-   SUMMARY ICONS
-   ========================================= */
-
 .summary-icon {
   width: 34px;
   height: 34px;
-
   border-radius: 50%;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   flex-shrink: 0;
-
   font-size: 14px;
   font-weight: 600;
 }
 
 .critical-icon {
   background: #ffe0e3;
-
   color: #f20d19;
 }
 
 .warning-icon {
   background: #fff0c9;
-
   color: #f2a900;
 }
 
@@ -999,64 +975,38 @@ label {
   background: #e5f0df;
 }
 
-
-/* =========================================
-   SUMMARY TEXT
-   ========================================= */
-
 .alert-summary-card > div:last-child {
   display: grid;
-
   grid-template-columns: auto auto;
-
   column-gap: 9px;
-
   align-items: center;
 }
 
 .alert-summary-card span {
   grid-column: 1 / -1;
-
   color: #50565c;
-
   font-size: 9px;
 }
 
 .alert-summary-card strong {
   color: #30353a;
-
   font-size: 21px;
-
   font-weight: 600;
-
   line-height: 25px;
 }
 
 .alert-summary-card small {
   color: #9aa0a5;
-
   font-size: 8px;
 }
-/* =========================================
-   PRODUCTION ALERTS
-   ========================================= */
 
 .production-alerts {
   background: white;
-
   border: 1px solid #dce1e4;
-
   border-radius: 6px;
-
   padding: 12px 13px 10px;
-
   margin-bottom: 14px;
 }
-
-
-/* =========================================
-   SECTION HEADER
-   ========================================= */
 
 .alerts-section-header {
   padding: 0 1px 8px;
@@ -1064,59 +1014,33 @@ label {
 
 .alerts-section-header h2 {
   margin: 0;
-
   color: #343a40;
-
   font-size: 13px;
-
   font-weight: 600;
 }
 
 .alerts-section-header p {
   margin: 4px 0 0;
-
   color: #9ba1a6;
-
   font-size: 8px;
 }
 
-
-/* =========================================
-   ALERT LIST
-   ========================================= */
-
 .alerts-list {
   display: flex;
-
   flex-direction: column;
-
   gap: 5px;
 }
 
-
-/* =========================================
-   ALERT ROW
-   ========================================= */
-
 .alert-row {
   min-height: 39px;
-
   border: 1px solid #dce1e4;
-
   border-radius: 5px;
-
   display: grid;
-
   grid-template-columns: 70px 1fr 100px;
-
   align-items: center;
-
   gap: 14px;
-
   padding: 5px 11px;
-
   cursor: pointer;
-
   transition: background 0.15s ease;
 }
 
@@ -1128,88 +1052,56 @@ label {
   border-color: #f0c7ca;
 }
 
-
-/* =========================================
-   STATUS
-   ========================================= */
-
 .alert-status {
   height: 22px;
-
   border-radius: 4px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: 7px;
-
   font-weight: 700;
 }
 
 .status-critical {
   background: #f20d19;
-
   color: white;
 }
 
 .status-warning {
   background: #ffda70;
-
   color: #252525;
 }
 
 .status-optimal {
   background: #e2ecd9;
-
   color: #53651d;
 }
-/* =========================================
-   ALERT INFORMATION
-   ========================================= */
 
 .alert-information {
   min-width: 0;
-
   display: flex;
-
   flex-direction: column;
-
   gap: 3px;
 }
 
 .alert-information strong {
   color: #353b40;
-
   font-size: 9px;
-
   font-weight: 600;
 }
 
 .alert-information span {
   color: #899198;
-
   font-size: 8px;
 }
 
-
-/* =========================================
-   ALERT ACTION
-   ========================================= */
-
 .alert-action {
   border: none;
-
   background: transparent;
-
   color: #53651d;
-
   font-size: 8px;
-
   font-weight: 600;
-
   text-align: right;
-
   cursor: pointer;
 }
 
@@ -1218,83 +1110,47 @@ label {
 }
 
 
-/* =========================================
-   NO ALERTS
-   ========================================= */
-
 .no-alerts {
   padding: 20px;
-
   text-align: center;
-
   color: #969da2;
-
   font-size: 10px;
 }
 
-/* =========================================
-   ALERT DETAIL
-   ========================================= */
 
 .alert-detail {
   min-height: 120px;
-
   background: white;
-
   border: 1px solid #dce1e4;
-
   border-radius: 6px;
-
   padding: 11px 14px;
 }
 
-
-/* =========================================
-   DETAIL HEADER
-   ========================================= */
-
 .detail-header h2 {
   margin: 0;
-
   color: #343a40;
-
   font-size: 13px;
-
   font-weight: 600;
 }
 
 .detail-header p {
   margin: 4px 0 11px;
-
   color: #9ba1a6;
-
   font-size: 8px;
 }
 
-
-/* =========================================
-   DETAIL CONTENT
-   ========================================= */
-
 .detail-content {
   display: flex;
-
   align-items: center;
-
   min-height: 48px;
 }
 
 .detail-item {
   min-width: 108px;
-
   padding: 0 16px;
-
   border-right: 1px solid #e0e4e7;
-
   display: flex;
-
   flex-direction: column;
-
   gap: 5px;
 }
 
@@ -1305,26 +1161,18 @@ label {
 .detail-item span,
 .detail-status span {
   color: #90979d;
-
   font-size: 8px;
 }
 
 .detail-item strong {
   color: #30353a;
-
   font-size: 17px;
-
   font-weight: 600;
 }
 
 .detail-danger {
   color: #f20d19 !important;
 }
-
-
-/* =========================================
-   MACHINE
-   ========================================= */
 
 .machine-detail {
   min-width: 145px;
@@ -1334,80 +1182,49 @@ label {
   font-size: 10px;
 }
 
-
-/* =========================================
-   DETAIL STATUS
-   ========================================= */
-
 .detail-status {
   min-width: 100px;
-
   padding-left: 16px;
-
   display: flex;
-
   flex-direction: column;
-
   gap: 5px;
 }
 
 .detail-status strong {
   width: 70px;
-
   height: 23px;
-
   border-radius: 4px;
-
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   font-size: 7px;
 }
 
 .detail-status-critical {
   background: #f20d19;
-
   color: white;
 }
 
 .detail-status-warning {
   background: #ffda70;
-
   color: #252525;
 }
 
 .detail-status-optimal {
   background: #e2ecd9;
-
   color: #53651d;
 }
 
-
-/* =========================================
-   REVIEW BUTTON
-   ========================================= */
-
 .review-button {
   margin-left: auto;
-
   width: 120px;
-
   height: 32px;
-
   border: none;
-
   border-radius: 5px;
-
   background: #52621c;
-
   color: white;
-
   font-size: 8px;
-
   font-weight: 600;
-
   cursor: pointer;
 }
 
@@ -1415,24 +1232,14 @@ label {
   background: #465317;
 }
 
-
-/* =========================================
-   EMPTY DETAIL
-   ========================================= */
-
 .empty-detail {
   display: flex;
-
   align-items: center;
   justify-content: center;
-
   color: #969da2;
 
   font-size: 10px;
 }
-/* =========================================
-   IDENTITY ACCESS
-   ========================================= */
 
 .role-selection {
   position: relative;
@@ -1529,10 +1336,6 @@ label {
   background: #fafaf7;
   color: #5c5c54;
 }
-
-/* =========================================
-   RESPONSIVE
-   ========================================= */
 
 @media (max-width: 900px) {
 
