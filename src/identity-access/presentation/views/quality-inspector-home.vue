@@ -20,16 +20,3 @@ const logOut = () => {
     <pv-button :label="t('sidebar.logOut')" icon="pi pi-sign-out" severity="secondary" @click="logOut"/>
   </section>
 </template>
-
-<style scoped>
-.inspector-home {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  background: #fafaf7;
-  color: #5c5c54;
-}
-</style>
