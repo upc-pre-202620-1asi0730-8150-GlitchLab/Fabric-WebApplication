@@ -22,6 +22,75 @@
       "shrinkageTest": "Prueba de encogimiento"
     },
     "placeholder": "Esta vista está en construcción.",
+    "parameters": {
+      "title": "Parámetros de inspección",
+      "subtitle": "Registra los parámetros evaluados durante la inspección de un rollo de tela para conservar evidencia de las condiciones en que se recibió el material.",
+      "rollSection": {
+        "title": "Rollo de tela",
+        "subtitle": "Selecciona el rollo registrado que vas a evaluar."
+      },
+      "parametersSection": {
+        "title": "Parámetros evaluados",
+        "subtitle": "Registra el tono, ancho, longitud y defectos encontrados en el rollo."
+      },
+      "fields": {
+        "roll": "Rollo de tela",
+        "shadeCondition": "Matiz / tono",
+        "fabricWidth": "Ancho",
+        "fabricLength": "Longitud",
+        "defectsDetected": "Defectos detectados",
+        "observations": "Observaciones"
+      },
+      "placeholders": {
+        "roll": "Selecciona un rollo",
+        "shadeCondition": "Selecciona la condición del tono",
+        "fabricWidth": "ej. 150",
+        "fabricLength": "ej. 50",
+        "defectsDetected": "Selecciona el tipo de defecto",
+        "observations": "Describe los hallazgos o condiciones observadas durante la inspección."
+      },
+      "units": {
+        "width": "cm",
+        "length": "m"
+      },
+      "summary": {
+        "rollId": "ID del rollo",
+        "supplier": "Proveedor",
+        "receptionDate": "Fecha de recepción",
+        "sample": "Tela / muestra del cliente",
+        "initialResult": "Resultado inicial"
+      },
+      "options": {
+        "shadeCondition": {
+          "matches": "Coincide con la muestra aprobada",
+          "slightVariation": "Variación leve",
+          "offShade": "Fuera de tono"
+        },
+        "defects": {
+          "none": "Ninguno",
+          "holes": "Huecos",
+          "stains": "Manchas",
+          "shadeDifference": "Diferencia de matiz"
+        }
+      },
+      "errors": {
+        "required": "Este campo es obligatorio.",
+        "invalidMeasure": "El valor debe ser mayor que cero."
+      },
+      "hint": "Estos parámetros se guardan como evidencia de la condición del material al recibirlo.",
+      "empty": "No hay rollos pendientes de registrar parámetros.",
+      "actions": {
+        "save": "Guardar parámetros",
+        "clear": "Limpiar formulario"
+      },
+      "messages": {
+        "savedTitle": "Parámetros guardados",
+        "saved": "Los parámetros de inspección se registraron.",
+        "errorTitle": "Error",
+        "saveError": "No se pudieron guardar los parámetros.",
+        "loadError": "No se pudieron cargar los rollos registrados."
+      }
+    },
     "newInspection": {
       "title": "Nueva inspección de rollo",
       "subtitle": "Registra el rollo de tela recibido y verifica su conformidad inicial antes del corte.",
