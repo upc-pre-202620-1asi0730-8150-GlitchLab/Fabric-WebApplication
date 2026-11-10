@@ -2,38 +2,38 @@
   <div class="page-container">
     <div class="top-nav">
       <div>
-        <h1 class="page-title">Inspection Parameters</h1>
-        <p class="page-subtitle">Register the parameters evaluated during the fabric roll inspection.</p>
+        <h1 class="page-title">{{ t('quality.parameters.title') }}</h1>
+        <p class="page-subtitle">{{ t('quality.parameters.subtitle') }}</p>
       </div>
-      <button class="back-link" @click="goBack">← Back to Quality</button>
+      <button class="back-link" @click="goBack">← {{ t('quality.back') }}</button>
     </div>
 
     <div class="info-card">
-      <h3 class="card-caption">Fabric Roll Information</h3>
+      <h3 class="card-caption">{{ t('quality.parameters.info.title') }}</h3>
       <div class="info-row">
         <div class="info-item">
-          <span>Roll ID</span>
+          <span>{{ t('quality.parameters.info.rollId') }}</span>
           <strong>{{ roll.rollId || '—' }}</strong>
         </div>
         <div class="info-item">
-          <span>Supplier</span>
+          <span>{{ t('quality.parameters.info.supplier') }}</span>
           <strong>{{ roll.supplier || '—' }}</strong>
         </div>
         <div class="info-item">
-          <span>Reception Date</span>
+          <span>{{ t('quality.parameters.info.receptionDate') }}</span>
           <strong>{{ roll.inspectionDate || '—' }}</strong>
         </div>
         <div class="info-item">
-          <span>Fabric / Client Sample</span>
+          <span>{{ t('quality.parameters.info.sample') }}</span>
           <strong>{{ roll.sample || 'T-Shirt Basic' }}</strong>
         </div>
         <div class="info-item">
-          <span>Initial Result</span>
+          <span>{{ t('quality.parameters.info.initialResult') }}</span>
           <span
               class="badge"
               :class="roll.initialResult === 'Conforming' ? 'badge-conforming' : 'badge-observed'"
           >
-            {{ roll.initialResult || 'Conforming' }}
+            {{ display(RESULT_STATUS_DISPLAY, roll.initialResult || 'Conforming') }}
           </span>
         </div>
       </div>
@@ -43,119 +43,117 @@
       <div class="section-header">
         <div class="step-badge">1</div>
         <div>
-          <h2 class="section-title">Inspection Parameters</h2>
-          <p class="section-subtitle">Record the physical and visual conditions evaluated during the inspection.</p>
+          <h2 class="section-title">{{ t('quality.parameters.section.title') }}</h2>
+          <p class="section-subtitle">{{ t('quality.parameters.section.subtitle') }}</p>
         </div>
       </div>
 
       <div class="form-grid">
         <div class="form-group">
-          <label>Fabric Width *</label>
+          <label>{{ t('quality.parameters.fields.fabricWidth') }} *</label>
           <div class="input-with-suffix">
-            <input v-model.number="paramsForm.fabricWidth" type="number" placeholder="e.g. 150" required />
+            <input v-model.number="paramsForm.fabricWidth" type="number" :placeholder="t('quality.parameters.placeholders.fabricWidth')" required />
             <span class="suffix">cm</span>
           </div>
         </div>
 
         <div class="form-group">
-          <label>Fabric Weight / GSM *</label>
+          <label>{{ t('quality.parameters.fields.fabricWeight') }} *</label>
           <div class="input-with-suffix">
-            <input v-model.number="paramsForm.fabricWeight" type="number" placeholder="e.g. 220" required />
+            <input v-model.number="paramsForm.fabricWeight" type="number" :placeholder="t('quality.parameters.placeholders.fabricWeight')" required />
             <span class="suffix">g/m²</span>
           </div>
         </div>
 
         <div class="form-group">
-          <label>Shade / Color Condition *</label>
+          <label>{{ t('quality.parameters.fields.shadeCondition') }} *</label>
           <select v-model="paramsForm.shadeCondition" required>
-            <option value="Matches approved sample">Matches approved sample</option>
-            <option value="Slight variation">Slight variation</option>
-            <option value="Off-shade">Off-shade</option>
+            <option v-for="option in shadeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label>Weave Condition *</label>
+          <label>{{ t('quality.parameters.fields.weaveCondition') }} *</label>
           <select v-model="paramsForm.weaveCondition" required>
-            <option value="No weave defects">No weave defects</option>
-            <option value="Minor slubs">Minor slubs</option>
-            <option value="Defects detected">Defects detected</option>
+            <option v-for="option in weaveOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label>Surface Condition *</label>
+          <label>{{ t('quality.parameters.fields.surfaceCondition') }} *</label>
           <select v-model="paramsForm.surfaceCondition" required>
-            <option value="No stains or damage">No stains or damage</option>
-            <option value="Slight grease traces">Slight grease traces</option>
-            <option value="Damaged surface">Damaged surface</option>
+            <option v-for="option in surfaceOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label>Defects Detected</label>
+          <label>{{ t('quality.parameters.fields.defectsDetected') }}</label>
           <select v-model="paramsForm.defectsDetected">
-            <option value="None">None</option>
-            <option value="Holes">Holes</option>
-            <option value="Stains">Stains</option>
-            <option value="Shade difference">Shade difference</option>
+            <option v-for="option in defectOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
           </select>
         </div>
 
         <div class="form-group full-width">
-          <label>Inspection Evidence / Observations</label>
+          <label>{{ t('quality.parameters.fields.observations') }}</label>
           <textarea
               v-model="paramsForm.observations"
               rows="3"
-              placeholder="Describe findings, variations, defects or conditions observed during the inspection."
+              :placeholder="t('quality.parameters.placeholders.observations')"
           ></textarea>
         </div>
       </div>
 
       <div class="form-footer">
         <div class="evidence-note">
-          These parameters will be stored as evidence of the material condition at reception.
+          {{ t('quality.parameters.note') }}
         </div>
         <div class="footer-actions">
-          <button type="button" class="btn-cancel" @click="goBack">Cancel</button>
-          <button type="submit" class="btn-submit">Save Parameters</button>
+          <button type="button" class="btn-cancel" @click="goBack">{{ t('quality.parameters.actions.cancel') }}</button>
+          <button type="submit" class="btn-submit">{{ t('quality.parameters.actions.save') }}</button>
         </div>
       </div>
     </form>
 
     <div class="section-card">
-      <h2 class="section-title">Inspection Record History</h2>
-      <p class="section-subtitle">Previous physical and visual condition parameter records for this roll.</p>
+      <h2 class="section-title">{{ t('quality.parameters.history.title') }}</h2>
+      <p class="section-subtitle">{{ t('quality.parameters.history.subtitle') }}</p>
 
       <table class="history-table">
         <thead>
         <tr>
-          <th>Record Date</th>
-          <th>Width / Weight</th>
-          <th>Shade Condition</th>
-          <th>Weave & Surface</th>
-          <th>Defects Detected</th>
-          <th>Observations</th>
+          <th>{{ t('quality.parameters.history.columns.date') }}</th>
+          <th>{{ t('quality.parameters.history.columns.measures') }}</th>
+          <th>{{ t('quality.parameters.history.columns.shade') }}</th>
+          <th>{{ t('quality.parameters.history.columns.weaveSurface') }}</th>
+          <th>{{ t('quality.parameters.history.columns.defects') }}</th>
+          <th>{{ t('quality.parameters.history.columns.observations') }}</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="(record, index) in roll.parameterHistory" :key="index">
           <td>{{ record.date }}</td>
-          <td>{{ record.fabricWidth }} cm · {{ record.fabricWeight }} g/m²</td>
-          <td>{{ record.shadeCondition }}</td>
-          <td>{{ record.weaveCondition }} / {{ record.surfaceCondition }}</td>
+          <td>
+            {{ record.fabricWidth }} {{ t('quality.parameters.units.width') }}
+            <template v-if="record.fabricWeight"> · {{ record.fabricWeight }} {{ t('quality.parameters.units.weight') }}</template>
+            <template v-else-if="record.fabricLength"> · {{ record.fabricLength }} {{ t('quality.parameters.units.length') }}</template>
+          </td>
+          <td>{{ labelOf(shadeOptions, record.shadeCondition) }}</td>
+          <td>
+            <template v-if="record.weaveCondition">{{ labelOf(weaveOptions, record.weaveCondition) }} / {{ labelOf(surfaceOptions, record.surfaceCondition) }}</template>
+            <template v-else>—</template>
+          </td>
           <td>
               <span
                   class="badge"
                   :class="record.defectsDetected === 'None' ? 'badge-conforming' : 'badge-observed'"
               >
-                {{ record.defectsDetected }}
+                {{ labelOf(defectOptions, record.defectsDetected) }}
               </span>
           </td>
           <td>{{ record.observations || '—' }}</td>
         </tr>
         <tr v-if="!roll.parameterHistory || roll.parameterHistory.length === 0">
-          <td colspan="6" class="empty-cell">No inspection parameter records registered yet for this roll.</td>
+          <td colspan="6" class="empty-cell">{{ t('quality.parameters.history.empty') }}</td>
         </tr>
         </tbody>
       </table>
@@ -164,13 +162,32 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { FabricInspectionService } from '../../infrastructure/fabric-inspection.service.js'
+import {
+  DEFECT_OPTIONS,
+  RESULT_STATUS_DISPLAY,
+  SHADE_CONDITION_OPTIONS,
+  SURFACE_CONDITION_OPTIONS,
+  WEAVE_PARAMETER_OPTIONS
+} from '../inspection-options.js'
 
 const route = useRoute()
 const router = useRouter()
+const { t } = useI18n()
 const roll = ref({})
+
+const translate = (options) => options.map(({ value, labelKey }) => ({ value, label: t(labelKey) }))
+const shadeOptions = computed(() => translate(SHADE_CONDITION_OPTIONS))
+const weaveOptions = computed(() => translate(WEAVE_PARAMETER_OPTIONS))
+const surfaceOptions = computed(() => translate(SURFACE_CONDITION_OPTIONS))
+const defectOptions = computed(() => translate(DEFECT_OPTIONS))
+
+const display = (map, value) => map[value] ? t(map[value].labelKey) : value
+
+const labelOf = (options, value) => options.find(option => option.value === value)?.label ?? value ?? '—'
 
 const paramsForm = reactive({
   fabricWidth: 150,

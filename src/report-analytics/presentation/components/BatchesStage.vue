@@ -1,61 +1,39 @@
 <script setup>
-import { useProductionStore } from '../../../production-batches/application/store/production.js'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { STAGE_LABEL_KEYS } from '../stage-labels.js'
 
-const productionStore = useProductionStore()
+const props = defineProps({
+  batches: { type: Array, default: () => [] }
+})
+
 const { t } = useI18n()
 
-const translateStage = (stage) => {
-  const stageKeys = {
-    Cutting: 'dashboard.stages.cutting',
-    Sewing: 'dashboard.stages.sewing',
-    Finishing: 'dashboard.stages.finishing',
-    Unknown: 'dashboard.stages.unknown'
-  }
-  return stageKeys[stage] ? t(stageKeys[stage]) : stage
-}
+const batchesByStage = computed(() => props.batches.reduce((acc, batch) => {
+  const stage = batch.currentStage || 'Unknown'
+  acc[stage] = (acc[stage] || 0) + 1
+  return acc
+}, {}))
+
+const translateStage = (stage) => STAGE_LABEL_KEYS[stage] ? t(STAGE_LABEL_KEYS[stage]) : stage
 </script>
 
 <template>
-  <div class="card stage-card">
-
-    <div class="card-header">
-
+  <div class="report-card report-stage-card">
+    <div class="report-card-header">
       <h2>{{ t('dashboard.stages.title') }}</h2>
-
       <p>{{ t('dashboard.stages.subtitle') }}</p>
-
     </div>
 
-    <div
-        v-if="!Object.keys(productionStore.batchesByStage).length"
-        class="stage-empty"
-    >
+    <div v-if="!Object.keys(batchesByStage).length" class="report-empty">
       {{ t('dashboard.stages.empty') }}
     </div>
 
-    <div
-        v-else
-        class="stage-list"
-    >
-
-      <div
-          v-for="(quantity, stage) in productionStore.batchesByStage"
-          :key="stage"
-          class="stage-row"
-      >
-
-        <span>
-          {{ translateStage(stage) }}
-        </span>
-
-        <strong>
-          {{ quantity }}
-        </strong>
-
+    <div v-else class="report-stage-list">
+      <div v-for="(quantity, stage) in batchesByStage" :key="stage" class="report-stage-row">
+        <span>{{ translateStage(stage) }}</span>
+        <strong>{{ quantity }}</strong>
       </div>
-
     </div>
-
   </div>
 </template>

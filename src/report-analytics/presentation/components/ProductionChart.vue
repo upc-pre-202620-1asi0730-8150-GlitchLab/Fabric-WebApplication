@@ -4,6 +4,9 @@ import { Chart, registerables } from 'chart.js'
 import { useI18n } from 'vue-i18n'
 
 Chart.register(...registerables)
+
+const CHART_LINE_COLOR = '#43521f'
+const CHART_FILL_COLOR = 'rgba(67, 82, 31, 0.12)'
 const { t, locale } = useI18n()
 
 const props = defineProps({
@@ -31,11 +34,14 @@ const createChart = () => {
         {
           label: t('dashboard.chart.series'),
           data: props.data.map(item => Number(item.totalProduced)),
+          borderColor: CHART_LINE_COLOR,
+          backgroundColor: CHART_FILL_COLOR,
+          pointBackgroundColor: CHART_LINE_COLOR,
           borderWidth: 2,
           tension: 0.35,
-          pointRadius: 4,
-          pointHoverRadius: 6,
-          fill: false
+          pointRadius: 5,
+          pointHoverRadius: 7,
+          fill: true
         }
       ]
     },
@@ -72,17 +78,17 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="card production-card">
-    <div class="card-header">
+  <div class="report-card report-production-card">
+    <div class="report-card-header">
       <h2>{{ t('dashboard.chart.title') }}</h2>
       <p>{{ t('dashboard.chart.subtitle') }}</p>
     </div>
 
-    <div v-if="!data.length" class="chart-message">
+    <div v-if="!data.length" class="report-empty">
       {{ t('dashboard.chart.empty') }}
     </div>
 
-    <div v-else class="chart-container">
+    <div v-else class="report-chart-container">
       <canvas ref="chartCanvas"></canvas>
     </div>
   </div>

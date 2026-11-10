@@ -2,146 +2,144 @@
   <div class="page-container">
     <div class="top-nav">
       <div>
-        <h1 class="page-title">Shrinkage Test</h1>
-        <p class="page-subtitle">Register the shrinkage percentage and washing test results for a fabric sample.</p>
+        <h1 class="page-title">{{ t('quality.shrinkage.title') }}</h1>
+        <p class="page-subtitle">{{ t('quality.shrinkage.subtitle') }}</p>
       </div>
-      <button class="back-link" @click="goBack">← Back to Quality</button>
+      <button class="back-link" @click="goBack">← {{ t('quality.back') }}</button>
     </div>
 
     <div class="info-card">
-      <h3 class="card-caption">Fabric Roll Information</h3>
+      <h3 class="card-caption">{{ t('quality.shrinkage.info.title') }}</h3>
       <div class="info-row">
         <div class="info-item">
-          <span>Roll ID</span>
+          <span>{{ t('quality.shrinkage.info.rollId') }}</span>
           <strong>{{ roll.rollId || '—' }}</strong>
         </div>
         <div class="info-item">
-          <span>Supplier</span>
+          <span>{{ t('quality.shrinkage.info.supplier') }}</span>
           <strong>{{ roll.supplier || '—' }}</strong>
         </div>
         <div class="info-item">
-          <span>Fabric / Client Sample</span>
+          <span>{{ t('quality.shrinkage.info.sample') }}</span>
           <strong>{{ roll.sample || 'T-Shirt Basic' }}</strong>
         </div>
         <div class="info-item">
-          <span>Shade / Color</span>
+          <span>{{ t('quality.shrinkage.info.color') }}</span>
           <strong>{{ roll.color || 'Navy' }}</strong>
         </div>
         <div class="info-item">
-          <span>Inspection Result</span>
-          <span class="badge badge-conforming">{{ roll.initialResult || 'Conforming' }}</span>
+          <span>{{ t('quality.shrinkage.info.result') }}</span>
+          <span class="badge badge-conforming">{{ display(RESULT_STATUS_DISPLAY, roll.initialResult || 'Conforming') }}</span>
         </div>
         <div class="info-item">
-          <span>Roll Status</span>
-          <span class="badge badge-conforming">{{ roll.rollStatus || 'Available for Cutting' }}</span>
+          <span>{{ t('quality.shrinkage.info.status') }}</span>
+          <span class="badge badge-conforming">{{ display(ROLL_STATUS_DISPLAY, roll.rollStatus || 'Available for Cutting') }}</span>
         </div>
       </div>
     </div>
 
     <form class="section-card" @submit.prevent="saveTest">
-      <h2 class="section-title">Shrinkage & Wash Test</h2>
-      <p class="section-subtitle">Register the test results of a fabric sample according to the technical sheet tolerances.</p>
+      <h2 class="section-title">{{ t('quality.shrinkage.form.title') }}</h2>
+      <p class="section-subtitle">{{ t('quality.shrinkage.form.subtitle') }}</p>
 
       <div class="form-grid">
         <div class="form-group">
-          <label>Test Date *</label>
+          <label>{{ t('quality.shrinkage.fields.testDate') }} *</label>
           <input v-model="testForm.testDate" type="date" required />
         </div>
 
         <div class="form-group">
-          <label>Test Method *</label>
+          <label>{{ t('quality.shrinkage.fields.method') }} *</label>
           <input v-model="testForm.method" type="text" required />
         </div>
 
         <div class="form-group">
-          <label>Sample ID / Reference *</label>
-          <input v-model="testForm.sampleId" type="text" placeholder="e.g. SAMPLE-001" required />
+          <label>{{ t('quality.shrinkage.fields.sampleId') }} *</label>
+          <input v-model="testForm.sampleId" type="text" :placeholder="t('quality.shrinkage.placeholders.sampleId')" required />
         </div>
 
         <div class="form-group">
-          <label>Initial Measurements (cm) *</label>
+          <label>{{ t('quality.shrinkage.fields.initialMeasures') }} *</label>
           <div class="dual-inputs">
             <div>
-              <span class="input-sublabel">Len</span>
+              <span class="input-sublabel">{{ t('quality.shrinkage.length') }}</span>
               <input v-model.number="testForm.initialLen" type="number" step="0.1" placeholder="100.0" required />
             </div>
             <div>
-              <span class="input-sublabel">Widt</span>
+              <span class="input-sublabel">{{ t('quality.shrinkage.width') }}</span>
               <input v-model.number="testForm.initialWidth" type="number" step="0.1" placeholder="100.0" required />
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <label>Final Measurements (cm) *</label>
+          <label>{{ t('quality.shrinkage.fields.finalMeasures') }} *</label>
           <div class="dual-inputs">
             <div>
-              <span class="input-sublabel">Len</span>
+              <span class="input-sublabel">{{ t('quality.shrinkage.length') }}</span>
               <input v-model.number="testForm.finalLen" type="number" step="0.1" placeholder="98.5" required />
             </div>
             <div>
-              <span class="input-sublabel">Widt</span>
+              <span class="input-sublabel">{{ t('quality.shrinkage.width') }}</span>
               <input v-model.number="testForm.finalWidth" type="number" step="0.1" placeholder="97.8" required />
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <label>Shrinkage Percentage (%)</label>
+          <label>{{ t('quality.shrinkage.fields.shrinkagePercent') }}</label>
           <div class="dual-inputs">
             <div>
-              <span class="input-sublabel">Len</span>
+              <span class="input-sublabel">{{ t('quality.shrinkage.length') }}</span>
               <input type="text" :value="lenShrinkageFormatted" readonly class="input-readonly" />
             </div>
             <div>
-              <span class="input-sublabel">Widt</span>
+              <span class="input-sublabel">{{ t('quality.shrinkage.width') }}</span>
               <input type="text" :value="widthShrinkageFormatted" readonly class="input-readonly" />
             </div>
           </div>
         </div>
 
         <div class="form-group">
-          <label>Result *</label>
+          <label>{{ t('quality.shrinkage.fields.result') }} *</label>
           <select v-model="testForm.result" required>
-            <option value="Approved">Approved</option>
-            <option value="Pending">Pending</option>
-            <option value="Non-Compliant">Non-Compliant</option>
+            <option v-for="option in resultOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
           </select>
         </div>
 
         <div class="form-group col-span-2">
-          <label>Note</label>
-          <input v-model="testForm.note" type="text" placeholder="Optional observations or comments" />
+          <label>{{ t('quality.shrinkage.fields.note') }}</label>
+          <input v-model="testForm.note" type="text" :placeholder="t('quality.shrinkage.placeholders.note')" />
         </div>
       </div>
 
       <div class="actions-right">
-        <button type="button" class="btn-cancel" @click="goBack">Cancel</button>
-        <button type="submit" class="btn-submit">Save Test</button>
+        <button type="button" class="btn-cancel" @click="goBack">{{ t('quality.shrinkage.actions.cancel') }}</button>
+        <button type="submit" class="btn-submit">{{ t('quality.shrinkage.actions.save') }}</button>
       </div>
     </form>
 
     <div class="section-card">
-      <h2 class="section-title">Test History</h2>
-      <p class="section-subtitle">Previous shrinkage and wash tests registered for this roll.</p>
+      <h2 class="section-title">{{ t('quality.shrinkage.history.title') }}</h2>
+      <p class="section-subtitle">{{ t('quality.shrinkage.history.subtitle') }}</p>
 
       <table class="history-table">
         <thead>
         <tr>
-          <th>Test Date</th>
-          <th>Sample ID</th>
-          <th>Method</th>
-          <th>Shrinkage (%)</th>
-          <th>Result</th>
-          <th>Notes</th>
+          <th>{{ t('quality.shrinkage.history.columns.testDate') }}</th>
+          <th>{{ t('quality.shrinkage.history.columns.sampleId') }}</th>
+          <th>{{ t('quality.shrinkage.history.columns.method') }}</th>
+          <th>{{ t('quality.shrinkage.history.columns.shrinkage') }}</th>
+          <th>{{ t('quality.shrinkage.history.columns.result') }}</th>
+          <th>{{ t('quality.shrinkage.history.columns.notes') }}</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="(test, index) in roll.testHistory" :key="index">
           <td>{{ test.testDate }}</td>
           <td>{{ test.sampleId }}</td>
-          <td>{{ test.method }}</td>
-          <td>Len: {{ test.lenShrinkage }} | Wid: {{ test.widthShrinkage }}</td>
+          <td>{{ labelOf(methodOptions, test.method) }}</td>
+          <td>{{ t('quality.shrinkage.history.lenWid', { len: formatPercent(test.lenShrinkage), wid: formatPercent(test.widthShrinkage) }) }}</td>
           <td>
               <span
                   class="badge"
@@ -151,13 +149,13 @@
                   'badge-blocked': test.result === 'Non-Compliant'
                 }"
               >
-                {{ test.result }}
+                {{ display(SHRINKAGE_STATUS_DISPLAY, test.result) }}
               </span>
           </td>
           <td>{{ test.note || '—' }}</td>
         </tr>
         <tr v-if="!roll.testHistory || roll.testHistory.length === 0">
-          <td colspan="6" class="empty-cell">No shrinkage tests registered yet for this roll.</td>
+          <td colspan="6" class="empty-cell">{{ t('quality.shrinkage.history.empty') }}</td>
         </tr>
         </tbody>
       </table>
@@ -168,11 +166,30 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { FabricInspectionService } from '../../infrastructure/fabric-inspection.service.js'
+import {
+  RESULT_STATUS_DISPLAY,
+  ROLL_STATUS_DISPLAY,
+  SHRINKAGE_STATUS_DISPLAY,
+  WASH_METHOD_OPTIONS
+} from '../inspection-options.js'
 
 const route = useRoute()
 const router = useRouter()
+const { t } = useI18n()
 const roll = ref({})
+
+const RESULT_VALUES = ['Approved', 'Pending', 'Non-Compliant']
+
+const display = (map, value) => map[value] ? t(map[value].labelKey) : (value ?? '—')
+
+const resultOptions = computed(() => RESULT_VALUES.map(value => ({ value, label: display(SHRINKAGE_STATUS_DISPLAY, value) })))
+const methodOptions = computed(() => WASH_METHOD_OPTIONS.map(({ value, labelKey }) => ({ value, label: t(labelKey) })))
+
+const labelOf = (options, value) => options.find(option => option.value === value)?.label ?? value
+
+const formatPercent = (value) => typeof value === 'number' ? `${value}%` : value
 
 const testForm = reactive({
   testDate: new Date().toISOString().split('T')[0],

@@ -1,13 +1,14 @@
-const inspectorPlaceholder = () => import('./views/inspector-placeholder.view.vue');
+const inspectorDashboard = () => import('./views/inspector-dashboard.view.vue');
 const newRollInspection = () => import('./views/new-roll-inspection.view.vue');
 const inspectionParameters = () => import('./views/inspection-parameters.view.vue');
+const shrinkageTest = () => import('./views/shrinkage-test.view.vue');
 
 const qualityInspectorRoutes = [
     {
         path: '/inspector/dashboard',
         name: 'quality-inspector-home',
-        component: inspectorPlaceholder,
-        meta: {title: 'Inspector Dashboard', titleKey: 'qualityInspector.nav.dashboard'}
+        component: inspectorDashboard,
+        meta: {title: 'Inspector Dashboard'}
     },
     {
         path: '/inspector/inspections/new',
@@ -24,8 +25,8 @@ const qualityInspectorRoutes = [
     {
         path: '/inspector/shrinkage-test',
         name: 'inspector-shrinkage-test',
-        component: inspectorPlaceholder,
-        meta: {title: 'Shrinkage Test', titleKey: 'qualityInspector.nav.shrinkageTest'}
+        component: shrinkageTest,
+        meta: {title: 'Shrinkage Test'}
     }
 ];
 

@@ -21,7 +21,136 @@
       "parameters": "Inspection parameters",
       "shrinkageTest": "Shrinkage test"
     },
-    "placeholder": "This view is under construction.",
+    "dashboard": {
+      "title": "Quality inspector dashboard",
+      "subtitle": "Summary of the fabric roll inspections and their history.",
+      "stats": {
+        "total": "Inspected rolls",
+        "conforming": "Conforming rolls",
+        "observed": "Observed rolls",
+        "pendingShrinkage": "Pending shrinkage tests"
+      },
+      "charts": {
+        "results": "Initial inspection results",
+        "suppliers": "Inspections by supplier",
+        "shrinkage": "Shrinkage test status"
+      },
+      "status": {
+        "conforming": "Conforming",
+        "observed": "Observed",
+        "pending": "Pending",
+        "approved": "Approved",
+        "nonCompliant": "Non-compliant",
+        "available": "Available for cutting",
+        "blocked": "Blocked"
+      },
+      "emptyData": "There are no registered inspections yet. Register a roll to see the indicators.",
+      "history": {
+        "title": "Inspection history",
+        "subtitle": "Review the past roll inspections and filter them by supplier, result or roll.",
+        "filters": {
+          "supplier": "Supplier",
+          "result": "Result",
+          "roll": "Roll ID"
+        },
+        "placeholders": {
+          "supplier": "All suppliers",
+          "result": "All results",
+          "roll": "Search by roll ID"
+        },
+        "columns": {
+          "date": "Date",
+          "roll": "Roll",
+          "supplier": "Supplier",
+          "sample": "Fabric / sample",
+          "result": "Initial result",
+          "shrinkage": "Shrinkage test",
+          "status": "Roll status",
+          "observation": "Observations"
+        },
+        "empty": "No inspections match the selected criteria."
+      },
+      "messages": {
+        "errorTitle": "Error",
+        "loadError": "Could not load the inspections."
+      }
+    },
+    "shrinkageTest": {
+      "title": "Shrinkage test",
+      "subtitle": "Record the dimensions of a fabric specimen before and after washing to verify it meets the technical sheet tolerance before cutting.",
+      "rollSection": {
+        "title": "Fabric roll",
+        "subtitle": "Select the roll whose shrinkage test is pending."
+      },
+      "testSection": {
+        "title": "Test data",
+        "subtitle": "Identify the specimen and the washing method used."
+      },
+      "measurementsSection": {
+        "title": "Specimen dimensions",
+        "subtitle": "Enter the measurements before and after washing."
+      },
+      "fields": {
+        "roll": "Fabric roll",
+        "testDate": "Test date",
+        "method": "Washing method",
+        "sampleId": "Specimen ID",
+        "initialLength": "Length before washing",
+        "initialWidth": "Width before washing",
+        "finalLength": "Length after washing",
+        "finalWidth": "Width after washing",
+        "note": "Observation"
+      },
+      "placeholders": {
+        "roll": "Select a roll",
+        "method": "Select the method",
+        "sampleId": "Optional, generated if empty",
+        "measure": "e.g. 100",
+        "note": "Optional details about the test."
+      },
+      "units": {
+        "measure": "cm",
+        "percent": "%"
+      },
+      "options": {
+        "method": {
+          "iso6330": "Washing (ISO 6330)",
+          "iso3175": "Dry cleaning (ISO 3175)"
+        }
+      },
+      "summary": {
+        "rollId": "Roll ID",
+        "supplier": "Supplier",
+        "sample": "Fabric / client sample",
+        "tolerance": "Tolerance (technical sheet)"
+      },
+      "result": {
+        "lengthShrinkage": "Length shrinkage",
+        "widthShrinkage": "Width shrinkage",
+        "status": "Result",
+        "approved": "Approved",
+        "nonCompliant": "Non-compliant",
+        "empty": "—"
+      },
+      "errors": {
+        "required": "This field is required.",
+        "invalidMeasure": "The value must be greater than zero."
+      },
+      "hint": "If the shrinkage is within the tolerance the test is approved and the roll is enabled for pattern making; otherwise it is marked as non-compliant.",
+      "empty": "There are no rolls with a pending shrinkage test.",
+      "actions": {
+        "save": "Save test",
+        "clear": "Clear form"
+      },
+      "messages": {
+        "savedTitle": "Test saved",
+        "approved": "The test was approved. The roll is enabled for pattern making.",
+        "nonCompliant": "The shrinkage exceeds the tolerance. The roll was marked as non-compliant.",
+        "errorTitle": "Error",
+        "saveError": "Could not save the shrinkage test.",
+        "loadError": "Could not load the registered rolls."
+      }
+    },
     "parameters": {
       "title": "Inspection parameters",
       "subtitle": "Record the parameters evaluated during the inspection of a fabric roll to keep evidence of the conditions in which the material was received.",
@@ -178,9 +307,6 @@
     "title": "Dashboard",
     "subtitle": "Overview of today's production",
     "date": "Date",
-    "today": "Today",
-    "october3": "October 3, 2026",
-    "october2": "October 2, 2026",
     "batch": "Batch",
     "allBatches": "All batches",
     "exportReport": "Export Report",
@@ -208,7 +334,8 @@
       "unknown": "Unknown",
       "cutting": "Cutting",
       "sewing": "Sewing",
-      "finishing": "Finishing"
+      "finishing": "Finishing",
+      "qualityCheck": "Quality check"
     },
     "progress": {
       "title": "Batch progress",
@@ -552,6 +679,197 @@
       },
       "errors": {
         "sizeLimit": "File size exceeds the 10 MB limit."
+      }
+    },
+    "back": "Back to Quality",
+    "fabric": {
+      "stats": {
+        "rolls": "Fabric Rolls",
+        "registered": "registered",
+        "available": "Available for Cutting",
+        "conformingRolls": "conforming rolls",
+        "observed": "Observed",
+        "blockedRolls": "blocked rolls",
+        "pendingTests": "Pending Tests",
+        "requireReview": "require review"
+      },
+      "filters": {
+        "searchRoll": "Search Roll ID",
+        "supplier": "Supplier",
+        "result": "Result",
+        "date": "Date"
+      },
+      "newInspection": "+ New Inspection",
+      "columns": {
+        "rollId": "Roll ID",
+        "supplier": "Supplier",
+        "inspectionDate": "Inspection Date",
+        "initialResult": "Initial Result",
+        "shrinkageTest": "Shrinkage Test",
+        "rollStatus": "Roll Status",
+        "actions": "Actions"
+      },
+      "actions": {
+        "label": "Actions",
+        "shrinkageTest": "Shrinkage Test",
+        "parameters": "Inspection Parameters"
+      },
+      "empty": "No fabric inspections found.",
+      "legend": {
+        "rowActions": "Row Actions: View Inspection · Shrinkage & Wash Test · Inspection History",
+        "defectsHint": "Switch to \"Defects\" to access garment defect registration, evidence, disposition and recurring-defect analysis."
+      }
+    },
+    "newInspection": {
+      "rollInfo": {
+        "title": "Fabric Roll Information",
+        "subtitle": "Enter the identification and reception data of the incoming roll."
+      },
+      "initial": {
+        "title": "Initial Quality Inspection",
+        "subtitle": "Compare the roll with the client's approved sample and record any severe variation."
+      },
+      "fields": {
+        "rollId": "Roll ID",
+        "supplier": "Supplier",
+        "receptionDate": "Reception Date",
+        "sample": "Fabric / Client Sample",
+        "color": "Shade / Color",
+        "rollLength": "Roll Length",
+        "shadeMatch": "Shade Match",
+        "weaveCondition": "Weave Condition",
+        "result": "Inspection Result",
+        "observation": "Observation / Reason"
+      },
+      "placeholders": {
+        "rollId": "e.g. ROLL-001",
+        "supplier": "Select supplier",
+        "sample": "Select reference",
+        "color": "e.g. Navy Blue",
+        "rollLength": "e.g. 50",
+        "observation": "Required when the roll is marked as Observed. Describe shade variation, weave holes, or other findings."
+      },
+      "unit": "m",
+      "banner": "Conforming → Available for Cutting · Observed → Blocked from cutting batches",
+      "actions": {
+        "cancel": "Cancel",
+        "save": "Save Inspection"
+      }
+    },
+    "parameters": {
+      "title": "Inspection Parameters",
+      "subtitle": "Register the parameters evaluated during the fabric roll inspection.",
+      "info": {
+        "title": "Fabric Roll Information",
+        "rollId": "Roll ID",
+        "supplier": "Supplier",
+        "receptionDate": "Reception Date",
+        "sample": "Fabric / Client Sample",
+        "initialResult": "Initial Result"
+      },
+      "section": {
+        "title": "Inspection Parameters",
+        "subtitle": "Record the physical and visual conditions evaluated during the inspection."
+      },
+      "fields": {
+        "fabricWidth": "Fabric Width",
+        "fabricWeight": "Fabric Weight / GSM",
+        "shadeCondition": "Shade / Color Condition",
+        "weaveCondition": "Weave Condition",
+        "surfaceCondition": "Surface Condition",
+        "defectsDetected": "Defects Detected",
+        "observations": "Inspection Evidence / Observations"
+      },
+      "placeholders": {
+        "fabricWidth": "e.g. 150",
+        "fabricWeight": "e.g. 220",
+        "observations": "Describe findings, variations, defects or conditions observed during the inspection."
+      },
+      "units": {
+        "width": "cm",
+        "weight": "g/m²",
+        "length": "m"
+      },
+      "options": {
+        "weave": {
+          "none": "No weave defects",
+          "minorSlubs": "Minor slubs",
+          "defects": "Defects detected"
+        },
+        "surface": {
+          "clean": "No stains or damage",
+          "greaseTraces": "Slight grease traces",
+          "damaged": "Damaged surface"
+        }
+      },
+      "note": "These parameters will be stored as evidence of the material condition at reception.",
+      "actions": {
+        "cancel": "Cancel",
+        "save": "Save Parameters"
+      },
+      "history": {
+        "title": "Inspection Record History",
+        "subtitle": "Previous physical and visual condition parameter records for this roll.",
+        "columns": {
+          "date": "Record Date",
+          "measures": "Width / Weight",
+          "shade": "Shade Condition",
+          "weaveSurface": "Weave & Surface",
+          "defects": "Defects Detected",
+          "observations": "Observations"
+        },
+        "empty": "No inspection parameter records registered yet for this roll."
+      }
+    },
+    "shrinkage": {
+      "title": "Shrinkage Test",
+      "subtitle": "Register the shrinkage percentage and washing test results for a fabric sample.",
+      "length": "Length",
+      "width": "Width",
+      "info": {
+        "title": "Fabric Roll Information",
+        "rollId": "Roll ID",
+        "supplier": "Supplier",
+        "sample": "Fabric / Client Sample",
+        "color": "Shade / Color",
+        "result": "Inspection Result",
+        "status": "Roll Status"
+      },
+      "form": {
+        "title": "Shrinkage & Wash Test",
+        "subtitle": "Register the test results of a fabric sample according to the technical sheet tolerances."
+      },
+      "fields": {
+        "testDate": "Test Date",
+        "method": "Test Method",
+        "sampleId": "Sample ID / Reference",
+        "initialMeasures": "Initial Measurements (cm)",
+        "finalMeasures": "Final Measurements (cm)",
+        "shrinkagePercent": "Shrinkage Percentage (%)",
+        "result": "Result",
+        "note": "Note"
+      },
+      "placeholders": {
+        "sampleId": "e.g. SAMPLE-001",
+        "note": "Optional observations or comments"
+      },
+      "actions": {
+        "cancel": "Cancel",
+        "save": "Save Test"
+      },
+      "history": {
+        "title": "Test History",
+        "subtitle": "Previous shrinkage and wash tests registered for this roll.",
+        "columns": {
+          "testDate": "Test Date",
+          "sampleId": "Sample ID",
+          "method": "Method",
+          "shrinkage": "Shrinkage (%)",
+          "result": "Result",
+          "notes": "Notes"
+        },
+        "lenWid": "Length: {len} · Width: {wid}",
+        "empty": "No shrinkage tests registered yet for this roll."
       }
     }
   },

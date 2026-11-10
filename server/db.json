@@ -224,6 +224,20 @@
       "totalProduced": 1450,
       "averagePerHour": 181,
       "dailyCompliance": 92
+    },
+    {
+      "id": 2,
+      "date": "2026-10-03",
+      "totalProduced": 1380,
+      "averagePerHour": 172,
+      "dailyCompliance": 88
+    },
+    {
+      "id": 3,
+      "date": "2026-10-02",
+      "totalProduced": 1520,
+      "averagePerHour": 190,
+      "dailyCompliance": 95
     }
   ],
   "alerts": [
@@ -397,19 +411,23 @@
   "fabricSamples": [
     {
       "id": "1",
-      "name": "T-Shirt Basic"
+      "name": "T-Shirt Basic",
+      "shrinkageTolerance": 5
     },
     {
       "id": "2",
-      "name": "Hoodie"
+      "name": "Hoodie",
+      "shrinkageTolerance": 5
     },
     {
       "id": "3",
-      "name": "Crewneck"
+      "name": "Crewneck",
+      "shrinkageTolerance": 5
     },
     {
       "id": "4",
-      "name": "Leggings"
+      "name": "Leggings",
+      "shrinkageTolerance": 5
     }
   ]
 }

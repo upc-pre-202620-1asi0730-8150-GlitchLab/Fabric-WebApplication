@@ -2,27 +2,27 @@
   <div class="fabric-inspections">
     <div class="stats-grid">
       <div class="stat-card">
-        <p class="stat-title">Fabric Rolls</p>
+        <p class="stat-title">{{ t('quality.fabric.stats.rolls') }}</p>
         <h3>{{ totalRolls }}</h3>
-        <span>registered</span>
+        <span>{{ t('quality.fabric.stats.registered') }}</span>
       </div>
 
       <div class="stat-card">
-        <p class="stat-title">Available for Cutting</p>
+        <p class="stat-title">{{ t('quality.fabric.stats.available') }}</p>
         <h3>{{ availableRolls }}</h3>
-        <span>conforming rolls</span>
+        <span>{{ t('quality.fabric.stats.conformingRolls') }}</span>
       </div>
 
       <div class="stat-card">
-        <p class="stat-title">Observed</p>
+        <p class="stat-title">{{ t('quality.fabric.stats.observed') }}</p>
         <h3>{{ observedRolls }}</h3>
-        <span>blocked rolls</span>
+        <span>{{ t('quality.fabric.stats.blockedRolls') }}</span>
       </div>
 
       <div class="stat-card">
-        <p class="stat-title">Pending Tests</p>
+        <p class="stat-title">{{ t('quality.fabric.stats.pendingTests') }}</p>
         <h3>{{ pendingTests }}</h3>
-        <span>require review</span>
+        <span>{{ t('quality.fabric.stats.requireReview') }}</span>
       </div>
     </div>
 
@@ -36,14 +36,14 @@
           <input
               v-model="searchRoll"
               type="text"
-              placeholder="Search Roll ID"
+              :placeholder="t('quality.fabric.filters.searchRoll')"
           />
         </div>
       </div>
 
       <div class="filter-field">
-        <select v-model="supplierFilter">
-          <option value="">Supplier</option>
+        <select v-model="supplierFilter" :aria-label="t('quality.fabric.filters.supplier')">
+          <option value="">{{ t('quality.fabric.filters.supplier') }}</option>
           <option v-for="supplier in suppliers" :key="supplier" :value="supplier">
             {{ supplier }}
           </option>
@@ -51,10 +51,11 @@
       </div>
 
       <div class="filter-field">
-        <select v-model="resultFilter">
-          <option value="">Result</option>
-          <option value="Conforming">Conforming</option>
-          <option value="Observed">Observed</option>
+        <select v-model="resultFilter" :aria-label="t('quality.fabric.filters.result')">
+          <option value="">{{ t('quality.fabric.filters.result') }}</option>
+          <option v-for="option in resultOptions" :key="option.value" :value="option.value">
+            {{ option.label }}
+          </option>
         </select>
       </div>
 
@@ -62,12 +63,12 @@
         <input
             v-model="dateFilter"
             type="date"
-            placeholder="Date"
+            :aria-label="t('quality.fabric.filters.date')"
         />
       </div>
 
       <button class="new-inspection-btn" @click="goToNewInspection">
-        + New Inspection
+        {{ t('quality.fabric.newInspection') }}
       </button>
     </div>
 
@@ -75,13 +76,13 @@
       <table class="inspections-table">
         <thead>
         <tr>
-          <th>Roll ID</th>
-          <th>Supplier</th>
-          <th>Inspection Date</th>
-          <th>Initial Result</th>
-          <th>Shrinkage Test</th>
-          <th>Roll Status</th>
-          <th class="actions-header">Actions</th>
+          <th>{{ t('quality.fabric.columns.rollId') }}</th>
+          <th>{{ t('quality.fabric.columns.supplier') }}</th>
+          <th>{{ t('quality.fabric.columns.inspectionDate') }}</th>
+          <th>{{ t('quality.fabric.columns.initialResult') }}</th>
+          <th>{{ t('quality.fabric.columns.shrinkageTest') }}</th>
+          <th>{{ t('quality.fabric.columns.rollStatus') }}</th>
+          <th class="actions-header">{{ t('quality.fabric.columns.actions') }}</th>
         </tr>
         </thead>
 
@@ -96,7 +97,7 @@
                   class="badge"
                   :class="inspection.initialResult === 'Conforming' ? 'badge-conforming' : 'badge-observed'"
               >
-                {{ inspection.initialResult }}
+                {{ display(RESULT_STATUS_DISPLAY, inspection.initialResult) }}
               </span>
           </td>
 
@@ -110,7 +111,7 @@
                   'badge-blocked': inspection.shrinkageTest === 'Non-Compliant'
                 }"
               >
-                {{ inspection.shrinkageTest }}
+                {{ display(SHRINKAGE_STATUS_DISPLAY, inspection.shrinkageTest) }}
               </span>
             <span v-else class="text-muted">—</span>
           </td>
@@ -124,7 +125,7 @@
                   'badge-neutral': inspection.rollStatus === 'Not Available'
                 }"
               >
-                {{ inspection.rollStatus }}
+                {{ display(ROLL_STATUS_DISPLAY, inspection.rollStatus) }}
               </span>
           </td>
 
@@ -132,7 +133,7 @@
             <div class="dropdown-wrapper">
               <button
                   class="dots-btn"
-                  aria-label="Actions"
+                  :aria-label="t('quality.fabric.actions.label')"
                   @click.stop="toggleMenu(inspection.id)"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -148,10 +149,10 @@
                   @click.stop
               >
                 <button @click="goToShrinkageTest(inspection.id)">
-                  Shrinkage Test
+                  {{ t('quality.fabric.actions.shrinkageTest') }}
                 </button>
                 <button @click="goToInspectionParameters(inspection.id)">
-                  Inspection Parameters
+                  {{ t('quality.fabric.actions.parameters') }}
                 </button>
               </div>
             </div>
@@ -160,7 +161,7 @@
 
         <tr v-if="filteredInspections.length === 0">
           <td colspan="7" class="empty-table">
-            No fabric inspections found.
+            {{ t('quality.fabric.empty') }}
           </td>
         </tr>
         </tbody>
@@ -168,8 +169,8 @@
     </div>
 
     <div class="table-legend">
-      <p>Row Actions: View Inspection · Shrinkage & Wash Test · Inspection History</p>
-      <p>Switch to "Defects" to access garment defect registration, evidence, disposition and recurring-defect analysis.</p>
+      <p>{{ t('quality.fabric.legend.rowActions') }}</p>
+      <p>{{ t('quality.fabric.legend.defectsHint') }}</p>
     </div>
   </div>
 </template>
@@ -177,15 +178,27 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { FabricInspectionService } from '../../infrastructure/fabric-inspection.service.js'
+import {
+  RESULT_OPTIONS,
+  RESULT_STATUS_DISPLAY,
+  ROLL_STATUS_DISPLAY,
+  SHRINKAGE_STATUS_DISPLAY
+} from '../inspection-options.js'
 
 const router = useRouter()
+const { t } = useI18n()
 const fabricInspections = ref([])
 const searchRoll = ref('')
 const supplierFilter = ref('')
 const resultFilter = ref('')
 const dateFilter = ref('')
 const openMenuId = ref(null)
+
+const resultOptions = computed(() => RESULT_OPTIONS.map(({ value, labelKey }) => ({ value, label: t(labelKey) })))
+
+const display = (map, value) => map[value] ? t(map[value].labelKey) : value
 
 const loadFabricInspections = async () => {
   try {
