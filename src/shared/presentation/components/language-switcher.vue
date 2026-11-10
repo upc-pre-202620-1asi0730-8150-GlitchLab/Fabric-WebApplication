@@ -23,9 +23,3 @@ const changeLocale = (selectedLocale) => {
     </template>
   </pv-select-button>
 </template>
-
-<style scoped>
-.language-switcher {
-  align-self: flex-start;
-}
-</style>
