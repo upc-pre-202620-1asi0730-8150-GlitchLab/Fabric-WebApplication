@@ -325,8 +325,59 @@
           "note": ""
         }
       ],
-      "parameters": null,
-      "id": 2
+      "parameters": {
+        "fabricWidth": 234,
+        "fabricLength": 11,
+        "shadeCondition": "Matches approved sample",
+        "defectsDetected": "Holes",
+        "observations": "njdx",
+        "updatedAt": "2026-11-10T21:11:06.158Z"
+      },
+      "id": 2,
+      "parameterHistory": [
+        {
+          "date": "2026-11-10",
+          "fabricWidth": 234,
+          "fabricLength": 11,
+          "shadeCondition": "Matches approved sample",
+          "defectsDetected": "Holes",
+          "observations": "njdx"
+        }
+      ]
+    },
+    {
+      "rollId": "12",
+      "supplier": "Supplier B",
+      "inspectionDate": "2026-11-10",
+      "sample": "Hoodie",
+      "color": "Verde shrek",
+      "rollLength": null,
+      "shadeMatch": "Slight variation",
+      "weaveCondition": "Minor irregularities",
+      "initialResult": "Conforming",
+      "observation": "swswswswswswsw",
+      "shrinkageTest": "Pending",
+      "rollStatus": "Available for Cutting",
+      "testHistory": [],
+      "parameters": {
+        "fabricWidth": 67,
+        "fabricLength": 50,
+        "shadeCondition": "Slight variation",
+        "defectsDetected": "Stains",
+        "observations": "bhderftgyhui",
+        "updatedAt": "2026-11-10T21:12:16.224Z"
+      },
+      "id": 3,
+      "parameterHistory": [
+        {
+          "date": "2026-11-10",
+          "fabricWidth": 67,
+          "fabricLength": 50,
+          "shadeCondition": "Slight variation",
+          "defectsDetected": "Stains",
+          "observations": "bhderftgyhui"
+        }
+      ]
     }
   ],
   "suppliers": [
