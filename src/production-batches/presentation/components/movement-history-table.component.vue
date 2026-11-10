@@ -1,8 +1,4 @@
-﻿<!--
-  @summary Presentation component rendering movement traceability history and quantity differences.
-  @author Diego Sebastian Reategui Galarcep (u20201F165)
--->
-<template>
+﻿<template>
   <div class="card">
     <h3 class="card-title">{{ $t('productionBatches.movement.title') }}</h3>
     <p class="card-subtitle">{{ $t('productionBatches.movement.subtitle') }}</p>

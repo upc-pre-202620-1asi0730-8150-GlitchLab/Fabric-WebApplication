@@ -1,7 +1,6 @@
 ﻿
 <template>
   <div class="page-container">
-    <!-- Page Header -->
     <div class="page-header">
       <div>
         <h1 class="page-title">
@@ -17,7 +16,6 @@
       </router-link>
     </div>
 
-    <!-- Reusable Form Component -->
     <CreateBatchForm
         :saving="saving"
         @save="createBatch"
@@ -49,7 +47,6 @@ const createBatch = async (form) => {
   saving.value = true
 
   try {
-    // Load current batches to prevent LOT number collisions
     await productionStore.fetchBatches()
 
     if (productionStore.error) {
@@ -57,7 +54,6 @@ const createBatch = async (form) => {
       return
     }
 
-    // Create the new production batch
     await productionStore.createBatch({
       batchNumber: productionStore.nextBatchNumber,
       garmentModel: form.garmentModel,
@@ -69,7 +65,6 @@ const createBatch = async (form) => {
       notes: form.notes
     })
 
-    // Return to production batches list
     router.push('/production-batches')
 
   } catch (err) {

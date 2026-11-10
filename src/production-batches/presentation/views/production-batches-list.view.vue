@@ -24,7 +24,6 @@ const startOfWeek = (d) => {
   return copy
 }
 
-// "Date" filter is applied to the delivery date of each batch
 const matchesDate = (batch, period) => {
   if (!period) return true
   if (!batch.deliveryDate) return false

@@ -1,11 +1,4 @@
-﻿/**
- * @summary Domain entity representing a quantity movement (Traceability) for a batch.
- * @author Diego Sebastian Reategui Galarcep (u20201F165)
- */
-export class BatchMovement {
-    /**
-     * @param {Object} [data={}] - Plain object data.
-     */
+﻿export class BatchMovement {
     constructor({
                     id = 0,
                     batchId = 0,
@@ -34,10 +27,6 @@ export class BatchMovement {
         this.status = status;
     }
 
-    /**
-     * Checks if there is a discrepancy between incoming and outgoing quantities.
-     * @returns {boolean}
-     */
     hasDiscrepancy() {
         return this.difference !== 0;
     }

@@ -1,10 +1,6 @@
 ﻿import { BaseEndpoint } from '../../../shared/infrastructure/base-endpoint.js';
 import { http } from '../../../shared/infrastructure/base-api.js';
 
-/**
- * Talks to the "batches" collection of the json-server API.
- * (The collection is called "batches" in db.json, not "production-batches".)
- */
 export class ProductionBatchesApiService extends BaseEndpoint {
     constructor() {
         super('/batches');

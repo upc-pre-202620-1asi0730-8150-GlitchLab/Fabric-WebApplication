@@ -8,7 +8,6 @@
       <router-link to="/production-batches" class="back-link mb-20">&larr; {{ t('productionBatches.views.backToBatches') }}</router-link>
     </div>
 
-    <!-- Info Card -->
     <div class="info-card">
       <div class="info-grid">
         <div><span class="info-label">{{ t('productionBatches.batchInfo.batchId') }}</span><span class="info-value">{{ batch.batchNumber }}</span></div>
@@ -28,7 +27,6 @@
 
     <assigned-operators-table :operators="assignedList" />
 
-    <!-- Modal de Éxito -->
     <div v-if="showSuccessModal" class="modal-overlay" @click.self="showSuccessModal = false">
       <div class="modal-card">
         <button type="button" class="modal-close-btn" @click="showSuccessModal = false">&times;</button>
@@ -51,7 +49,6 @@
       </div>
     </div>
 
-    <!-- Modal de Error -->
     <div v-if="showErrorModal" class="modal-overlay" @click.self="showErrorModal = false">
       <div class="modal-card">
         <button type="button" class="modal-close-btn" @click="showErrorModal = false">&times;</button>
@@ -129,7 +126,6 @@ const translateStatus = (status) => {
   return keys[status] ? t(`productionBatches.statuses.${keys[status]}`) : status
 }
 
-// Estados para los modales
 const showSuccessModal = ref(false)
 const showErrorModal = ref(false)
 
@@ -209,7 +205,6 @@ const goToBatch = () => {
 .badge-in-production { background: #ECEFE6; color: #48532B; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; }
 
 
-/* Estilos de Modales */
 .modal-overlay {
   position: fixed;
   top: 0;

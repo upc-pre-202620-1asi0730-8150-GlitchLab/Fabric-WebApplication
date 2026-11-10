@@ -3,7 +3,7 @@ export class MaintenanceRecord {
         this.id = id;
         this.machineId = machineId;
         this.date = date;
-        this.maintenanceType = maintenanceType; // 'corrective' | 'preventive'
+        this.maintenanceType = maintenanceType;
         this.interventionPerformed = interventionPerformed;
         this.partsReplaced = partsReplaced;
         this.technician = technician;

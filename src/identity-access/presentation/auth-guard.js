@@ -5,12 +5,6 @@ import {homeRouteNameFor} from "./role-options.js";
 const LOGIN_ROUTE_NAME = 'role-selection';
 const DEFAULT_REQUIRED_ROLE = USER_ROLES.PRODUCTION_SUPERVISOR;
 
-/**
- * Route meta flags:
- *  - guestOnly: only reachable without a session (role selection).
- *  - public: reachable always (404).
- *  - role: role required to enter; defaults to production supervisor.
- */
 export const authGuard = (to) => {
     const session = useSessionStore();
 
@@ -23,3 +17,6 @@ export const authGuard = (to) => {
     const requiredRole = to.meta.role ?? DEFAULT_REQUIRED_ROLE;
     return session.role === requiredRole ? true : {name: homeRouteNameFor(session.role)};
 };
+
+export const withRole = (role, routes) =>
+    routes.map((route) => ({...route, meta: {...route.meta, role}}));

@@ -11,10 +11,86 @@
         "qualityInspector": "Iniciar sesión como inspector de calidad",
         "productionSupervisor": "Iniciar sesión como supervisor de producción"
       }
+    }
+  },
+
+  "qualityInspector": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "newInspection": "Nueva inspección de rollo",
+      "parameters": "Parámetros de inspección",
+      "shrinkageTest": "Prueba de encogimiento"
     },
-    "qualityInspectorHome": {
-      "title": "Área del inspector de calidad",
-      "comingSoon": "Esta vista está en construcción."
+    "placeholder": "Esta vista está en construcción.",
+    "newInspection": {
+      "title": "Nueva inspección de rollo",
+      "subtitle": "Registra el rollo de tela recibido y verifica su conformidad inicial antes del corte.",
+      "rollInfo": {
+        "title": "Información del rollo de tela",
+        "subtitle": "Ingresa los datos de identificación y recepción del rollo entrante."
+      },
+      "initialInspection": {
+        "title": "Inspección inicial de calidad",
+        "subtitle": "Compara el rollo con la muestra aprobada del cliente y registra cualquier variación severa."
+      },
+      "fields": {
+        "rollId": "ID del rollo",
+        "supplier": "Proveedor",
+        "receptionDate": "Fecha de recepción",
+        "sample": "Tela / muestra del cliente",
+        "color": "Matiz / color",
+        "rollLength": "Longitud del rollo",
+        "shadeMatch": "Coincidencia de matiz",
+        "weaveCondition": "Condición de la trama",
+        "result": "Resultado de la inspección",
+        "observation": "Observación / motivo"
+      },
+      "placeholders": {
+        "rollId": "ej. ROLL-001",
+        "supplier": "Selecciona proveedor",
+        "sample": "Selecciona referencia",
+        "color": "ej. Azul marino",
+        "rollLength": "ej. 50",
+        "observation": "Obligatorio cuando el rollo se marca como observado. Describe variación de matiz, huecos en la trama u otros hallazgos."
+      },
+      "lengthUnit": "m",
+      "options": {
+        "shadeMatch": {
+          "matches": "Coincide con la muestra del cliente",
+          "slightVariation": "Variación leve",
+          "severeMismatch": "Discrepancia severa"
+        },
+        "weaveCondition": {
+          "noHoles": "Sin huecos en la trama",
+          "minorIrregularities": "Irregularidades menores",
+          "severeDefects": "Defectos severos en la trama"
+        },
+        "result": {
+          "conforming": "Conforme",
+          "observed": "Observado"
+        }
+      },
+      "hints": {
+        "available": "Conforme → Disponible para corte",
+        "blocked": "Observado → Bloqueado para lotes de corte"
+      },
+      "errors": {
+        "required": "Este campo es obligatorio.",
+        "invalidLength": "La longitud debe ser mayor que cero.",
+        "observationRequired": "Ingresa el motivo cuando el rollo está observado.",
+        "severeMustBeObserved": "Una variación severa requiere marcar el rollo como observado."
+      },
+      "actions": {
+        "save": "Guardar inspección",
+        "clear": "Limpiar formulario"
+      },
+      "messages": {
+        "savedTitle": "Inspección guardada",
+        "saved": "El rollo se registró correctamente.",
+        "errorTitle": "Error",
+        "saveError": "No se pudo guardar la inspección.",
+        "loadCatalogsError": "No se pudieron cargar los proveedores y las muestras de tela."
+      }
     }
   },
 
@@ -90,7 +166,8 @@
       "excel": "Excel (.xlsx)",
       "cancel": "Cancelar",
       "submit": "Exportar informe"
-    }
+    },
+    "placeholder": "Vista del Dashboard — contenido próximamente."
   },
 
   "productionBatches": {

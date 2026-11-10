@@ -25,14 +25,12 @@ export const useProductionStore = defineStore('production', {
     }),
 
     getters: {
-        /** { Cutting: 2, Sewing: 1, ... } used by the dashboard. */
         batchesByStage: (state) => state.batches.reduce((acc, batch) => {
             const stage = batch.currentStage || 'Unknown';
             acc[stage] = (acc[stage] || 0) + 1;
             return acc;
         }, {}),
 
-        /** Next free code, e.g. LOT-088. */
         nextBatchNumber: (state) => {
             const max = state.batches
                 .map(b => parseInt(String(b.batchNumber || '').replace(/\D/g, ''), 10))

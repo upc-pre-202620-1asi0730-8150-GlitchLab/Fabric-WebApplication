@@ -1,9 +1,6 @@
 <script setup>
 import {useI18n} from "vue-i18n";
 
-/**
- * Presentation component for switching the application's active language.
- */
 const {locale, availableLocales} = useI18n();
 
 const changeLocale = (selectedLocale) => {
@@ -26,9 +23,3 @@ const changeLocale = (selectedLocale) => {
     </template>
   </pv-select-button>
 </template>
-
-<style scoped>
-.language-switcher {
-  align-self: flex-start;
-}
-</style>

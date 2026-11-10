@@ -1,8 +1,4 @@
-﻿<!--
-  @summary Presentation view component for managing batch observations and timeline.
-  @author Diego Sebastian Reategui Galarcep (u20201F165)
--->
-<template>
+﻿<template>
   <div class="page-container" v-if="batch">
     <div class="page-header">
       <div>
@@ -12,7 +8,6 @@
       <router-link to="/production-batches" class="back-link">&larr; {{ t('productionBatches.views.backToBatches') }}</router-link>
     </div>
 
-    <!-- Info Card (Mantenida localmente sin usar batch-info-card) -->
     <div class="info-card">
       <div class="info-grid">
         <div><span class="info-label">{{ t('productionBatches.batchInfo.batchId') }}</span><span class="info-value">{{ batch.batchNumber }}</span></div>
@@ -21,7 +16,6 @@
       </div>
     </div>
 
-    <!-- Observations Timeline Component -->
     <batch-observations-timeline
         :observations="observations"
         @save-observation="addObservation"
