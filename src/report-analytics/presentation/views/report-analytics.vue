@@ -50,7 +50,6 @@ onMounted(() => {
   loadDashboardData()
 })
 
-// Export: Excel option downloads a CSV (opens in Excel), PDF option opens the print dialog
 const downloadCsv = (rows, filename) => {
   const csv = rows.map(r => r.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(',')).join('\n')
   const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' })

@@ -1,8 +1,4 @@
-﻿<!--
-  @summary Presentation view component displaying movement traceability history and wastage differences.
-  @author Diego Sebastian Reategui Galarcep (u20201F165)
--->
-<template>
+﻿<template>
   <div class="page-container" v-if="batch">
     <div class="page-header">
       <div>
@@ -12,7 +8,6 @@
       <router-link :to="`/production-batches/${batch.id}`" class="back-link">&larr; {{ t('productionBatches.views.backToBatchDetail') }}</router-link>
     </div>
 
-    <!-- Info Card -->
     <div class="info-card">
       <div class="info-grid">
         <div><span class="info-label">{{ t('productionBatches.batchInfo.batchId') }}</span><span class="info-value">{{ batch.batchNumber }}</span></div>
@@ -23,10 +18,8 @@
       </div>
     </div>
 
-    <!-- Movement History Table Component -->
     <movement-history-table :movements="history" />
 
-    <!-- Traceability Summary Card Component -->
     <traceability-summary-card
         :projected-quantity="batch.projectedQuantity"
         :current-qty="currentQty"

@@ -242,5 +242,123 @@
       "batch": "1"
     }
   ],
-  "fabricInspections": []
+  "fabricInspections": [
+    {
+      "rollId": "12",
+      "supplier": "Textile A",
+      "inspectionDate": "2026-11-10",
+      "sample": "Hoodie",
+      "color": "Verde shrek",
+      "rollLength": 23,
+      "shadeMatch": "Slight variation",
+      "weaveCondition": "Severe weave defects",
+      "initialResult": "Observed",
+      "observation": "Tiene huecos",
+      "shrinkageTest": "Approved",
+      "rollStatus": "Blocked",
+      "testHistory": [
+        {
+          "testDate": "2026-11-10",
+          "method": "Washing (ISO 6330)",
+          "sampleId": "SAMPLE-002",
+          "lenShrinkage": "-1.5%",
+          "widthShrinkage": "-2.2%",
+          "result": "Approved",
+          "note": ""
+        }
+      ],
+      "parameters": {
+        "fabricWidth": 150,
+        "fabricWeight": 220,
+        "shadeCondition": "Slight variation",
+        "weaveCondition": "Minor slubs",
+        "surfaceCondition": "Damaged surface",
+        "defectsDetected": "Holes",
+        "observations": "",
+        "updatedAt": "2026-11-10T20:43:44.751Z"
+      },
+      "id": 1,
+      "parameterHistory": [
+        {
+          "date": "2026-11-10",
+          "fabricWidth": 150,
+          "fabricWeight": 220,
+          "shadeCondition": "Slight variation",
+          "weaveCondition": "Minor slubs",
+          "surfaceCondition": "Damaged surface",
+          "defectsDetected": "Holes",
+          "observations": ""
+        },
+        {
+          "date": "2026-11-10",
+          "fabricWidth": 150,
+          "fabricWeight": 220,
+          "shadeCondition": "Matches approved sample",
+          "weaveCondition": "No weave defects",
+          "surfaceCondition": "No stains or damage",
+          "defectsDetected": "None",
+          "observations": ""
+        }
+      ]
+    },
+    {
+      "rollId": "12",
+      "supplier": "Textile A",
+      "inspectionDate": "2026-11-10",
+      "sample": "Crewneck",
+      "color": "Verde shrek",
+      "rollLength": 11,
+      "shadeMatch": "Slight variation",
+      "weaveCondition": "Severe weave defects",
+      "initialResult": "Observed",
+      "observation": "hueocs",
+      "shrinkageTest": "Non-Compliant",
+      "rollStatus": "Blocked",
+      "testHistory": [
+        {
+          "testDate": "2026-11-10",
+          "method": "Washing (ISO 6330)",
+          "sampleId": "SAMPLE-003",
+          "lenShrinkage": "-1.5%",
+          "widthShrinkage": "-2.2%",
+          "result": "Non-Compliant",
+          "note": ""
+        }
+      ],
+      "parameters": null,
+      "id": 2
+    }
+  ],
+  "suppliers": [
+    {
+      "id": "1",
+      "name": "Textile A"
+    },
+    {
+      "id": "2",
+      "name": "Supplier B"
+    },
+    {
+      "id": "3",
+      "name": "Supplier C"
+    }
+  ],
+  "fabricSamples": [
+    {
+      "id": "1",
+      "name": "T-Shirt Basic"
+    },
+    {
+      "id": "2",
+      "name": "Hoodie"
+    },
+    {
+      "id": "3",
+      "name": "Crewneck"
+    },
+    {
+      "id": "4",
+      "name": "Leggings"
+    }
+  ]
 }

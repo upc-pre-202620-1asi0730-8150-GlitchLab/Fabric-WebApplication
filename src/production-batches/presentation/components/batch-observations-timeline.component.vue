@@ -1,10 +1,5 @@
-﻿<!--
-  @summary Presentation component for registering operational observations and displaying timeline.
-  @author Diego Sebastian Reategui Galarcep (u20201F165)
--->
-<template>
+﻿<template>
   <div>
-    <!-- Add Observation Card -->
     <div class="card">
       <h3 class="card-title">{{ $t('productionBatches.observations.addTitle') }}</h3>
       <p class="card-subtitle">{{ $t('productionBatches.observations.addDescription') }}</p>
@@ -20,7 +15,6 @@
       </div>
     </div>
 
-    <!-- Timeline Card -->
     <div class="card">
       <h3 class="card-title">{{ $t('productionBatches.observations.historyTitle') }}</h3>
       <p class="card-subtitle">{{ $t('productionBatches.observations.historyDescription') }}</p>

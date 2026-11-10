@@ -1,16 +1,10 @@
-﻿<!--
-  @summary Presentation component displaying quantity discrepancy alerts and traceability summary.
-  @author Diego Sebastian Reategui Galarcep (u20201F165)
--->
-<template>
+﻿<template>
   <div>
-    <!-- Warning Banner (Conditional if total difference exists) -->
     <div v-if="totalDifference < 0" class="alert-card">
       <h4 class="alert-title">{{ $t('productionBatches.traceability.alertTitle') }}</h4>
       <p class="alert-sub">{{ $t('productionBatches.traceability.alertDescription', { quantity: totalDifference }) }}</p>
     </div>
 
-    <!-- Summary Box -->
     <div class="card">
       <h3 class="card-title">{{ $t('productionBatches.traceability.summaryTitle') }}</h3>
       <div class="summary-grid">

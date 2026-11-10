@@ -50,7 +50,6 @@
       </pv-column>
     </pv-data-table>
 
-    <!-- Context Menu para las acciones del lote -->
     <pv-menu ref="menu" id="overlay_menu" :model="menuItems" :popup="true" />
   </div>
 </template>

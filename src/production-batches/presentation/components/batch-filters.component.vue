@@ -1,11 +1,6 @@
-﻿<!--
-  @summary Presentation component for filtering production batches by ID, status, date, and model.
-  @author Diego Sebastian Reategui Galarcep (u20201F165)
--->
-<template>
+﻿<template>
   <div class="surface-card p-4 mb-4 border-round shadow-1">
     <div class="grid p-fluid">
-      <!-- Search by Batch ID -->
       <div class="col-12 md:col-3">
         <label for="search-id" class="font-semibold block mb-2 text-700">{{ $t('productionBatches.search') }}</label>
         <pv-input-text
@@ -17,7 +12,6 @@
         />
       </div>
 
-      <!-- Filter by Status -->
       <div class="col-12 md:col-3">
         <label for="filter-status" class="font-semibold block mb-2 text-700">{{ $t('productionBatches.status') }}</label>
         <pv-dropdown
@@ -32,7 +26,6 @@
         />
       </div>
 
-      <!-- Filter by Date -->
       <div class="col-12 md:col-3">
         <label for="filter-date" class="font-semibold block mb-2 text-700">{{ $t('productionBatches.date') }}</label>
         <pv-dropdown
@@ -47,7 +40,6 @@
         />
       </div>
 
-      <!-- Filter by Garment Model -->
       <div class="col-12 md:col-3">
         <label for="filter-model" class="font-semibold block mb-2 text-700">{{ $t('productionBatches.garmentModel') }}</label>
         <pv-dropdown

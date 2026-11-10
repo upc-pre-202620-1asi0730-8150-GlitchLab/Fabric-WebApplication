@@ -6,13 +6,9 @@ import LanguageSwitcher from "./language-switcher.vue";
 const { t } = useI18n();
 const emit = defineEmits(['logout']);
 
-const navItems = [
-  {to: "/dashboard", icon: "pi pi-home", labelKey: "sidebar.dashboard"},
-  {to: "/production-batches", icon: "pi pi-box", labelKey: "sidebar.productionBatches"},
-  {to: "/quality", icon: "pi pi-verified", labelKey: "sidebar.quality"},
-  {to: "/machinery", icon: "pi pi-cog", labelKey: "sidebar.machinery"},
-  {to: "/alerts", icon: "pi pi-bell", labelKey: "sidebar.alerts"}
-];
+defineProps({
+  navItems: {type: Array, default: () => []}
+});
 </script>
 
 <template>
@@ -54,16 +50,16 @@ const navItems = [
 
 <style scoped>
 .sidebar {
-  position: sticky;        /* nuevo */
-  top: 0;                  /* nuevo */
-  align-self: flex-start;  /* nuevo, imprescindible dentro de un flex */
-  flex-shrink: 0;          /* nuevo */
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  flex-shrink: 0;
   width: 16rem;
   height: 100vh;
-  overflow-y: auto;        /* nuevo */
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  background: #f5f6fa;     /* antes #ffffff */
+  background: #f5f6fa;
   border-right: 1px solid #e5e5e0;
   padding: 1.5rem 1rem;
   box-sizing: border-box;

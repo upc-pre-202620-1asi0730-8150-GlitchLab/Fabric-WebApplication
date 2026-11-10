@@ -2,7 +2,6 @@
 <template>
   <form @submit.prevent="handleSubmit" class="form-card">
 
-    <!-- Section 1: Basic Information -->
     <div class="section-header">
       <div class="step-number">1</div>
 
@@ -16,7 +15,6 @@
 
     <div class="form-grid">
 
-      <!-- Garment Model -->
       <div class="form-group">
         <label for="garmentModel">{{ $t('productionBatches.createBatch.createBatchTable.garmentModel') }}</label>
 
@@ -40,7 +38,6 @@
         </select>
       </div>
 
-      <!-- Projected Quantity -->
       <div class="form-group">
         <label for="projectedQuantity">{{ $t('productionBatches.createBatch.createBatchTable.projectedQuantity') }}</label>
 
@@ -59,7 +56,6 @@
         </div>
       </div>
 
-      <!-- Delivery Date -->
       <div class="form-group">
         <label for="deliveryDate">{{ $t('productionBatches.createBatch.createBatchTable.deliveryDate') }}</label>
 
@@ -72,7 +68,6 @@
         />
       </div>
 
-      <!-- Technical Sheet -->
       <div class="form-group">
         <label for="technicalSheet">{{ $t('productionBatches.createBatch.createBatchTable.technicalSheet') }}</label>
 
@@ -107,7 +102,6 @@
 
     <hr class="divider" />
 
-    <!-- Section 2: Additional Information -->
     <div class="section-header">
       <div class="step-number">2</div>
 
@@ -119,7 +113,6 @@
       </div>
     </div>
 
-    <!-- Notes -->
     <div class="form-group mb-28">
       <label for="notes">{{ $t('productionBatches.createBatch.createBatchTable.notes') }}</label>
 
@@ -132,7 +125,6 @@
       ></textarea>
     </div>
 
-    <!-- Action Buttons -->
     <div class="form-actions">
 
       <button

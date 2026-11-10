@@ -1,11 +1,4 @@
-﻿/**
- * @summary Domain entity representing an Operator assigned to a batch stage.
- * @author Diego Sebastian Reategui Galarcep (u20201F165)
- */
 export class BatchOperator {
-    /**
-     * @param {Object} [data={}] - Plain object data.
-     */
     constructor({
                     id = 0,
                     batchId = 0,

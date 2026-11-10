@@ -84,7 +84,6 @@ onMounted(() => {
 
 <template>
   <main class="alerts-page">
-    <!-- HEADER -->
     <header class="alerts-header">
       <div>
         <h1>{{ t('alerts.title') }}</h1>
@@ -92,7 +91,6 @@ onMounted(() => {
       </div>
     </header>
 
-    <!-- STATE MESSAGES -->
     <div v-if="loading" class="state-message">
       {{ t('alerts.loading') }}
     </div>
@@ -102,7 +100,6 @@ onMounted(() => {
     </div>
 
     <template v-else>
-      <!-- FILTERS -->
       <section class="alerts-filters">
         <div class="alert-filter">
           <label>{{ t('alerts.status') }}</label>
@@ -143,7 +140,6 @@ onMounted(() => {
         </div>
       </section>
 
-      <!-- SUMMARY -->
       <section class="alerts-summary">
         <div class="alert-summary-card">
           <div class="summary-icon critical-icon">!</div>
@@ -173,7 +169,6 @@ onMounted(() => {
         </div>
       </section>
 
-      <!-- ALERT LIST -->
       <section class="production-alerts">
         <div class="alerts-section-header">
           <h2>{{ t('alerts.productionAlerts') }}</h2>
@@ -194,7 +189,6 @@ onMounted(() => {
         </div>
       </section>
 
-      <!-- ALERT DETAIL -->
       <section v-if="selectedAlert" class="alert-detail">
         <div class="detail-header">
           <h2>{{ t('alerts.detail') }} — {{ selectedAlert.reference }}</h2>
@@ -267,7 +261,6 @@ onMounted(() => {
   color: #64748b;
 }
 
-/* FILTROS (Solución Imagen 1) */
 .alerts-filters {
   display: flex;
   gap: 1.25rem;
@@ -319,7 +312,6 @@ onMounted(() => {
   border-color: #2563eb;
 }
 
-/* RESUMEN */
 .alerts-summary {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -379,7 +371,6 @@ onMounted(() => {
   color: #94a3b8;
 }
 
-/* LISTA DE ALERTAS */
 .production-alerts {
   display: flex;
   flex-direction: column;
@@ -415,7 +406,6 @@ onMounted(() => {
   font-style: italic;
 }
 
-/* DETALLE DE ALERTA (Solución Imagen 2) */
 .alert-detail {
   background-color: #ffffff;
   padding: 1.5rem;
@@ -479,7 +469,6 @@ onMounted(() => {
   color: #dc2626 !important;
 }
 
-/* Badge del Status en Detalle */
 .detail-status-badge {
   display: inline-flex;
   align-items: center;
@@ -507,7 +496,6 @@ onMounted(() => {
   color: #ffffff;
 }
 
-/* Botón Review Machine */
 .review-button {
   display: inline-flex;
   align-items: center;

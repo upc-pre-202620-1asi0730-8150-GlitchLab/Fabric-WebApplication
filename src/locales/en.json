@@ -11,10 +11,86 @@
         "qualityInspector": "Sign in as quality inspector",
         "productionSupervisor": "Sign in as production supervisor"
       }
+    }
+  },
+
+  "qualityInspector": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "newInspection": "New roll inspection",
+      "parameters": "Inspection parameters",
+      "shrinkageTest": "Shrinkage test"
     },
-    "qualityInspectorHome": {
-      "title": "Quality inspector area",
-      "comingSoon": "This view is under construction."
+    "placeholder": "This view is under construction.",
+    "newInspection": {
+      "title": "New roll inspection",
+      "subtitle": "Register the fabric roll received and verify its initial conformity before cutting.",
+      "rollInfo": {
+        "title": "Fabric roll information",
+        "subtitle": "Enter the identification and reception data of the incoming roll."
+      },
+      "initialInspection": {
+        "title": "Initial quality inspection",
+        "subtitle": "Compare the roll with the client's approved sample and record any severe variation."
+      },
+      "fields": {
+        "rollId": "Roll ID",
+        "supplier": "Supplier",
+        "receptionDate": "Reception date",
+        "sample": "Fabric / client sample",
+        "color": "Shade / color",
+        "rollLength": "Roll length",
+        "shadeMatch": "Shade match",
+        "weaveCondition": "Weave condition",
+        "result": "Inspection result",
+        "observation": "Observation / reason"
+      },
+      "placeholders": {
+        "rollId": "e.g. ROLL-001",
+        "supplier": "Select supplier",
+        "sample": "Select reference",
+        "color": "e.g. Navy Blue",
+        "rollLength": "e.g. 50",
+        "observation": "Required when the roll is marked as observed. Describe shade variation, weave holes or other findings."
+      },
+      "lengthUnit": "m",
+      "options": {
+        "shadeMatch": {
+          "matches": "Matches client sample",
+          "slightVariation": "Slight variation",
+          "severeMismatch": "Severe mismatch"
+        },
+        "weaveCondition": {
+          "noHoles": "No weave holes detected",
+          "minorIrregularities": "Minor irregularities",
+          "severeDefects": "Severe weave defects"
+        },
+        "result": {
+          "conforming": "Conforming",
+          "observed": "Observed"
+        }
+      },
+      "hints": {
+        "available": "Conforming → Available for cutting",
+        "blocked": "Observed → Blocked from cutting batches"
+      },
+      "errors": {
+        "required": "This field is required.",
+        "invalidLength": "The length must be greater than zero.",
+        "observationRequired": "Enter the reason when the roll is observed.",
+        "severeMustBeObserved": "A severe variation requires marking the roll as observed."
+      },
+      "actions": {
+        "save": "Save inspection",
+        "clear": "Clear form"
+      },
+      "messages": {
+        "savedTitle": "Inspection saved",
+        "saved": "The roll was registered successfully.",
+        "errorTitle": "Error",
+        "saveError": "Could not save the inspection.",
+        "loadCatalogsError": "Could not load suppliers and fabric samples."
+      }
     }
   },
 
