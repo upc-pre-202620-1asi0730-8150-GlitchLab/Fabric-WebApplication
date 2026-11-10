@@ -4,6 +4,7 @@ import {computed} from "vue";
 import {useRoute} from "vue-router";
 
 const route = useRoute();
+const emit = defineEmits(['logout']);
 const hideSidebar = computed(() => route.meta.hideSidebar === true);
 </script>
 
@@ -11,7 +12,7 @@ const hideSidebar = computed(() => route.meta.hideSidebar === true);
   <pv-toast/>
   <pv-confirm-dialog/>
   <div class="layout">
-    <app-sidebar v-if="!hideSidebar"/>
+    <app-sidebar v-if="!hideSidebar" @logout="emit('logout')"/>
     <main class="layout__content" :class="{ 'layout__content--full': hideSidebar }">
       <router-view/>
     </main>

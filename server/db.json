@@ -2,8 +2,8 @@
   "machines": [
     {
       "id": "1",
-      "type": "straight-stitch",
-      "batchId": "LOT-025",
+      "type": "overlock",
+      "batchId": "LOT-023",
       "status": "operational",
       "currentDowntime": null,
       "lastFailure": null,
@@ -242,6 +242,5 @@
       "batch": "1"
     }
   ],
-  "fabricInspections": [
-  ]
+  "fabricInspections": []
 }
