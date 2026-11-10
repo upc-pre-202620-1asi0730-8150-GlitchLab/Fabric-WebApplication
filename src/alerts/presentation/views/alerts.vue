@@ -3,7 +3,9 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { AlertsApiService } from '../../infrastructure/services/alerts-api.service.js'
 import AlertRow from '../components/Alerts.vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const selectedStatus = ref('All alerts')
 const selectedBatch = ref('All batches')
 const selectedType = ref('All types')
@@ -27,7 +29,7 @@ const fetchAlerts = async () => {
     alerts.value = await alertsService.getAll()
   } catch (err) {
     console.error('Error loading alerts:', err)
-    error.value = 'Failed to load alerts from server.'
+    error.value = 'alerts.loadError'
   } finally {
     loading.value = false
   }
@@ -82,45 +84,42 @@ onMounted(() => {
 
 <template>
   <main class="alerts-page">
-    <!-- HEADER -->
     <header class="alerts-header">
       <div>
-        <h1>Alerts</h1>
-        <p>Monitor waste, rework and machine downtime across the production line.</p>
+        <h1>{{ t('alerts.title') }}</h1>
+        <p>{{ t('alerts.subtitle') }}</p>
       </div>
     </header>
 
-    <!-- STATE MESSAGES -->
     <div v-if="loading" class="state-message">
-      Loading alerts...
+      {{ t('alerts.loading') }}
     </div>
 
     <div v-else-if="error" class="state-message error">
-      {{ error }}
+      {{ t(error) }}
     </div>
 
     <template v-else>
-      <!-- FILTERS -->
       <section class="alerts-filters">
         <div class="alert-filter">
-          <label>Status</label>
+          <label>{{ t('alerts.status') }}</label>
 
           <div class="select-wrapper">
             <select v-model="selectedStatus">
-              <option>All alerts</option>
-              <option value="CRITICAL">Critical</option>
-              <option value="WARNING">Warning</option>
-              <option value="OPTIMAL">Optimal</option>
+              <option value="All alerts">{{ t('alerts.allAlerts') }}</option>
+              <option value="CRITICAL">{{ t('alerts.critical') }}</option>
+              <option value="WARNING">{{ t('alerts.warning') }}</option>
+              <option value="OPTIMAL">{{ t('alerts.optimal') }}</option>
             </select>
           </div>
         </div>
 
         <div class="alert-filter">
-          <label>Batch</label>
+          <label>{{ t('alerts.batch') }}</label>
 
           <div class="select-wrapper">
             <select v-model="selectedBatch">
-              <option>All batches</option>
+              <option value="All batches">{{ t('alerts.allBatches') }}</option>
               <option>LOT-024</option>
               <option>LOT-021</option>
             </select>
@@ -128,54 +127,52 @@ onMounted(() => {
         </div>
 
         <div class="alert-filter">
-          <label>Alert Type</label>
+          <label>{{ t('alerts.type') }}</label>
 
           <div class="select-wrapper">
             <select v-model="selectedType">
-              <option>All types</option>
-              <option>Machine Downtime</option>
-              <option>Defect Rate</option>
-              <option>Rework Rate</option>
+              <option value="All types">{{ t('alerts.allTypes') }}</option>
+              <option value="Machine Downtime">{{ t('alerts.machineDowntime') }}</option>
+              <option value="Defect Rate">{{ t('alerts.defectRate') }}</option>
+              <option value="Rework Rate">{{ t('alerts.reworkRate') }}</option>
             </select>
           </div>
         </div>
       </section>
 
-      <!-- SUMMARY -->
       <section class="alerts-summary">
         <div class="alert-summary-card">
           <div class="summary-icon critical-icon">!</div>
           <div>
-            <span>Critical Alerts</span>
+            <span>{{ t('alerts.criticalAlerts') }}</span>
             <strong>{{ criticalAlerts }}</strong>
-            <small>require intervention</small>
+            <small>{{ t('alerts.requireIntervention') }}</small>
           </div>
         </div>
 
         <div class="alert-summary-card">
           <div class="summary-icon warning-icon">!</div>
           <div>
-            <span>Batches at Risk</span>
+            <span>{{ t('alerts.batchesAtRisk') }}</span>
             <strong>{{ batchesAtRisk }}</strong>
-            <small>above tolerance</small>
+            <small>{{ t('alerts.aboveTolerance') }}</small>
           </div>
         </div>
 
         <div class="alert-summary-card">
           <div class="summary-icon optimal-icon">✓</div>
           <div>
-            <span>Optimal Flow</span>
+            <span>{{ t('alerts.optimalFlow') }}</span>
             <strong>{{ optimalFlow }}</strong>
-            <small>batches within target</small>
+            <small>{{ t('alerts.batchesWithinTarget') }}</small>
           </div>
         </div>
       </section>
 
-      <!-- ALERT LIST -->
       <section class="production-alerts">
         <div class="alerts-section-header">
-          <h2>Production Alerts</h2>
-          <p>Alerts are generated automatically when operational tolerance thresholds are exceeded.</p>
+          <h2>{{ t('alerts.productionAlerts') }}</h2>
+          <p>{{ t('alerts.generatedAutomatically') }}</p>
         </div>
 
         <div class="alerts-list">
@@ -187,60 +184,59 @@ onMounted(() => {
           />
 
           <div v-if="!filteredAlerts.length" class="no-alerts">
-            No alerts found.
+            {{ t('alerts.empty') }}
           </div>
         </div>
       </section>
 
-      <!-- ALERT DETAIL -->
       <section v-if="selectedAlert" class="alert-detail">
         <div class="detail-header">
-          <h2>Alert Detail — {{ selectedAlert.reference }}</h2>
-          <p>Operational indicators for the selected alert.</p>
+          <h2>{{ t('alerts.detail') }} — {{ selectedAlert.reference }}</h2>
+          <p>{{ t('alerts.detailSubtitle') }}</p>
         </div>
 
         <div class="detail-content">
           <div class="detail-item">
-            <span>ACCUMULATED DOWNTIME</span>
+            <span>{{ t('alerts.accumulatedDowntime') }}</span>
             <strong>{{ selectedAlert.accumulated }}</strong>
           </div>
 
           <div class="detail-item">
-            <span>CONFIGURED LIMIT</span>
+            <span>{{ t('alerts.configuredLimit') }}</span>
             <strong>{{ selectedAlert.limit }}</strong>
           </div>
 
           <div class="detail-item">
-            <span>EXCESS TIME</span>
+            <span>{{ t('alerts.excessTime') }}</span>
             <strong :class="{ 'detail-danger': selectedAlert.status === 'CRITICAL' }">
               {{ selectedAlert.excess }}
             </strong>
           </div>
 
           <div class="detail-item">
-            <span>MACHINE</span>
+            <span>{{ t('alerts.machine') }}</span>
             <strong>{{ selectedAlert.machine }}</strong>
           </div>
 
           <div class="detail-item">
-            <span>STATUS</span>
+            <span>{{ t('alerts.status') }}</span>
 
             <div
                 class="detail-status-badge"
                 :class="`badge-${selectedAlert.status.toLowerCase()}`"
             >
-              {{ selectedAlert.status }}
+              {{ t(`alerts.${selectedAlert.status.toLowerCase()}`) }}
             </div>
           </div>
 
           <button class="review-button" @click="reviewAlert(selectedAlert)">
-            {{ selectedAlert.action || 'Review' }}
+            {{ selectedAlert.action || t('alerts.review') }}
           </button>
         </div>
       </section>
 
       <section v-else class="alert-detail empty-detail">
-        <span>Select an alert to view its details.</span>
+        <span>{{ t('alerts.selectAlert') }}</span>
       </section>
     </template>
   </main>
@@ -265,7 +261,6 @@ onMounted(() => {
   color: #64748b;
 }
 
-/* FILTROS (Solución Imagen 1) */
 .alerts-filters {
   display: flex;
   gap: 1.25rem;
@@ -317,7 +312,6 @@ onMounted(() => {
   border-color: #2563eb;
 }
 
-/* RESUMEN */
 .alerts-summary {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -377,7 +371,6 @@ onMounted(() => {
   color: #94a3b8;
 }
 
-/* LISTA DE ALERTAS */
 .production-alerts {
   display: flex;
   flex-direction: column;
@@ -413,7 +406,6 @@ onMounted(() => {
   font-style: italic;
 }
 
-/* DETALLE DE ALERTA (Solución Imagen 2) */
 .alert-detail {
   background-color: #ffffff;
   padding: 1.5rem;
@@ -477,7 +469,6 @@ onMounted(() => {
   color: #dc2626 !important;
 }
 
-/* Badge del Status en Detalle */
 .detail-status-badge {
   display: inline-flex;
   align-items: center;
@@ -505,7 +496,6 @@ onMounted(() => {
   color: #ffffff;
 }
 
-/* Botón Review Machine */
 .review-button {
   display: inline-flex;
   align-items: center;

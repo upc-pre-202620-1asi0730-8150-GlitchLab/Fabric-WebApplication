@@ -2,17 +2,17 @@
   <div class="observed-table-wrapper">
     <div class="card-header">
       <div>
-        <h2 class="title">Observed Garments</h2>
-        <p class="subtitle">Review pending defects and define their final disposition.</p>
+        <h2 class="title">{{ $t('quality.table.title') }}</h2>
+        <p class="subtitle">{{ $t('quality.table.subtitle') }}</p>
       </div>
 
       <div class="grouping-control">
-        <label>Group by:</label>
+        <label>{{ $t('quality.table.groupBy') }}</label>
         <select v-model="groupBy" class="group-select">
-          <option value="none">None (Individual)</option>
-          <option value="type">Defect Type</option>
-          <option value="machine">Machine</option>
-          <option value="batch">Batch</option>
+          <option value="none">{{ $t('quality.table.groups.none') }}</option>
+          <option value="type">{{ $t('quality.table.groups.type') }}</option>
+          <option value="machine">{{ $t('quality.table.groups.machine') }}</option>
+          <option value="batch">{{ $t('quality.table.groups.batch') }}</option>
         </select>
       </div>
     </div>
@@ -21,8 +21,8 @@
       <div class="summary-card" v-for="group in groupedSummary" :key="group.name">
         <span class="group-title font-mono">{{ group.name }}</span>
         <div class="group-meta">
-          <span>Incidences: <strong>{{ group.count }}</strong></span>
-          <span>Total Qty: <strong>{{ group.totalQuantity }}</strong></span>
+          <span>{{ $t('quality.table.recurrence.incidences') }}: <strong>{{ group.count }}</strong></span>
+          <span>{{ $t('quality.table.recurrence.totalQty') }}: <strong>{{ group.totalQuantity }}</strong></span>
         </div>
       </div>
     </div>
@@ -31,12 +31,12 @@
       <table class="data-table">
         <thead>
         <tr>
-          <th>DEFECT</th>
-          <th>BATCH</th>
-          <th>DEFECT TYPE</th>
-          <th class="text-center">QTY</th>
-          <th class="text-center">STATUS</th>
-          <th class="text-right">ACTIONS</th>
+          <th>{{ $t('quality.table.columns.defect') }}</th>
+          <th>{{ $t('quality.table.columns.batch') }}</th>
+          <th>{{ $t('quality.table.columns.defectType') }}</th>
+          <th class="text-center">{{ $t('quality.table.columns.qty') }}</th>
+          <th class="text-center">{{ $t('quality.table.columns.status') }}</th>
+          <th class="text-right">{{ $t('quality.table.columns.actions') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -49,7 +49,7 @@
           <td class="font-mono font-bold">{{ item.id }}</td>
           <td class="font-mono">{{ item.batchId }}</td>
           <td>
-            {{ item.defectType }}
+            {{ formatDefectType(item.defectType) }}
             <span v-if="item.evidences && item.evidences.length > 0" class="evidence-tag">
                 📷 {{ item.evidences.length }}
               </span>
@@ -57,7 +57,7 @@
           <td class="text-center font-mono">{{ item.quantity }}</td>
           <td class="text-center">
               <span class="badge" :class="getBadgeClass(item.status)">
-                {{ item.status }}
+                {{ formatStatus(item.status) }}
               </span>
           </td>
           <td class="text-right action-cell">
@@ -71,16 +71,16 @@
 
             <div v-if="openMenuId === item.id" class="dropdown-menu">
               <button type="button" class="menu-btn" @click.stop="openEvidence(item)">
-                <span></span> Add Evidence
+                <span></span> {{ $t('quality.table.actions.addEvidence') }}
               </button>
               <button type="button" class="menu-btn" @click.stop="openDisposition(item)">
-                <span></span> Disposition
+                <span></span> {{ $t('quality.table.actions.disposition') }}
               </button>
             </div>
           </td>
         </tr>
         <tr v-if="defects.length === 0">
-          <td colspan="6" class="text-center py-4 text-muted">No observed garments recorded.</td>
+          <td colspan="6" class="text-center py-4 text-muted">{{ $t('quality.table.empty') }}</td>
         </tr>
         </tbody>
       </table>
@@ -90,6 +90,9 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   defects: {
@@ -102,7 +105,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['select-defect', 'navigate-to-evidence'])
+const emit = defineEmits(['select-defect', 'navigate-to-evidence', 'open-disposition'])
 
 const groupBy = ref('none')
 const openMenuId = ref(null)
@@ -124,6 +127,7 @@ const handleRowSelect = (item) => {
 
 const openDisposition = (item) => {
   emit('select-defect', item)
+  emit('open-disposition', item)
   openMenuId.value = null
 }
 
@@ -148,6 +152,27 @@ const groupedSummary = computed(() => {
   })
   return Object.values(groups)
 })
+
+const formatDefectType = (type) => {
+  switch (type) {
+    case 'Open stitches': return t('quality.form.defectTypes.openStitches')
+    case 'Torn fabric': return t('quality.form.defectTypes.tornFabric')
+    case 'Uneven seam': return t('quality.form.defectTypes.unevenSeam')
+    case 'Oil stain': return t('quality.form.defectTypes.oilStain')
+    case 'Loose button': return t('quality.form.defectTypes.looseButton')
+    default: return type
+  }
+}
+
+const formatStatus = (status) => {
+  switch (status) {
+    case 'Pending Decision': return t('quality.table.statuses.pending')
+    case 'In Evaluation': return t('quality.table.statuses.evaluation')
+    case 'Send to Rework': return t('quality.table.statuses.rework')
+    case 'Permanent Discard': return t('quality.table.statuses.discard')
+    default: return status
+  }
+}
 
 const getBadgeClass = (status) => {
   switch (status) {

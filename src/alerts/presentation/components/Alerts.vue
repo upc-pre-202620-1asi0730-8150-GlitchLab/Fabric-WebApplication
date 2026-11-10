@@ -1,4 +1,8 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 defineProps({
   alert: {
     type: Object,
@@ -7,6 +11,30 @@ defineProps({
 })
 
 defineEmits(['select'])
+
+const translateStatus = (status) => {
+  const key = status?.toLowerCase()
+  return ['critical', 'warning', 'optimal'].includes(key) ? t(`alerts.${key}`) : status
+}
+
+const translateTitle = (alert) => {
+  if (alert.title === 'Machine downtime above limit') {
+    return t('alerts.machineDowntimeTitle')
+  }
+  return alert.title
+}
+
+const translateDescription = (alert) => {
+  if (alert.type === 'Machine Downtime' && alert.accumulated && alert.limit) {
+    return t('alerts.downtimeDescription', {
+      accumulated: alert.accumulated,
+      limit: alert.limit
+    })
+  }
+  return alert.description
+}
+
+const translateAction = (action) => action === 'View Machine' ? t('alerts.viewMachine') : action
 </script>
 
 <template>
@@ -19,15 +47,15 @@ defineEmits(['select'])
         class="alert-status"
         :class="`status-${(alert.status || '').toLowerCase()}`"
     >
-      {{ alert.status }}
+      {{ translateStatus(alert.status) }}
     </div>
 
     <div class="alert-information">
       <strong>
-        {{ alert.reference }} — {{ alert.title }}
+        {{ alert.reference }} — {{ translateTitle(alert) }}
       </strong>
       <span>
-        {{ alert.description }}
+        {{ translateDescription(alert) }}
       </span>
     </div>
 
@@ -35,7 +63,7 @@ defineEmits(['select'])
         class="alert-action"
         @click.stop="$emit('select', alert)"
     >
-      {{ alert.action }} →
+      {{ translateAction(alert.action) }} →
     </button>
   </div>
 </template>

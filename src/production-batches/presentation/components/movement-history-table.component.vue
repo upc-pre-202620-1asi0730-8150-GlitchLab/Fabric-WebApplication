@@ -1,37 +1,35 @@
-﻿<!--
-  @summary Presentation component rendering movement traceability history and quantity differences.
-  @author Diego Sebastian Reategui Galarcep (u20201F165)
--->
-<template>
-  <div class="surface-card p-4 border-round shadow-1 mb-4">
-    <h3 class="m-0 text-xl font-bold text-900 mb-1">Movement History</h3>
-    <p class="m-0 text-sm text-600 mb-4">Chronological record of batch movements, quantities and responsible operators.</p>
+﻿<template>
+  <div class="card">
+    <h3 class="card-title">{{ $t('productionBatches.movement.title') }}</h3>
+    <p class="card-subtitle">{{ $t('productionBatches.movement.subtitle') }}</p>
 
-    <pv-data-table :value="movements" responsiveLayout="scroll" class="p-datatable-sm">
-      <pv-column field="stageName" header="STAGE" class="font-bold text-900"></pv-column>
-      <pv-column field="timestamp" header="DATE & TIME"></pv-column>
-      <pv-column field="qtyIn" header="QTY IN"></pv-column>
-      <pv-column field="qtyOut" header="QTY OUT"></pv-column>
-
-      <!-- Difference Badge -->
-      <pv-column header="DIFFERENCE">
-        <template #body="slotProps">
-          <span
-              class="px-2 py-1 border-round font-bold text-xs"
-              :class="slotProps.data.difference !== 0 ? 'bg-red-100 text-red-600' : 'text-700'"
-          >
-            {{ slotProps.data.difference > 0 ? `-${slotProps.data.difference}` : '0' }}
-          </span>
-        </template>
-      </pv-column>
-
-      <pv-column field="responsiblePerson" header="RESPONSIBLE"></pv-column>
-      <pv-column field="status" header="STATUS">
-        <template #body="slotProps">
-          <span class="text-sm font-semibold text-600">{{ slotProps.data.status || 'Completed' }}</span>
-        </template>
-      </pv-column>
-    </pv-data-table>
+    <table class="custom-table">
+      <thead>
+      <tr>
+        <th>{{ $t('productionBatches.movement.stage') }}</th>
+        <th>{{ $t('productionBatches.movement.dateTime') }}</th>
+        <th>{{ $t('productionBatches.movement.qtyIn') }}</th>
+        <th>{{ $t('productionBatches.movement.qtyOut') }}</th>
+        <th>{{ $t('productionBatches.movement.difference') }}</th>
+        <th>{{ $t('productionBatches.movement.responsible') }}</th>
+        <th>{{ $t('productionBatches.movement.status') }}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="item in movements" :key="item.id || item.stage">
+        <td>{{ translateStage(item.stage) }}</td>
+        <td>{{ item.dateTime }}</td>
+        <td>{{ item.qtyIn }}</td>
+        <td>{{ item.qtyOut }}</td>
+        <td>
+          <span v-if="item.difference < 0" class="diff-badge">{{ item.difference }}</span>
+          <span v-else>{{ item.difference }}</span>
+        </td>
+        <td>{{ item.responsible }}</td>
+        <td>{{ translateStatus(item.status) }}</td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -41,13 +39,42 @@ export default {
   props: {
     movements: {
       type: Array,
-      default: () => [
-        { id: 1, stageName: 'Cutting', timestamp: 'Sep 14, 2026 09:15', qtyIn: 500, qtyOut: 500, difference: 0, responsiblePerson: 'Carlos Mendoza', status: 'Completed' },
-        { id: 2, stageName: 'Sewing', timestamp: 'Sep 15, 2026 14:20', qtyIn: 500, qtyOut: 492, difference: 8, responsiblePerson: 'Ana Torres', status: 'Completed' },
-        { id: 3, stageName: 'Finishing', timestamp: 'Sep 16, 2026 10:30', qtyIn: 492, qtyOut: 487, difference: 5, responsiblePerson: 'Luis Ramos', status: 'Completed' },
-        { id: 4, stageName: 'Quality Check', timestamp: 'Sep 17, 2026 15:10', qtyIn: 487, qtyOut: 487, difference: 0, responsiblePerson: 'Maria Lopez', status: 'Current' }
-      ]
+      required: true,
+      default: () => []
+    }
+  },
+  methods: {
+    translateStage(stage) {
+      const keys = {
+        Cutting: 'cutting',
+        Sewing: 'sewing',
+        Finishing: 'finishing',
+        'Quality Check': 'qualityCheck',
+        Completed: 'completed'
+      };
+      return keys[stage] ? this.$t(`productionBatches.stages.${keys[stage]}`) : stage;
+    },
+    translateStatus(status) {
+      const keys = {
+        'In Production': 'inProduction',
+        'At Risk': 'atRisk',
+        Completed: 'completed',
+        Delayed: 'delayed'
+      };
+      return keys[status] ? this.$t(`productionBatches.statuses.${keys[status]}`) : status;
     }
   }
 };
 </script>
+
+<style scoped>
+.card { border: 1px solid #E5E7EB; border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+.card-title { font-size: 16px; font-weight: 700; margin: 0; }
+.card-subtitle { font-size: 13px; color: #6B7280; margin: 4px 0 20px 0; }
+
+.custom-table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+.custom-table th { padding: 12px; color: #374151; font-weight: 700; border-bottom: 1px solid #E5E7EB; background: #F9FAFB; }
+.custom-table td { padding: 14px 12px; border-bottom: 1px solid #F3F4F6; color: #4B5563; }
+
+.diff-badge { background: #FCE8E8; color: #B93838; font-weight: 700; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+</style>

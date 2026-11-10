@@ -1,15 +1,17 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { ReportAnalyticsApiService } from '../../infrastructure/services/report-analytics-api.service'
 import StatCard from '../components/StatCard.vue'
 import ProductionChart from '../components/ProductionChart.vue'
 import BatchesStage from '../components/BatchesStage.vue'
 import BatchProgress from '../components/BatchProgress.vue'
 import ExportReportModal from '../components/ExportReportModal.vue'
-import { useProductionStore } from '../../../stores/production.js'
+import { useProductionStore } from '../../../production-batches/application/store/production.js'
 
-const selectedDate = ref('2026-10-04')
-const selectedBatch = ref('All batches')
+const { t, locale } = useI18n()
+const selectedDate = ref(null)
+const selectedBatch = ref(null)
 
 const metrics = ref({
   totalProduced: 0,
@@ -25,21 +27,40 @@ const productionHistory = ref([])
 const reportService = new ReportAnalyticsApiService()
 const productionStore = useProductionStore()
 
+const availableDates = computed(() => productionHistory.value.map(record => record.date).sort().reverse())
+const visibleBatches = computed(() => selectedBatch.value === null
+    ? productionStore.batches
+    : productionStore.batches.filter(batch => batch.id === selectedBatch.value))
+
+const formatDate = (date) =>
+    new Intl.DateTimeFormat(locale.value, { dateStyle: 'medium' }).format(new Date(`${date}T00:00:00`))
+
+const loadMetrics = async () => {
+  metrics.value = await reportService.getDashboardData(selectedDate.value)
+}
+
 const loadDashboardData = async () => {
   try {
     loading.value = true
     error.value = null
-    const [data, history] = await Promise.all([
-      reportService.getDashboardData(selectedDate.value),
-      reportService.getDashboardHistory()
-    ])
-    metrics.value = data
-    productionHistory.value = history
+    productionHistory.value = await reportService.getDashboardHistory()
+    selectedDate.value = availableDates.value[0] ?? null
+    await loadMetrics()
   } catch (err) {
     console.error('Error loading dashboard:', err)
-    error.value = 'Failed to load report analytics.'
+    error.value = 'dashboard.loadError'
   } finally {
     loading.value = false
+  }
+}
+
+const onDateChange = async () => {
+  try {
+    error.value = null
+    await loadMetrics()
+  } catch (err) {
+    console.error('Error loading dashboard:', err)
+    error.value = 'dashboard.loadError'
   }
 }
 
@@ -48,10 +69,9 @@ onMounted(() => {
   loadDashboardData()
 })
 
-// Export: Excel option downloads a CSV (opens in Excel), PDF option opens the print dialog
 const downloadCsv = (rows, filename) => {
   const csv = rows.map(r => r.map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(',')).join('\n')
-  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' })
+  const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' })
   const url = URL.createObjectURL(blob)
   const link = document.createElement('a')
   link.href = url
@@ -62,7 +82,7 @@ const downloadCsv = (rows, filename) => {
 
 const onExport = (options) => {
   if (options.format === 'excel') {
-    const rows = [['Date', 'Total produced', 'Average per hour', 'Daily compliance (%)']]
+    const rows = [[t('dashboard.date'), t('dashboard.stats.totalProduced'), t('dashboard.stats.averagePerHour'), `${t('dashboard.stats.dailyCompliance')} (%)`]]
     productionHistory.value
         .filter(r => r.date >= options.startDate && r.date <= options.endDate)
         .forEach(r => rows.push([r.date, r.totalProduced, r.averagePerHour, r.dailyCompliance]))
@@ -75,152 +95,72 @@ const onExport = (options) => {
 </script>
 
 <template>
-  <div class="dashboard-container">
-    <header class="dashboard-header">
-      <div class="dashboard-title">
-        <h1>Dashboard</h1>
-        <p>Overview of today's production</p>
+  <div class="report-container">
+    <header class="report-header">
+      <div class="report-title">
+        <h1>{{ t('dashboard.title') }}</h1>
+        <p>{{ t('dashboard.subtitle') }}</p>
 
-        <div class="filters">
-          <div class="filter-group">
-            <label>Date</label>
-            <select v-model="selectedDate" @change="loadDashboardData">
-              <option value="2026-10-04">Today</option>
-              <option value="2026-10-03">October 3, 2026</option>
-              <option value="2026-10-02">October 2, 2026</option>
+        <div class="report-filters">
+          <div class="report-filter-group">
+            <label for="report-date">{{ t('dashboard.date') }}</label>
+            <select id="report-date" v-model="selectedDate" :disabled="!availableDates.length" @change="onDateChange">
+              <option v-for="date in availableDates" :key="date" :value="date">{{ formatDate(date) }}</option>
             </select>
           </div>
 
-          <div class="filter-group">
-            <label>Batch</label>
-            <select v-model="selectedBatch">
-              <option>All batches</option>
+          <div class="report-filter-group">
+            <label for="report-batch">{{ t('dashboard.batch') }}</label>
+            <select id="report-batch" v-model="selectedBatch">
+              <option :value="null">{{ t('dashboard.allBatches') }}</option>
+              <option v-for="batch in productionStore.batches" :key="batch.id" :value="batch.id">
+                {{ batch.batchNumber }}
+              </option>
             </select>
           </div>
         </div>
       </div>
 
-      <button class="export-report-button" @click="showExport = true">
-        ↓ Export Report
+      <button class="report-export-button" @click="showExport = true">
+        ↓ {{ t('dashboard.exportReport') }}
       </button>
     </header>
 
-    <div v-if="loading" class="state-message">
-      Loading production analytics...
+    <div v-if="loading" class="report-state">
+      {{ t('dashboard.loading') }}
     </div>
 
-    <div v-else-if="error" class="state-message error">
-      {{ error }}
+    <div v-else-if="error" class="report-state report-state-error">
+      {{ t(error) }}
     </div>
 
     <template v-else>
-      <section class="stats-grid">
+      <section class="report-stats-grid">
         <StatCard
-            title="Total produced today"
+            :title="t('dashboard.stats.totalProduced')"
             :value="metrics.totalProduced"
-            description="garments"
+            :description="t('dashboard.stats.garments')"
         />
         <StatCard
-            title="Average per hour"
+            :title="t('dashboard.stats.averagePerHour')"
             :value="metrics.averagePerHour"
-            description="garments / hour"
+            :description="t('dashboard.stats.garmentsPerHour')"
         />
         <StatCard
-            title="Daily compliance"
+            :title="t('dashboard.stats.dailyCompliance')"
             :value="`${metrics.dailyCompliance}%`"
-            description="daily production target"
+            :description="t('dashboard.stats.dailyTarget')"
         />
       </section>
 
-      <section class="dashboard-grid">
+      <section class="report-grid">
         <ProductionChart :data="productionHistory" />
-        <BatchesStage />
+        <BatchesStage :batches="visibleBatches" />
       </section>
 
-      <BatchProgress />
+      <BatchProgress :batches="visibleBatches" />
     </template>
 
     <ExportReportModal v-if="showExport" @close="showExport = false" @export="onExport" />
   </div>
 </template>
-
-<style scoped>
-.dashboard-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.dashboard-title h1 {
-  margin: 0;
-  font-size: 1.75rem;
-  color: #0f172a;
-}
-
-.dashboard-title p {
-  margin: 0.25rem 0 1rem 0;
-  color: #64748b;
-}
-
-.filters {
-  display: flex;
-  gap: 1rem;
-}
-
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.filter-group label {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #475569;
-}
-
-.filter-group select {
-  padding: 0.5rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  background-color: #ffffff;
-}
-
-.export-report-button {
-  padding: 0.6rem 1.2rem;
-  background-color: #0f172a;
-  color: #ffffff;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-}
-
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 1rem;
-}
-
-.state-message {
-  padding: 2rem;
-  text-align: center;
-  color: #64748b;
-}
-
-.state-message.error {
-  color: #dc2626;
-}
-</style>

@@ -1,46 +1,35 @@
-﻿<!--
-  @summary Presentation component for registering operational observations and displaying timeline.
-  @author Diego Sebastian Reategui Galarcep (u20201F165)
--->
-<template>
+﻿<template>
   <div>
-    <!-- Add Observation Form Card -->
-    <div class="surface-card p-4 border-round shadow-1 mb-4">
-      <h3 class="m-0 text-xl font-bold text-900 mb-1">Add Observation</h3>
-      <p class="m-0 text-sm text-600 mb-3">Document incidents or agreements that are not formal defects.</p>
+    <div class="card">
+      <h3 class="card-title">{{ $t('productionBatches.observations.addTitle') }}</h3>
+      <p class="card-subtitle">{{ $t('productionBatches.observations.addDescription') }}</p>
 
-      <form @submit.prevent="handleSave">
-        <label for="observationText" class="font-semibold block mb-2 text-700">Observation *</label>
-        <textarea
-            id="observationText"
-            v-model="newContent"
-            rows="4"
-            class="p-inputtext w-full mb-2"
-            placeholder="Write an observation about this production batch..."
-            required
-        ></textarea>
+      <div class="form-group mb-16">
+        <label>{{ $t('productionBatches.observations.observation') }}</label>
+        <textarea v-model="localText" rows="3" :placeholder="$t('productionBatches.observations.placeholder')" class="custom-textarea"></textarea>
+      </div>
 
-        <div class="flex align-items-center justify-content-between">
-          <span class="text-xs text-500">Empty text or spaces only &rarr; observation cannot be saved.</span>
-          <pv-button label="Save Observation" type="submit" class="custom-olive-btn px-4" :disabled="!newContent.trim()" />
-        </div>
-      </form>
+      <div class="card-footer">
+        <span class="help-text">{{ $t('productionBatches.observations.emptyHint') }}</span>
+        <button class="btn-olive" :disabled="!localText.trim()" @click="handleSave">{{ $t('productionBatches.observations.save') }}</button>
+      </div>
     </div>
 
-    <!-- Timeline History Card -->
-    <div class="surface-card p-4 border-round shadow-1">
-      <h3 class="m-0 text-xl font-bold text-900 mb-1">Observation History</h3>
-      <p class="m-0 text-sm text-600 mb-4">Most recent observations appear first.</p>
+    <div class="card">
+      <h3 class="card-title">{{ $t('productionBatches.observations.historyTitle') }}</h3>
+      <p class="card-subtitle">{{ $t('productionBatches.observations.historyDescription') }}</p>
 
-      <div class="flex flex-column gap-4">
-        <div
-            v-for="obs in observations"
-            :key="obs.id"
-            class="border-left-2 border-primary pl-3 py-1"
-        >
-          <div class="text-xs font-bold text-700 mb-1">{{ obs.createdAt }}</div>
-          <p class="m-0 text-sm text-800 font-medium mb-1">{{ obs.content }}</p>
-          <span class="text-xs text-500">Registered by {{ obs.authorName }}</span>
+      <div class="timeline">
+        <div v-for="(obs, index) in observations" :key="obs.id">
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <div class="timeline-content">
+              <span class="timestamp">{{ obs.timestamp }}</span>
+              <p class="obs-text">{{ obs.text }}</p>
+              <span v-if="obs.author" class="author">{{ obs.author }}</span>
+            </div>
+          </div>
+          <div v-if="index < observations.length - 1" class="timeline-divider"></div>
         </div>
       </div>
     </div>
@@ -53,23 +42,21 @@ export default {
   props: {
     observations: {
       type: Array,
-      default: () => [
-        { id: 1, createdAt: '16/09/2026 · 11:42', content: 'Production paused for 15 minutes while material availability was confirmed.', authorName: 'Rosangela Silva' },
-        { id: 2, createdAt: '15/09/2026 · 16:10', content: 'Supervisor agreed to prioritize finishing before end of shift.', authorName: 'Rosangela Silva' }
-      ]
+      required: true,
+      default: () => []
     }
   },
   emits: ['save-observation'],
   data() {
     return {
-      newContent: ''
+      localText: ''
     };
   },
   methods: {
     handleSave() {
-      if (this.newContent.trim()) {
-        this.$emit('save-observation', this.newContent.trim());
-        this.newContent = '';
+      if (this.localText.trim()) {
+        this.$emit('save-observation', this.localText.trim());
+        this.localText = '';
       }
     }
   }
@@ -77,8 +64,25 @@ export default {
 </script>
 
 <style scoped>
-.custom-olive-btn {
-  background-color: #536228 !important;
-  border-color: #536228 !important;
-}
+.card { border: 1px solid #E5E7EB; border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+.card-title { font-size: 16px; font-weight: 700; margin: 0; }
+.card-subtitle { font-size: 13px; color: #6B7280; margin: 4px 0 20px 0; }
+
+.form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+.custom-textarea { width: 100%; border: 1px solid #E5E7EB; border-radius: 8px; padding: 12px; font-size: 14px; box-sizing: border-box; }
+.mb-16 { margin-bottom: 16px; }
+
+.card-footer { display: flex; justify-content: space-between; align-items: center; }
+.help-text { font-size: 12px; color: #9CA3AF; }
+
+.btn-olive { background: #48532B; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+.btn-olive:disabled { background-color: #A3A3A3; cursor: not-allowed; }
+
+.timeline { display: flex; flex-direction: column; gap: 16px; }
+.timeline-item { display: flex; gap: 12px; align-items: flex-start; }
+.dot { width: 10px; height: 10px; background-color: #48532B; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+.timestamp { font-size: 13px; font-weight: 700; color: #111827; display: block; margin-bottom: 4px; }
+.obs-text { font-size: 14px; color: #374151; margin: 0 0 4px 0; }
+.author { font-size: 12px; color: #9CA3AF; }
+.timeline-divider { border-top: 1px solid #F3F4F6; margin: 8px 0; }
 </style>

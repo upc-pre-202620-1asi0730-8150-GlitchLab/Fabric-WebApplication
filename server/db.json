@@ -3,7 +3,7 @@
     {
       "id": "1",
       "type": "overlock",
-      "batchId": "LOT-020",
+      "batchId": "LOT-023",
       "status": "operational",
       "currentDowntime": null,
       "lastFailure": null,
@@ -11,9 +11,212 @@
       "downtimeStartedAt": null
     }
   ],
-  "stopEvents": [],
-  "maintenanceRecords": [],
+  "stopEvents": [
+    {
+      "machineId": "1",
+      "cause": "mechanical-jam",
+      "stoppedAt": "2026-10-28T13:30:00.000Z",
+      "resumedAt": "2026-10-28T14:27:00.000Z",
+      "durationMinutes": 57,
+      "failureDescription": "aguja fallida",
+      "id": 1
+    }
+  ],
+  "maintenanceRecords": [
+    {
+      "machineId": "1",
+      "date": "2026-10-27",
+      "maintenanceType": "preventive",
+      "interventionPerformed": "npmrundev",
+      "partsReplaced": "Aguja",
+      "technician": "Alan",
+      "id": 1
+    },
+    {
+      "machineId": "1",
+      "date": "2026-10-28",
+      "maintenanceType": "corrective",
+      "interventionPerformed": "correa",
+      "partsReplaced": "Correa",
+      "technician": "Diego",
+      "id": 2
+    }
+  ],
+  "batches": [
+    {
+      "id": "1",
+      "batchNumber": "LOT-024",
+      "garmentModel": "T-Shirt Basic",
+      "projectedQuantity": 1000,
+      "currentStage": "Sewing",
+      "progressPercentage": 64,
+      "deliveryDate": "2026-04-25",
+      "status": "In Production",
+      "notes": "Lote principal en planta asociado a la máquina MC-014."
+    },
+    {
+      "id": "2",
+      "batchNumber": "LOT-023",
+      "garmentModel": "Hoodie",
+      "projectedQuantity": 500,
+      "currentStage": "Cutting",
+      "progressPercentage": 35,
+      "deliveryDate": "2026-04-28",
+      "status": "In Production",
+      "notes": "Lote secundario en proceso de corte."
+    },
+    {
+      "batchNumber": "LOT-025",
+      "garmentModel": "Hoodie",
+      "projectedQuantity": 500,
+      "currentStage": "Quality Check",
+      "progressPercentage": 80,
+      "deliveryDate": "2026-11-20",
+      "status": "In Production",
+      "notes": "detalle",
+      "id": "SJHPVWI"
+    },
+    {
+      "batchNumber": "LOT-026",
+      "garmentModel": "Crewneck",
+      "projectedQuantity": 100,
+      "currentStage": "Sewing",
+      "progressPercentage": 40,
+      "deliveryDate": "2017-03-05",
+      "status": "In Production",
+      "notes": "detalle",
+      "id": "3H-ugH1"
+    },
+    {
+      "batchNumber": "LOT-027",
+      "garmentModel": "Leggings",
+      "projectedQuantity": 1000,
+      "currentStage": "Cutting",
+      "progressPercentage": 10,
+      "deliveryDate": "2028-05-05",
+      "status": "In Production",
+      "notes": "",
+      "id": "TvKdnJU"
+    },
+    {
+      "batchNumber": "LOT-028",
+      "garmentModel": "Jogger Pants",
+      "projectedQuantity": 200,
+      "currentStage": "Cutting",
+      "progressPercentage": 10,
+      "deliveryDate": "2028-06-06",
+      "status": "In Production",
+      "notes": "",
+      "id": "16EkTzp"
+    }
+  ],
   "defects": [],
+  "operators": [
+    {
+      "id": "1",
+      "name": "Carlos Mendoza",
+      "specialty": "Overlock"
+    },
+    {
+      "id": "2",
+      "name": "Ana Torres",
+      "specialty": "Straight Stitch"
+    },
+    {
+      "id": "3",
+      "name": "Luis Ramos",
+      "specialty": "Finishing"
+    },
+    {
+      "id": "4",
+      "name": "Maria Lopez",
+      "specialty": "Quality Control"
+    }
+  ],
+  "assignedOperators": [
+    {
+      "id": "1",
+      "batchId": "1",
+      "operatorId": "1",
+      "operatorName": "Carlos Mendoza",
+      "specialty": "Overlock",
+      "stage": "Sewing",
+      "assignedAt": "2026-09-16 09:15"
+    }
+  ],
+  "traceabilityHistory": [
+    {
+      "id": "1",
+      "batchId": "1",
+      "stageName": "Sewing",
+      "qtyIn": 500,
+      "qtyOut": 492,
+      "difference": -8,
+      "responsiblePerson": "Ana Torres",
+      "timestamp": "2026-09-15 14:20"
+    },
+    {
+      "batchId": "SJHPVWI",
+      "stage": "Cutting",
+      "dateTime": "Oct 28, 2026, 10:19",
+      "qtyIn": 500,
+      "qtyOut": 50,
+      "difference": -450,
+      "responsible": "Supervisor",
+      "status": "Completed",
+      "id": "ZOXJb31"
+    },
+    {
+      "batchId": "3H-ugH1",
+      "stage": "Cutting",
+      "dateTime": "Oct 28, 2026, 10:19",
+      "qtyIn": 100,
+      "qtyOut": 70,
+      "difference": -30,
+      "responsible": "Supervisor",
+      "status": "Current",
+      "id": "tlKjEzK"
+    },
+    {
+      "batchId": "SJHPVWI",
+      "stage": "Sewing",
+      "dateTime": "Oct 28, 2026, 10:19",
+      "qtyIn": 50,
+      "qtyOut": 2,
+      "difference": -48,
+      "responsible": "Supervisor",
+      "status": "Completed",
+      "id": "L3kkYgn"
+    },
+    {
+      "batchId": "SJHPVWI",
+      "stage": "Cutting",
+      "dateTime": "Oct 28, 2026, 10:20",
+      "qtyIn": 2,
+      "qtyOut": 500,
+      "difference": 498,
+      "responsible": "Supervisor",
+      "status": "Current",
+      "id": "4HXRnRX"
+    }
+  ],
+  "observations": [
+    {
+      "id": "1",
+      "batchId": "1",
+      "authorName": "Rosangela Silva",
+      "category": "Delay",
+      "content": "Production paused for 15 minutes while material availability was confirmed.",
+      "createdAt": "16/09/2026 · 11:42"
+    },
+    {
+      "batchId": "1",
+      "timestamp": "28/10/2026 · 10:21",
+      "text": "hola",
+      "author": "Registered by Supervisor",
+      "id": "Wxih9Go"
+    }
+  ],
   "dashboard": [
     {
       "id": 1,
@@ -49,262 +252,182 @@
       "accumulated": "47 min",
       "limit": "30 min",
       "excess": "17 min",
-      "machine": "MC-014 — Overlock",
-      "batch": "All batches"
-    },
-    {
-      "id": "2",
-      "status": "CRITICAL",
-      "type": "Defect Rate",
-      "reference": "LOT-024",
-      "title": "Defect rate above tolerance",
-      "description": "Accumulated defective garments: 5.6% · Maximum allowed: 5%",
-      "action": "View Batch",
-      "accumulated": "5.6%",
-      "limit": "5%",
-      "excess": "0.6%",
-      "machine": "LOT-024",
-      "batch": "LOT-024"
-    },
-    {
-      "id": "3",
-      "status": "WARNING",
-      "type": "Rework Rate",
-      "reference": "LOT-021",
-      "title": "Rework rate within target",
-      "description": "Current rework rate: 1.7% · Optimal flow threshold: below 2%",
-      "action": "View Batch",
-      "accumulated": "1.7%",
-      "limit": "2%",
-      "excess": "0%",
-      "machine": "LOT-021",
-      "batch": "LOT-021"
-    },
-    {
-      "id": "4",
-      "status": "OPTIMAL",
-      "type": "Machine Downtime",
-      "reference": "MC-008",
-      "title": "Machine downtime normalized",
-      "description": "Accumulated downtime: 12 min · Maximum allowed: 30 min",
-      "action": "View Machine",
-      "accumulated": "12 min",
-      "limit": "30 min",
-      "excess": "0 min",
-      "machine": "MC-008 — Sewing",
-      "batch": "All batches"
+      "machine": "1",
+      "batch": "1"
     }
   ],
   "fabricInspections": [
     {
-      "id": "1",
-      "rollId": "ROLL-001",
+      "rollId": "12",
       "supplier": "Textile A",
-      "inspectionDate": "2026-09-16",
-      "initialResult": "Conforming",
-      "shrinkageTest": "Approved",
-      "rollStatus": "Available for Cutting"
-    },
-    {
-      "id": "2",
-      "rollId": "ROLL-002",
-      "supplier": "Supplier B",
-      "inspectionDate": "2026-09-16",
+      "inspectionDate": "2026-11-10",
+      "sample": "Hoodie",
+      "color": "Verde shrek",
+      "rollLength": 23,
+      "shadeMatch": "Slight variation",
+      "weaveCondition": "Severe weave defects",
       "initialResult": "Observed",
-      "shrinkageTest": "Pending",
-      "rollStatus": "Blocked"
-    },
-    {
-      "id": "3",
-      "rollId": "ROLL-003",
-      "supplier": "Textile A",
-      "inspectionDate": "2026-09-15",
-      "initialResult": "Conforming",
+      "observation": "Tiene huecos",
       "shrinkageTest": "Approved",
-      "rollStatus": "Available for Cutting"
+      "rollStatus": "Blocked",
+      "testHistory": [
+        {
+          "testDate": "2026-11-10",
+          "method": "Washing (ISO 6330)",
+          "sampleId": "SAMPLE-002",
+          "lenShrinkage": "-1.5%",
+          "widthShrinkage": "-2.2%",
+          "result": "Approved",
+          "note": ""
+        }
+      ],
+      "parameters": {
+        "fabricWidth": 150,
+        "fabricWeight": 220,
+        "shadeCondition": "Slight variation",
+        "weaveCondition": "Minor slubs",
+        "surfaceCondition": "Damaged surface",
+        "defectsDetected": "Holes",
+        "observations": "",
+        "updatedAt": "2026-11-10T20:43:44.751Z"
+      },
+      "id": 1,
+      "parameterHistory": [
+        {
+          "date": "2026-11-10",
+          "fabricWidth": 150,
+          "fabricWeight": 220,
+          "shadeCondition": "Slight variation",
+          "weaveCondition": "Minor slubs",
+          "surfaceCondition": "Damaged surface",
+          "defectsDetected": "Holes",
+          "observations": ""
+        },
+        {
+          "date": "2026-11-10",
+          "fabricWidth": 150,
+          "fabricWeight": 220,
+          "shadeCondition": "Matches approved sample",
+          "weaveCondition": "No weave defects",
+          "surfaceCondition": "No stains or damage",
+          "defectsDetected": "None",
+          "observations": ""
+        }
+      ]
     },
     {
-      "id": "4",
-      "rollId": "ROLL-004",
-      "supplier": "Supplier C",
-      "inspectionDate": "2026-09-15",
-      "initialResult": "Conforming",
+      "rollId": "12",
+      "supplier": "Textile A",
+      "inspectionDate": "2026-11-10",
+      "sample": "Crewneck",
+      "color": "Verde shrek",
+      "rollLength": 11,
+      "shadeMatch": "Slight variation",
+      "weaveCondition": "Severe weave defects",
+      "initialResult": "Observed",
+      "observation": "hueocs",
       "shrinkageTest": "Non-Compliant",
-      "rollStatus": "Not Available"
+      "rollStatus": "Blocked",
+      "testHistory": [
+        {
+          "testDate": "2026-11-10",
+          "method": "Washing (ISO 6330)",
+          "sampleId": "SAMPLE-003",
+          "lenShrinkage": "-1.5%",
+          "widthShrinkage": "-2.2%",
+          "result": "Non-Compliant",
+          "note": ""
+        }
+      ],
+      "parameters": {
+        "fabricWidth": 234,
+        "fabricLength": 11,
+        "shadeCondition": "Matches approved sample",
+        "defectsDetected": "Holes",
+        "observations": "njdx",
+        "updatedAt": "2026-11-10T21:11:06.158Z"
+      },
+      "id": 2,
+      "parameterHistory": [
+        {
+          "date": "2026-11-10",
+          "fabricWidth": 234,
+          "fabricLength": 11,
+          "shadeCondition": "Matches approved sample",
+          "defectsDetected": "Holes",
+          "observations": "njdx"
+        }
+      ]
     },
     {
-      "id": "5",
-      "rollId": "ROLL-005",
+      "rollId": "12",
       "supplier": "Supplier B",
-      "inspectionDate": "2026-09-14",
-      "initialResult": "Observed",
-      "shrinkageTest": null,
-      "rollStatus": "Blocked"
+      "inspectionDate": "2026-11-10",
+      "sample": "Hoodie",
+      "color": "Verde shrek",
+      "rollLength": null,
+      "shadeMatch": "Slight variation",
+      "weaveCondition": "Minor irregularities",
+      "initialResult": "Conforming",
+      "observation": "swswswswswswsw",
+      "shrinkageTest": "Pending",
+      "rollStatus": "Available for Cutting",
+      "testHistory": [],
+      "parameters": {
+        "fabricWidth": 67,
+        "fabricLength": 50,
+        "shadeCondition": "Slight variation",
+        "defectsDetected": "Stains",
+        "observations": "bhderftgyhui",
+        "updatedAt": "2026-11-10T21:12:16.224Z"
+      },
+      "id": 3,
+      "parameterHistory": [
+        {
+          "date": "2026-11-10",
+          "fabricWidth": 67,
+          "fabricLength": 50,
+          "shadeCondition": "Slight variation",
+          "defectsDetected": "Stains",
+          "observations": "bhderftgyhui"
+        }
+      ]
     }
   ],
-  "batches": [
+  "suppliers": [
     {
       "id": "1",
-      "batchNumber": "LOT-024",
-      "garmentModel": "T-Shirt Basic",
-      "projectedQuantity": 1000,
-      "currentStage": "Sewing",
-      "progressPercentage": 64,
-      "deliveryDate": "2026-04-25",
-      "status": "In Production",
-      "notes": "Lote inicial de camisetas de algodón."
+      "name": "Textile A"
     },
     {
       "id": "2",
-      "batchNumber": "LOT-023",
-      "garmentModel": "Hoodie",
-      "projectedQuantity": 500,
-      "currentStage": "Cutting",
-      "progressPercentage": 35,
-      "deliveryDate": "2026-04-28",
-      "status": "In Production",
-      "notes": ""
+      "name": "Supplier B"
     },
     {
       "id": "3",
-      "batchNumber": "LOT-022",
-      "garmentModel": "Polo Shirt",
-      "projectedQuantity": 750,
-      "currentStage": "Finishing",
-      "progressPercentage": 82,
-      "deliveryDate": "2026-04-22",
-      "status": "At Risk",
-      "notes": ""
-    },
-    {
-      "batchNumber": "LOT-087",
-      "garmentModel": "Hoodie",
-      "projectedQuantity": 1000,
-      "currentStage": "Quality Check",
-      "progressPercentage": 80,
-      "deliveryDate": "2001-11-20",
-      "status": "In Production",
-      "notes": "hola",
-      "id": "tTS6zDZQnrk"
+      "name": "Supplier C"
     }
   ],
-  "operators": [
+  "fabricSamples": [
     {
       "id": "1",
-      "name": "Carlos Mendoza",
-      "specialty": "Overlock"
+      "name": "T-Shirt Basic",
+      "shrinkageTolerance": 5
     },
     {
       "id": "2",
-      "name": "Ana Torres",
-      "specialty": "Straight Stitch"
+      "name": "Hoodie",
+      "shrinkageTolerance": 5
     },
     {
       "id": "3",
-      "name": "Luis Ramos",
-      "specialty": "Finishing"
+      "name": "Crewneck",
+      "shrinkageTolerance": 5
     },
     {
       "id": "4",
-      "name": "Maria Lopez",
-      "specialty": "Quality Control"
+      "name": "Leggings",
+      "shrinkageTolerance": 5
     }
-  ],
-  "assignedOperators": [
-    {
-      "id": "1",
-      "batchId": "1",
-      "operatorName": "Carlos Mendoza",
-      "specialty": "Overlock",
-      "stage": "Sewing",
-      "assignedAt": "16/09/2026 09:15"
-    },
-    {
-      "id": "2",
-      "batchId": "1",
-      "operatorName": "Ana Torres",
-      "specialty": "Straight Stitch",
-      "stage": "Sewing",
-      "assignedAt": "16/09/2026 09:18"
-    },
-    {
-      "batchId": "tTS6zDZQnrk",
-      "operatorName": "Ana Torres",
-      "specialty": "Straight Stitch",
-      "stage": "Quality Check",
-      "assignedAt": "6/10/2026, 19:08:40",
-      "id": "TIwgAZlMHPo"
-    },
-    {
-      "batchId": "1",
-      "operatorName": "Maria Lopez",
-      "specialty": "Quality Control",
-      "stage": "Sewing",
-      "assignedAt": "6/10/2026, 23:00:18",
-      "id": "tHW1BFG0cX0"
-    }
-  ],
-  "traceabilityHistory": [
-    {
-      "id": "1",
-      "batchId": "1",
-      "stage": "Cutting",
-      "dateTime": "Sep 14, 2026 09:15",
-      "qtyIn": 500,
-      "qtyOut": 500,
-      "difference": 0,
-      "responsible": "Carlos Mendoza",
-      "status": "Completed"
-    },
-    {
-      "id": "2",
-      "batchId": "1",
-      "stage": "Sewing",
-      "dateTime": "Sep 15, 2026 14:20",
-      "qtyIn": 500,
-      "qtyOut": 492,
-      "difference": -8,
-      "responsible": "Ana Torres",
-      "status": "Completed"
-    },
-    {
-      "id": "3",
-      "batchId": "1",
-      "stage": "Finishing",
-      "dateTime": "Sep 16, 2026 10:30",
-      "qtyIn": 492,
-      "qtyOut": 487,
-      "difference": -5,
-      "responsible": "Luis Ramos",
-      "status": "Completed"
-    },
-    {
-      "id": "4",
-      "batchId": "1",
-      "stage": "Quality Check",
-      "dateTime": "Sep 17, 2026 15:10",
-      "qtyIn": 487,
-      "qtyOut": 487,
-      "difference": 0,
-      "responsible": "Maria Lopez",
-      "status": "Current"
-    }
-  ],
-  "observations": [
-    {
-      "id": "1",
-      "batchId": "1",
-      "timestamp": "16/09/2026 · 11:42",
-      "text": "Production paused for 15 minutes while material availability was confirmed.",
-      "author": "Registered by Rosangela Silva"
-    },
-    {
-      "id": "2",
-      "batchId": "1",
-      "timestamp": "15/09/2026 · 16:10",
-      "text": "Supervisor agreed to prioritize finishing before end of shift.",
-      "author": ""
-    }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }

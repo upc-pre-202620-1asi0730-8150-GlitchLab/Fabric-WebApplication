@@ -1,92 +1,94 @@
 <template>
   <div class="add-evidence-page" v-if="defect">
     <button type="button" class="back-link" @click="$emit('back')">
-      &larr; Back to Defects
+      &larr; {{ $t('quality.evidence.back') }}
     </button>
 
     <header class="page-header">
-      <h1 class="page-title">Add Evidence</h1>
-      <p class="page-subtitle">Attach and register evidence for the detected garment defect.</p>
+      <h1 class="page-title">{{ $t('quality.evidence.title') }}</h1>
+      <p class="page-subtitle">{{ $t('quality.evidence.subtitle') }}</p>
     </header>
 
     <div class="evidence-grid">
       <div class="col-left">
         <div class="card defect-info-card">
-          <h2 class="card-title">Defect Information</h2>
+          <h2 class="card-title">{{ $t('quality.evidence.defectInfo.title') }}</h2>
 
           <div class="highlight-box">
             <div>
-              <span class="label">Defect ID</span>
+              <span class="label">{{ $t('quality.evidence.defectInfo.defectId') }}</span>
               <span class="value-id font-mono">{{ defect.id }}</span>
             </div>
             <div class="text-right">
-              <span class="label">Status</span>
-              <span class="badge badge-pending">{{ defect.status }}</span>
+              <span class="label">{{ $t('quality.evidence.defectInfo.status') }}</span>
+              <span class="badge" :class="getBadgeClass(defect.status)">
+                {{ formatStatus(defect.status) }}
+              </span>
             </div>
           </div>
 
           <div class="meta-grid">
             <div>
-              <span class="label">Batch</span>
+              <span class="label">{{ $t('quality.evidence.defectInfo.batch') }}</span>
               <span class="value font-mono">{{ defect.batchId }}</span>
             </div>
             <div>
-              <span class="label">Defect Type</span>
-              <span class="value font-bold">{{ defect.defectType }}</span>
+              <span class="label">{{ $t('quality.evidence.defectInfo.defectType') }}</span>
+              <span class="value font-bold">{{ formatDefectType(defect.defectType) }}</span>
             </div>
             <div>
-              <span class="label">Quantity</span>
+              <span class="label">{{ $t('quality.evidence.defectInfo.quantity') }}</span>
               <span class="value font-mono font-bold">{{ defect.quantity }}</span>
             </div>
             <div>
-              <span class="label">Associated Machine</span>
+              <span class="label">{{ $t('quality.evidence.defectInfo.associatedMachine') }}</span>
               <span class="value">{{ defect.machineId }}</span>
             </div>
             <div class="full-row">
-              <span class="label">Garment</span>
+              <span class="label">{{ $t('quality.evidence.defectInfo.garment') }}</span>
               <span class="value font-bold">{{ defect.garmentModel || 'T-Shirt Basic' }}</span>
             </div>
           </div>
         </div>
 
         <div class="card form-card">
-          <h2 class="card-title">Evidence Details</h2>
+          <h2 class="card-title">{{ $t('quality.evidence.details.title') }}</h2>
 
           <div class="fields-row">
             <div class="field-item flex-1">
-              <label>Evidence Type *</label>
+              <label>{{ $t('quality.evidence.details.type') }}</label>
               <div class="select-box">
                 <select v-model="form.type">
-                  <option value="Photo">Photo</option>
-                  <option value="Lab Report">Lab Report</option>
-                  <option value="Inspection Sheet">Inspection Sheet</option>
+                  <option value="Photo">{{ $t('quality.evidence.details.types.photo') }}</option>
+                  <option value="Lab Report">{{ $t('quality.evidence.details.types.labReport') }}</option>
+                  <option value="Inspection Sheet">{{ $t('quality.evidence.details.types.inspectionSheet') }}</option>
                 </select>
                 <span class="chevron">⌄</span>
               </div>
             </div>
 
             <div class="field-item flex-1">
-              <label>Evidence Date *</label>
+              <label>{{ $t('quality.evidence.details.date') }}</label>
               <input type="text" v-model="form.date" class="form-input" />
             </div>
           </div>
 
           <div class="field-item">
-            <label>Description *</label>
+            <label>{{ $t('quality.evidence.details.description') }}</label>
             <textarea
                 v-model="form.description"
-                placeholder="Describe what the evidence shows..."
+                :placeholder="$t('quality.evidence.details.descriptionPlaceholder')"
                 rows="3"
                 class="form-textarea"
             ></textarea>
           </div>
 
           <div class="field-item">
-            <label>Corrective Action Taken</label>
+            <label>{{ $t('quality.evidence.details.action') }}</label>
             <input
                 type="text"
                 v-model="form.correctiveAction"
-                placeholder="Describe the corrective action taken or planned."
+                :placeholder="$t('quality.evidence.details.actionPlaceholder')"
                 class="form-input"
             />
           </div>
@@ -95,7 +97,7 @@
 
       <div class="col-right">
         <div class="card upload-card">
-          <h2 class="card-title">Upload Evidence</h2>
+          <h2 class="card-title">{{ $t('quality.evidence.upload.title') }}</h2>
 
           <div class="dropzone" @click="triggerUpload">
             <input
@@ -106,13 +108,13 @@
                 accept=".jpg,.png,.pdf"
             />
             <div class="upload-icon">↑</div>
-            <p class="dropzone-text">Drag and drop files here</p>
-            <span class="dropzone-sub">or click to upload</span>
+            <p class="dropzone-text">{{ $t('quality.evidence.upload.dragText') }}</p>
+            <span class="dropzone-sub">{{ $t('quality.evidence.upload.clickText') }}</span>
           </div>
-          <p class="format-note">Accepted formats: JPG, PNG, PDF - Max size: 10 MB each</p>
+          <p class="format-note">{{ $t('quality.evidence.upload.note') }}</p>
 
           <h3 class="uploaded-title">
-            Uploaded Evidence ({{ evidenceList.length }})
+            {{ $t('quality.evidence.upload.uploadedTitle') }} ({{ evidenceList.length }})
           </h3>
 
           <div class="evidence-list">
@@ -121,7 +123,7 @@
                 :key="item.id || index"
                 class="evidence-item"
             >
-              <div class="thumb">PHOTO</div>
+              <div class="thumb">{{ $t('quality.evidence.upload.photoBadge') }}</div>
               <div class="item-info">
                 <strong class="item-name">{{ item.fileName }}</strong>
                 <span class="item-date">{{ item.fileSize }} &middot; {{ item.date }}</span>
@@ -130,14 +132,18 @@
               <button type="button" class="btn-remove" @click="removeEvidence(index)">&times;</button>
             </div>
             <p v-if="evidenceList.length === 0" class="empty-note">
-              No evidence attached to this defect yet.
+              {{ $t('quality.evidence.upload.empty') }}
             </p>
           </div>
         </div>
 
         <div class="footer-actions">
-          <button type="button" class="btn-cancel" @click="$emit('back')">Cancel</button>
-          <button type="button" class="btn-save" @click="saveEvidence">Save Evidence</button>
+          <button type="button" class="btn-cancel" @click="$emit('back')">
+            {{ $t('quality.evidence.actions.cancel') }}
+          </button>
+          <button type="button" class="btn-save" @click="saveEvidence">
+            {{ $t('quality.evidence.actions.save') }}
+          </button>
         </div>
       </div>
     </div>
@@ -146,6 +152,9 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const props = defineProps({
   defect: {
@@ -176,7 +185,7 @@ const handleFileUpload = (event) => {
   if (!file) return
 
   if (file.size > 10 * 1024 * 1024) {
-    alert('File size exceeds the 10 MB limit.')
+    alert(t('quality.evidence.errors.sizeLimit'))
     return
   }
 
@@ -203,6 +212,37 @@ const saveEvidence = () => {
     defectId: props.defect.id,
     evidences: evidenceList.value
   })
+}
+
+const formatDefectType = (type) => {
+  switch (type) {
+    case 'Open stitches': return t('quality.form.defectTypes.openStitches')
+    case 'Torn fabric': return t('quality.form.defectTypes.tornFabric')
+    case 'Uneven seam': return t('quality.form.defectTypes.unevenSeam')
+    case 'Oil stain': return t('quality.form.defectTypes.oilStain')
+    case 'Loose button': return t('quality.form.defectTypes.looseButton')
+    default: return type
+  }
+}
+
+const formatStatus = (status) => {
+  switch (status) {
+    case 'Pending Decision': return t('quality.table.statuses.pending')
+    case 'In Evaluation': return t('quality.table.statuses.evaluation')
+    case 'Send to Rework': return t('quality.table.statuses.rework')
+    case 'Permanent Discard': return t('quality.table.statuses.discard')
+    default: return status
+  }
+}
+
+const getBadgeClass = (status) => {
+  switch (status) {
+    case 'Pending Decision': return 'badge-pending'
+    case 'In Evaluation': return 'badge-eval'
+    case 'Send to Rework': return 'badge-rework'
+    case 'Permanent Discard': return 'badge-discard'
+    default: return 'badge-default'
+  }
 }
 </script>
 
@@ -274,14 +314,18 @@ const saveEvidence = () => {
   font-weight: 700;
   color: #1a1a1a;
 }
-.badge-pending {
-  background-color: #edf2d8;
-  color: #485320;
+.badge {
+  display: inline-block;
   padding: 4px 10px;
   border-radius: 6px;
   font-size: 0.75rem;
   font-weight: 500;
 }
+.badge-pending { background-color: #edf2d8; color: #485320; }
+.badge-eval { background-color: #fef3c7; color: #92400e; }
+.badge-rework { background-color: #e0e7ff; color: #3730a3; }
+.badge-discard { background-color: #fee2e2; color: #991b1b; }
+
 .meta-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

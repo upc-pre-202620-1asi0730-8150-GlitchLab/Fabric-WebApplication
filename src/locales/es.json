@@ -3,6 +3,295 @@
     "occurred": "Ocurrió un error"
   },
 
+  "identityAccess": {
+    "roleSelection": {
+      "title": "Bienvenido a Fabric",
+      "subtitle": "Elige cómo quieres iniciar sesión",
+      "roles": {
+        "qualityInspector": "Iniciar sesión como inspector de calidad",
+        "productionSupervisor": "Iniciar sesión como supervisor de producción"
+      }
+    }
+  },
+
+  "qualityInspector": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "newInspection": "Nueva inspección de rollo",
+      "parameters": "Parámetros de inspección",
+      "shrinkageTest": "Prueba de encogimiento"
+    },
+    "dashboard": {
+      "title": "Dashboard del inspector de calidad",
+      "subtitle": "Resumen de las inspecciones de rollos de tela y su historial.",
+      "stats": {
+        "total": "Rollos inspeccionados",
+        "conforming": "Rollos conformes",
+        "observed": "Rollos observados",
+        "pendingShrinkage": "Pruebas de encogimiento pendientes"
+      },
+      "charts": {
+        "results": "Resultados de la inspección inicial",
+        "suppliers": "Inspecciones por proveedor",
+        "shrinkage": "Estado de la prueba de encogimiento"
+      },
+      "status": {
+        "conforming": "Conforme",
+        "observed": "Observado",
+        "pending": "Pendiente",
+        "approved": "Aprobada",
+        "nonCompliant": "No conforme",
+        "available": "Disponible para corte",
+        "blocked": "Bloqueado"
+      },
+      "emptyData": "Aún no hay inspecciones registradas. Registra un rollo para ver los indicadores.",
+      "history": {
+        "title": "Historial de inspecciones",
+        "subtitle": "Revisa las inspecciones de rollos anteriores y fíltralas por proveedor, resultado o rollo.",
+        "filters": {
+          "supplier": "Proveedor",
+          "result": "Resultado",
+          "roll": "ID del rollo"
+        },
+        "placeholders": {
+          "supplier": "Todos los proveedores",
+          "result": "Todos los resultados",
+          "roll": "Buscar por ID del rollo"
+        },
+        "columns": {
+          "date": "Fecha",
+          "roll": "Rollo",
+          "supplier": "Proveedor",
+          "sample": "Tela / muestra",
+          "result": "Resultado inicial",
+          "shrinkage": "Prueba de encogimiento",
+          "status": "Estado del rollo",
+          "observation": "Observaciones"
+        },
+        "empty": "Ninguna inspección cumple los criterios seleccionados."
+      },
+      "messages": {
+        "errorTitle": "Error",
+        "loadError": "No se pudieron cargar las inspecciones."
+      }
+    },
+    "shrinkageTest": {
+      "title": "Prueba de encogimiento",
+      "subtitle": "Registra las dimensiones de una probeta de tela antes y después del lavado para verificar que cumple la tolerancia de la ficha técnica antes de cortar.",
+      "rollSection": {
+        "title": "Rollo de tela",
+        "subtitle": "Selecciona el rollo con la prueba de encogimiento pendiente."
+      },
+      "testSection": {
+        "title": "Datos de la prueba",
+        "subtitle": "Identifica la probeta y el método de lavado usado."
+      },
+      "measurementsSection": {
+        "title": "Dimensiones de la probeta",
+        "subtitle": "Ingresa las medidas antes y después del lavado."
+      },
+      "fields": {
+        "roll": "Rollo de tela",
+        "testDate": "Fecha de la prueba",
+        "method": "Método de lavado",
+        "sampleId": "ID de la probeta",
+        "initialLength": "Largo antes del lavado",
+        "initialWidth": "Ancho antes del lavado",
+        "finalLength": "Largo después del lavado",
+        "finalWidth": "Ancho después del lavado",
+        "note": "Observación"
+      },
+      "placeholders": {
+        "roll": "Selecciona un rollo",
+        "method": "Selecciona el método",
+        "sampleId": "Opcional, se genera si queda vacío",
+        "measure": "ej. 100",
+        "note": "Detalles opcionales sobre la prueba."
+      },
+      "units": {
+        "measure": "cm",
+        "percent": "%"
+      },
+      "options": {
+        "method": {
+          "iso6330": "Lavado (ISO 6330)",
+          "iso3175": "Limpieza en seco (ISO 3175)"
+        }
+      },
+      "summary": {
+        "rollId": "ID del rollo",
+        "supplier": "Proveedor",
+        "sample": "Tela / muestra del cliente",
+        "tolerance": "Tolerancia (ficha técnica)"
+      },
+      "result": {
+        "lengthShrinkage": "Encogimiento en largo",
+        "widthShrinkage": "Encogimiento en ancho",
+        "status": "Resultado",
+        "approved": "Aprobada",
+        "nonCompliant": "No conforme",
+        "empty": "—"
+      },
+      "errors": {
+        "required": "Este campo es obligatorio.",
+        "invalidMeasure": "El valor debe ser mayor que cero."
+      },
+      "hint": "Si el encogimiento está dentro de la tolerancia la prueba se aprueba y el rollo queda habilitado para patronaje; si no, se marca como no conforme.",
+      "empty": "No hay rollos con la prueba de encogimiento pendiente.",
+      "actions": {
+        "save": "Guardar prueba",
+        "clear": "Limpiar formulario"
+      },
+      "messages": {
+        "savedTitle": "Prueba guardada",
+        "approved": "La prueba fue aprobada. El rollo queda habilitado para patronaje.",
+        "nonCompliant": "El encogimiento supera la tolerancia. El rollo se marcó como no conforme.",
+        "errorTitle": "Error",
+        "saveError": "No se pudo guardar la prueba de encogimiento.",
+        "loadError": "No se pudieron cargar los rollos registrados."
+      }
+    },
+    "parameters": {
+      "title": "Parámetros de inspección",
+      "subtitle": "Registra los parámetros evaluados durante la inspección de un rollo de tela para conservar evidencia de las condiciones en que se recibió el material.",
+      "rollSection": {
+        "title": "Rollo de tela",
+        "subtitle": "Selecciona el rollo registrado que vas a evaluar."
+      },
+      "parametersSection": {
+        "title": "Parámetros evaluados",
+        "subtitle": "Registra el tono, ancho, longitud y defectos encontrados en el rollo."
+      },
+      "fields": {
+        "roll": "Rollo de tela",
+        "shadeCondition": "Matiz / tono",
+        "fabricWidth": "Ancho",
+        "fabricLength": "Longitud",
+        "defectsDetected": "Defectos detectados",
+        "observations": "Observaciones"
+      },
+      "placeholders": {
+        "roll": "Selecciona un rollo",
+        "shadeCondition": "Selecciona la condición del tono",
+        "fabricWidth": "ej. 150",
+        "fabricLength": "ej. 50",
+        "defectsDetected": "Selecciona el tipo de defecto",
+        "observations": "Describe los hallazgos o condiciones observadas durante la inspección."
+      },
+      "units": {
+        "width": "cm",
+        "length": "m"
+      },
+      "summary": {
+        "rollId": "ID del rollo",
+        "supplier": "Proveedor",
+        "receptionDate": "Fecha de recepción",
+        "sample": "Tela / muestra del cliente",
+        "initialResult": "Resultado inicial"
+      },
+      "options": {
+        "shadeCondition": {
+          "matches": "Coincide con la muestra aprobada",
+          "slightVariation": "Variación leve",
+          "offShade": "Fuera de tono"
+        },
+        "defects": {
+          "none": "Ninguno",
+          "holes": "Huecos",
+          "stains": "Manchas",
+          "shadeDifference": "Diferencia de matiz"
+        }
+      },
+      "errors": {
+        "required": "Este campo es obligatorio.",
+        "invalidMeasure": "El valor debe ser mayor que cero."
+      },
+      "hint": "Estos parámetros se guardan como evidencia de la condición del material al recibirlo.",
+      "empty": "No hay rollos pendientes de registrar parámetros.",
+      "actions": {
+        "save": "Guardar parámetros",
+        "clear": "Limpiar formulario"
+      },
+      "messages": {
+        "savedTitle": "Parámetros guardados",
+        "saved": "Los parámetros de inspección se registraron.",
+        "errorTitle": "Error",
+        "saveError": "No se pudieron guardar los parámetros.",
+        "loadError": "No se pudieron cargar los rollos registrados."
+      }
+    },
+    "newInspection": {
+      "title": "Nueva inspección de rollo",
+      "subtitle": "Registra el rollo de tela recibido y verifica su conformidad inicial antes del corte.",
+      "rollInfo": {
+        "title": "Información del rollo de tela",
+        "subtitle": "Ingresa los datos de identificación y recepción del rollo entrante."
+      },
+      "initialInspection": {
+        "title": "Inspección inicial de calidad",
+        "subtitle": "Compara el rollo con la muestra aprobada del cliente y registra cualquier variación severa."
+      },
+      "fields": {
+        "rollId": "ID del rollo",
+        "supplier": "Proveedor",
+        "receptionDate": "Fecha de recepción",
+        "sample": "Tela / muestra del cliente",
+        "color": "Matiz / color",
+        "rollLength": "Longitud del rollo",
+        "shadeMatch": "Coincidencia de matiz",
+        "weaveCondition": "Condición de la trama",
+        "result": "Resultado de la inspección",
+        "observation": "Observación / motivo"
+      },
+      "placeholders": {
+        "rollId": "ej. ROLL-001",
+        "supplier": "Selecciona proveedor",
+        "sample": "Selecciona referencia",
+        "color": "ej. Azul marino",
+        "rollLength": "ej. 50",
+        "observation": "Obligatorio cuando el rollo se marca como observado. Describe variación de matiz, huecos en la trama u otros hallazgos."
+      },
+      "lengthUnit": "m",
+      "options": {
+        "shadeMatch": {
+          "matches": "Coincide con la muestra del cliente",
+          "slightVariation": "Variación leve",
+          "severeMismatch": "Discrepancia severa"
+        },
+        "weaveCondition": {
+          "noHoles": "Sin huecos en la trama",
+          "minorIrregularities": "Irregularidades menores",
+          "severeDefects": "Defectos severos en la trama"
+        },
+        "result": {
+          "conforming": "Conforme",
+          "observed": "Observado"
+        }
+      },
+      "hints": {
+        "available": "Conforme → Disponible para corte",
+        "blocked": "Observado → Bloqueado para lotes de corte"
+      },
+      "errors": {
+        "required": "Este campo es obligatorio.",
+        "invalidLength": "La longitud debe ser mayor que cero.",
+        "observationRequired": "Ingresa el motivo cuando el rollo está observado.",
+        "severeMustBeObserved": "Una variación severa requiere marcar el rollo como observado."
+      },
+      "actions": {
+        "save": "Guardar inspección",
+        "clear": "Limpiar formulario"
+      },
+      "messages": {
+        "savedTitle": "Inspección guardada",
+        "saved": "El rollo se registró correctamente.",
+        "errorTitle": "Error",
+        "saveError": "No se pudo guardar la inspección.",
+        "loadCatalogsError": "No se pudieron cargar los proveedores y las muestras de tela."
+      }
+    }
+  },
+
   "sidebar": {
     "companyName": "Fabric",
     "dashboard": "Panel de Control",
@@ -16,21 +305,612 @@
 
   "dashboard": {
     "title": "Panel de Control",
-    "placeholder": "Vista de Dashboard — contenido próximamente."
+    "subtitle": "Resumen de la producción de hoy",
+    "date": "Fecha",
+    "batch": "Lote",
+    "allBatches": "Todos los lotes",
+    "exportReport": "Exportar informe",
+    "loading": "Cargando analíticas de producción...",
+    "loadError": "No se pudieron cargar las analíticas del informe.",
+    "stats": {
+      "totalProduced": "Total producido hoy",
+      "garments": "prendas",
+      "averagePerHour": "Promedio por hora",
+      "garmentsPerHour": "prendas / hora",
+      "dailyCompliance": "Cumplimiento diario",
+      "dailyTarget": "objetivo de producción diario"
+    },
+    "chart": {
+      "title": "Producción por día",
+      "subtitle": "Prendas producidas durante los últimos días",
+      "series": "Prendas producidas",
+      "garments": "prendas",
+      "empty": "No hay datos de producción disponibles"
+    },
+    "stages": {
+      "title": "Lotes por etapa",
+      "subtitle": "Etapa operativa actual",
+      "empty": "No hay lotes disponibles",
+      "unknown": "Desconocida",
+      "cutting": "Corte",
+      "sewing": "Costura",
+      "finishing": "Acabado",
+      "qualityCheck": "Control de calidad"
+    },
+    "progress": {
+      "title": "Progreso de lotes",
+      "subtitle": "Progreso de los lotes de producción actuales",
+      "empty": "No hay lotes disponibles"
+    },
+    "export": {
+      "title": "Exportar informe de Producción y Calidad",
+      "subtitle": "Selecciona el período, la información y el formato del informe.",
+      "reportType": "Tipo de informe",
+      "productionQuality": "Producción y Calidad",
+      "production": "Producción",
+      "quality": "Calidad",
+      "period": "Período",
+      "include": "Incluir en el informe",
+      "productionSummary": "Resumen de producción",
+      "qualityIndicators": "Indicadores de calidad",
+      "batchProductivity": "Productividad de lotes",
+      "defectsRework": "Defectos y reprocesos",
+      "machineDowntime": "Tiempo de inactividad de máquinas",
+      "waste": "Merma",
+      "format": "Formato",
+      "pdf": "PDF",
+      "excel": "Excel (.xlsx)",
+      "cancel": "Cancelar",
+      "submit": "Exportar informe"
+    },
+    "placeholder": "Vista del Dashboard — contenido próximamente."
   },
 
   "productionBatches": {
     "title": "Lotes de Producción",
+    "subtitle": "Controla cada lote, su etapa y el estado de entrega.",
+    "create": "Crear lote",
+    "loading": "Cargando lotes de producción...",
+    "loadError": "No se pudieron cargar los lotes de producción.",
+    "search": "Buscar por ID de lote",
+    "searchPlaceholder": "p. ej. LOT-024",
+    "status": "Estado",
+    "allStatuses": "Todos los estados",
+    "allDates": "Todas las fechas",
+    "date": "Fecha",
+    "today": "Hoy",
+    "thisWeek": "Esta semana",
+    "thisMonth": "Este mes",
+    "garmentModel": "Modelo de prenda",
+    "allModels": "Todos los modelos",
+    "table": {
+      "batchId": "ID de lote",
+      "projectedQuantity": "Cantidad proyectada",
+      "currentStage": "Etapa actual",
+      "progress": "Progreso",
+      "deliveryDate": "Fecha de entrega",
+      "actions": "Acciones",
+      "detail": "Detalle del lote",
+      "assignOperators": "Asignar operarios",
+      "history": "Historial",
+      "observations": "Observaciones"
+    },
+    "statuses": {
+      "inProduction": "En producción",
+      "atRisk": "En riesgo",
+      "completed": "Completado",
+      "delayed": "Retrasado"
+    },
+    "models": {
+      "tshirtBasic": "Camiseta básica",
+      "hoodie": "Sudadera con capucha",
+      "poloShirt": "Polo",
+      "joggerPants": "Pantalón jogger",
+      "crewneck": "Sudadera cuello redondo",
+      "tankTop": "Camiseta sin mangas",
+      "leggings": "Mallas"
+    },
+    "stages": {
+      "cutting": "Corte",
+      "sewing": "Costura",
+      "finishing": "Acabado",
+      "qualityCheck": "Control de calidad",
+      "completed": "Completado"
+    },
+    "createBatch": {
+      "title": "Crear Lote de Producción",
+      "subtitle": "Añade la Informacion del lote para iniciar su trazabilidad.",
+      "back": "Volver a Lotes de Producción",
+      "createBatchTable": {
+        "basicInfo": "Información Básica",
+        "basicInfoDesc": "Ingresa los detalles principales del lote de producción.",
+        "garmentModel": "Modelo de Prenda *",
+        "garmentModelPlaceholder": "Selecciona el modelo de prenda",
+        "projectedQuantity": "Cantidad Proyectada *",
+        "projectedQuantityPlaceholder": "ej. 500",
+        "projectedQuantityUnits": "unidades",
+        "deliveryDate": "Fecha de Entrega *",
+        "technicalSheet": "Hoja Técnica *",
+        "technicalSheetPlaceholder": "Sube la hoja técnica (PDF, JPG, PNG)",
+        "additionalInfo": "Información Adicional",
+        "additionalInfoDesc": "Agrega cualquier nota relevante sobre el lote de producción. (opcional)",
+        "notes": "Notas",
+        "notesPlaceholder": "Ej. Instrucciones especiales para el lote, detalles de calidad, clientes, etc.",
+        "submit": "Crear Lote",
+        "creating": "Subiendo...",
+        "cancel": "Cancelar",
+        "uploadFormats": "PDF, JPG o PNG (Máx. 5 MB)"
+      }
+    },
+    "batchInfo": {
+      "batchId": "ID de lote",
+      "garmentModel": "Modelo de prenda",
+      "currentStage": "Etapa actual",
+      "projectedQuantity": "Cant. proyectada",
+      "pieces": "unidades"
+    },
+    "assignment": {
+      "title": "Asignar operarios",
+      "subtitle": "Asigna uno o más operarios a la etapa de producción actual.",
+      "stage": "Etapa de producción *",
+      "operators": "Operarios *",
+      "selectOperators": "Selecciona operarios",
+      "assignOperators": "Asignar operarios",
+      "assignedTitle": "Operarios asignados",
+      "assignedSubtitle": "Operarios asignados a este lote, agrupados por etapa de producción.",
+      "table": {
+        "operator": "OPERARIO",
+        "specialty": "ESPECIALIDAD",
+        "stage": "ETAPA",
+        "assignedAt": "ASIGNADO EL"
+      },
+      "successTitle": "Operarios asignados correctamente",
+      "successDescription": "Los operarios seleccionados se han asignado al lote {batch} en la etapa de {stage}.",
+      "viewBatch": "Ver lote",
+      "ok": "Aceptar",
+      "errorTitle": "No se pudieron asignar los operarios",
+      "errorNoOperators": "No se ha seleccionado ningún operario.",
+      "errorSelectOperator": "Selecciona al menos un operario para continuar.",
+      "duplicate": "Asignación duplicada → El operario ya está asignado a este lote y etapa."
+    },
+    "observations": {
+      "addTitle": "Agregar observación",
+      "addDescription": "Documenta incidentes o acuerdos que no sean defectos formales.",
+      "observation": "Observación *",
+      "placeholder": "Escribe una observación sobre este lote de producción...",
+      "emptyHint": "El texto vacío o compuesto solo por espacios no se puede guardar como observación.",
+      "save": "Guardar observación",
+      "historyTitle": "Historial de observaciones",
+      "historyDescription": "Las observaciones más recientes aparecen primero.",
+      "viewTitle": "Observaciones del lote",
+      "viewDescription": "Registra y consulta las notas asociadas a un lote de producción."
+    },
+    "movement": {
+      "title": "Historial de movimientos",
+      "subtitle": "Registro cronológico de movimientos del lote, cantidades y operarios responsables.",
+      "stage": "ETAPA",
+      "dateTime": "FECHA Y HORA",
+      "qtyIn": "CANT. ENTRADA",
+      "qtyOut": "CANT. SALIDA",
+      "difference": "DIFERENCIA",
+      "responsible": "RESPONSABLE",
+      "status": "ESTADO"
+    },
+    "stageProgress": {
+      "title": "Etapas de producción",
+      "subtitle": "Progreso operativo actual del lote.",
+      "updateTitle": "Actualizar etapa de producción",
+      "updateSubtitle": "Registra la cantidad procesada y avanza el lote a la siguiente etapa.",
+      "newStage": "Nueva etapa *",
+      "processedQuantity": "Cantidad procesada *",
+      "processedQuantityPlaceholder": "p. ej. 640",
+      "garments": "prendas",
+      "notes": "Notas",
+      "notesPlaceholder": "Notas opcionales de producción",
+      "cancel": "Cancelar",
+      "update": "Actualizar etapa"
+    },
+    "traceability": {
+      "alertTitle": "Se detectó una diferencia de cantidad",
+      "alertDescription": "Se registró una diferencia total de {quantity} unidades en las etapas.",
+      "summaryTitle": "Resumen de trazabilidad",
+      "projected": "Proyectado:",
+      "current": "Actual:",
+      "totalDifference": "Diferencia total:",
+      "currentStage": "Etapa actual:"
+    },
+    "views": {
+      "batchDetailTitle": "Detalle del lote",
+      "batchDetailSubtitle": "Actualiza la etapa operativa y registra el progreso de producción.",
+      "backToBatches": "Volver a Lotes de Producción",
+      "backToBatchDetail": "Volver al detalle del lote",
+      "traceabilityTitle": "Historial de trazabilidad",
+      "traceabilitySubtitle": "Consulta el historial completo de movimientos del lote de producción seleccionado.",
+      "operatorAssignmentTitle": "Asignación de operarios al lote",
+      "operatorAssignmentSubtitle": "Asigna operarios a un lote de producción y a una etapa.",
+      "batchStatus": "En producción"
+    },
+    "validation": {
+      "fileType": "Selecciona un archivo PDF, JPG o PNG.",
+      "fileSize": "El archivo no debe superar los 5 MB.",
+      "quantity": "La cantidad proyectada debe ser mayor que 0.",
+      "createFailure": "No se pudo crear el lote. Inténtalo de nuevo.",
+      "updateFailure": "No se pudo actualizar la etapa. Inténtalo de nuevo."
+    },
     "placeholder": "Vista de Lotes de Producción — contenido próximamente."
   },
 
   "quality": {
     "title": "Calidad",
-    "placeholder": "Vista de Calidad — contenido próximamente."
+    "subtitle": "Administre inspecciones de tela, pruebas de calidad y defectos de prendas.",
+    "tabs": {
+      "fabric": "Telas",
+      "defects": "Defectos"
+    },
+    "errors": {
+      "load": "No se pudieron cargar los defectos desde el servidor.",
+      "saveEvidence": "No se pudo guardar la evidencia.",
+      "create": "No se pudo registrar el defecto.",
+      "disposition": "No se pudo aplicar la disposición."
+    },
+    "inspection": {
+      "title": "Inspección de Tela",
+      "rolls": "Rollo de Tela"
+    },
+    "form": {
+      "title": "Registrar Defecto de Prenda",
+      "subtitle": "Registre un defecto detectado en la línea de producción.",
+      "active": "Activo",
+      "defect": "Defecto",
+      "qty": "Cant.",
+      "associated": "Asociado",
+      "origin": "Defecto",
+      "originHint": "Origen Desconocido → el registro se guarda como \"En Evaluación\".",
+      "observation": "Observación",
+      "observationPlaceholder": "Detalles opcionales sobre el defecto detectado.",
+      "btnRegister": "Registrar Defecto",
+      "defectTypes": {
+        "openStitches": "Puntadas abiertas",
+        "tornFabric": "Tela rasgada",
+        "unevenSeam": "Costura irregular",
+        "oilStain": "Mancha de aceite",
+        "looseButton": "Botón suelto"
+      },
+      "origins": {
+        "machine": "Máquina",
+        "fabric": "Tela",
+        "operator": "Operario",
+        "unknown": "Origen Desconocido"
+      }
+    },
+    "table": {
+      "title": "Prendas Observadas",
+      "subtitle": "Revise los defectos pendientes y defina su disposición final.",
+      "groupBy": "Agrupar por:",
+      "groups": {
+        "none": "Ninguno (Individual)",
+        "type": "Tipo de Defecto",
+        "machine": "Máquina",
+        "batch": "Lote"
+      },
+      "recurrence": {
+        "incidences": "Incidencias",
+        "totalQty": "Cant. Total"
+      },
+      "columns": {
+        "defect": "DEFECTO",
+        "batch": "LOTE",
+        "defectType": "TIPO DE DEFECTO",
+        "qty": "CANT",
+        "status": "ESTADO",
+        "actions": "ACCIONES"
+      },
+      "actions": {
+        "addEvidence": "Adjuntar Evidencia",
+        "disposition": "Disposición"
+      },
+      "empty": "No hay prendas observadas registradas.",
+      "statuses": {
+        "pending": "Decisión Pendiente",
+        "evaluation": "En Evaluación",
+        "rework": "Enviar a Reproceso",
+        "discard": "Descarte Definitivo"
+      }
+    },
+    "disposition": {
+      "title": "Disposición para",
+      "subtitle": "Elija qué debe ocurrir con las prendas observadas.",
+      "rework": {
+        "title": "Enviar a Reproceso",
+        "desc": "Prenda reparable.",
+        "foot": "Mantiene el inventario proyectado."
+      },
+      "discard": {
+        "title": "Descarte Definitivo",
+        "desc": "Prenda irreparable.",
+        "foot": "Reduce el saldo comercializable del lote."
+      },
+      "correction": "Corrección",
+      "quantity": "Cantidad",
+      "btnRework": "Confirmar Reproceso",
+      "btnDiscard": "Confirmar Descarte",
+      "callout": "Reproceso → cola de ajuste pendiente, sin deducción de inventario. Descarte → saldo vendible reducido y costo de merma acumulado."
+    },
+    "evidence": {
+      "back": "Volver a Defectos",
+      "title": "Adjuntar Evidencia",
+      "subtitle": "Adjunte y registre evidencia para el defecto de prenda detectado.",
+      "defectInfo": {
+        "title": "Información del Defecto",
+        "defectId": "ID de Defecto",
+        "status": "Estado",
+        "batch": "Lote",
+        "defectType": "Tipo de Defecto",
+        "quantity": "Cantidad",
+        "associatedMachine": "Máquina Asociada",
+        "garment": "Prenda"
+      },
+      "details": {
+        "title": "Detalles de la Evidencia",
+        "type": "Tipo de Evidencia *",
+        "date": "Fecha de Evidencia *",
+        "description": "Descripción *",
+        "descriptionPlaceholder": "Describa lo que muestra la evidencia...",
+        "action": "Acción Correctiva Tomada",
+        "actionPlaceholder": "Describa la acción correctiva tomada o planificada.",
+        "types": {
+          "photo": "Foto",
+          "labReport": "Informe de Laboratorio",
+          "inspectionSheet": "Hoja de Inspección"
+        }
+      },
+      "upload": {
+        "title": "Cargar Evidencia",
+        "dragText": "Arrastre y suelte archivos aquí",
+        "clickText": "o haga clic para cargar",
+        "note": "Formatos aceptados: JPG, PNG, PDF - Tamaño máx: 10 MB cada uno",
+        "uploadedTitle": "Evidencias Cargadas",
+        "empty": "Aún no hay evidencias adjuntas a este defecto.",
+        "photoBadge": "FOTO"
+      },
+      "actions": {
+        "cancel": "Cancelar",
+        "save": "Guardar Evidencia"
+      },
+      "errors": {
+        "sizeLimit": "El tamaño del archivo supera el límite de 10 MB."
+      }
+    },
+    "back": "Volver a Calidad",
+    "fabric": {
+      "stats": {
+        "rolls": "Rollos de Tela",
+        "registered": "registrados",
+        "available": "Disponibles para Corte",
+        "conformingRolls": "rollos conformes",
+        "observed": "Observados",
+        "blockedRolls": "rollos bloqueados",
+        "pendingTests": "Pruebas Pendientes",
+        "requireReview": "requieren revisión"
+      },
+      "filters": {
+        "searchRoll": "Buscar ID de rollo",
+        "supplier": "Proveedor",
+        "result": "Resultado",
+        "date": "Fecha"
+      },
+      "newInspection": "+ Nueva Inspección",
+      "columns": {
+        "rollId": "ID del Rollo",
+        "supplier": "Proveedor",
+        "inspectionDate": "Fecha de Inspección",
+        "initialResult": "Resultado Inicial",
+        "shrinkageTest": "Prueba de Encogimiento",
+        "rollStatus": "Estado del Rollo",
+        "actions": "Acciones"
+      },
+      "actions": {
+        "label": "Acciones",
+        "shrinkageTest": "Prueba de Encogimiento",
+        "parameters": "Parámetros de Inspección"
+      },
+      "empty": "No se encontraron inspecciones de tela.",
+      "legend": {
+        "rowActions": "Acciones por fila: Ver Inspección · Prueba de Encogimiento y Lavado · Historial de Inspecciones",
+        "defectsHint": "Cambie a \"Defectos\" para acceder al registro de defectos de prendas, evidencias, disposición y análisis de defectos recurrentes."
+      }
+    },
+    "newInspection": {
+      "rollInfo": {
+        "title": "Información del Rollo de Tela",
+        "subtitle": "Ingrese los datos de identificación y recepción del rollo entrante."
+      },
+      "initial": {
+        "title": "Inspección Inicial de Calidad",
+        "subtitle": "Compare el rollo con la muestra aprobada del cliente y registre cualquier variación severa."
+      },
+      "fields": {
+        "rollId": "ID del Rollo",
+        "supplier": "Proveedor",
+        "receptionDate": "Fecha de Recepción",
+        "sample": "Tela / Muestra del Cliente",
+        "color": "Tono / Color",
+        "rollLength": "Longitud del Rollo",
+        "shadeMatch": "Coincidencia de Tono",
+        "weaveCondition": "Condición de la Trama",
+        "result": "Resultado de la Inspección",
+        "observation": "Observación / Motivo"
+      },
+      "placeholders": {
+        "rollId": "ej. ROLL-001",
+        "supplier": "Seleccione proveedor",
+        "sample": "Seleccione referencia",
+        "color": "ej. Azul Marino",
+        "rollLength": "ej. 50",
+        "observation": "Obligatorio cuando el rollo se marca como Observado. Describa variación de tono, huecos en la trama u otros hallazgos."
+      },
+      "unit": "m",
+      "banner": "Conforme → Disponible para Corte · Observado → Bloqueado para lotes de corte",
+      "actions": {
+        "cancel": "Cancelar",
+        "save": "Guardar Inspección"
+      }
+    },
+    "parameters": {
+      "title": "Parámetros de Inspección",
+      "subtitle": "Registre los parámetros evaluados durante la inspección del rollo de tela.",
+      "info": {
+        "title": "Información del Rollo de Tela",
+        "rollId": "ID del Rollo",
+        "supplier": "Proveedor",
+        "receptionDate": "Fecha de Recepción",
+        "sample": "Tela / Muestra del Cliente",
+        "initialResult": "Resultado Inicial"
+      },
+      "section": {
+        "title": "Parámetros de Inspección",
+        "subtitle": "Registre las condiciones físicas y visuales evaluadas durante la inspección."
+      },
+      "fields": {
+        "fabricWidth": "Ancho de la Tela",
+        "fabricWeight": "Peso de la Tela / GSM",
+        "shadeCondition": "Condición de Tono / Color",
+        "weaveCondition": "Condición de la Trama",
+        "surfaceCondition": "Condición de la Superficie",
+        "defectsDetected": "Defectos Detectados",
+        "observations": "Evidencia / Observaciones de la Inspección"
+      },
+      "placeholders": {
+        "fabricWidth": "ej. 150",
+        "fabricWeight": "ej. 220",
+        "observations": "Describa hallazgos, variaciones, defectos o condiciones observadas durante la inspección."
+      },
+      "units": {
+        "width": "cm",
+        "weight": "g/m²",
+        "length": "m"
+      },
+      "options": {
+        "weave": {
+          "none": "Sin defectos en la trama",
+          "minorSlubs": "Nudos leves",
+          "defects": "Defectos detectados"
+        },
+        "surface": {
+          "clean": "Sin manchas ni daños",
+          "greaseTraces": "Leves rastros de grasa",
+          "damaged": "Superficie dañada"
+        }
+      },
+      "note": "Estos parámetros se guardarán como evidencia de la condición del material al momento de la recepción.",
+      "actions": {
+        "cancel": "Cancelar",
+        "save": "Guardar Parámetros"
+      },
+      "history": {
+        "title": "Historial de Registros de Inspección",
+        "subtitle": "Registros anteriores de parámetros de condición física y visual de este rollo.",
+        "columns": {
+          "date": "Fecha del Registro",
+          "measures": "Ancho / Peso",
+          "shade": "Condición de Tono",
+          "weaveSurface": "Trama y Superficie",
+          "defects": "Defectos Detectados",
+          "observations": "Observaciones"
+        },
+        "empty": "Aún no hay registros de parámetros de inspección para este rollo."
+      }
+    },
+    "shrinkage": {
+      "title": "Prueba de Encogimiento",
+      "subtitle": "Registre el porcentaje de encogimiento y los resultados de la prueba de lavado de una muestra de tela.",
+      "length": "Largo",
+      "width": "Ancho",
+      "info": {
+        "title": "Información del Rollo de Tela",
+        "rollId": "ID del Rollo",
+        "supplier": "Proveedor",
+        "sample": "Tela / Muestra del Cliente",
+        "color": "Tono / Color",
+        "result": "Resultado de la Inspección",
+        "status": "Estado del Rollo"
+      },
+      "form": {
+        "title": "Prueba de Encogimiento y Lavado",
+        "subtitle": "Registre los resultados de la prueba de una muestra de tela según las tolerancias de la ficha técnica."
+      },
+      "fields": {
+        "testDate": "Fecha de la Prueba",
+        "method": "Método de Prueba",
+        "sampleId": "ID / Referencia de la Muestra",
+        "initialMeasures": "Medidas Iniciales (cm)",
+        "finalMeasures": "Medidas Finales (cm)",
+        "shrinkagePercent": "Porcentaje de Encogimiento (%)",
+        "result": "Resultado",
+        "note": "Nota"
+      },
+      "placeholders": {
+        "sampleId": "ej. SAMPLE-001",
+        "note": "Observaciones o comentarios opcionales"
+      },
+      "actions": {
+        "cancel": "Cancelar",
+        "save": "Guardar Prueba"
+      },
+      "history": {
+        "title": "Historial de Pruebas",
+        "subtitle": "Pruebas de encogimiento y lavado anteriores registradas para este rollo.",
+        "columns": {
+          "testDate": "Fecha de la Prueba",
+          "sampleId": "ID de Muestra",
+          "method": "Método",
+          "shrinkage": "Encogimiento (%)",
+          "result": "Resultado",
+          "notes": "Notas"
+        },
+        "lenWid": "Largo: {len} · Ancho: {wid}",
+        "empty": "Aún no hay pruebas de encogimiento registradas para este rollo."
+      }
+    }
   },
 
   "alerts": {
     "title": "Alertas",
+    "subtitle": "Supervisa mermas, reprocesos e inactividad de máquinas en la línea de producción.",
+    "loading": "Cargando alertas...",
+    "loadError": "No se pudieron cargar las alertas del servidor.",
+    "status": "Estado",
+    "allAlerts": "Todas las alertas",
+    "critical": "Crítica",
+    "warning": "Advertencia",
+    "optimal": "Óptimo",
+    "batch": "Lote",
+    "allBatches": "Todos los lotes",
+    "type": "Tipo de alerta",
+    "allTypes": "Todos los tipos",
+    "machineDowntime": "Inactividad de máquina",
+    "defectRate": "Tasa de defectos",
+    "reworkRate": "Tasa de reprocesos",
+    "criticalAlerts": "Alertas críticas",
+    "requireIntervention": "requieren intervención",
+    "batchesAtRisk": "Lotes en riesgo",
+    "aboveTolerance": "por encima de la tolerancia",
+    "optimalFlow": "Flujo óptimo",
+    "batchesWithinTarget": "lotes dentro del objetivo",
+    "productionAlerts": "Alertas de producción",
+    "generatedAutomatically": "Las alertas se generan automáticamente cuando se superan los límites de tolerancia operativa.",
+    "empty": "No se encontraron alertas.",
+    "detail": "Detalle de alerta",
+    "detailSubtitle": "Indicadores operativos de la alerta seleccionada.",
+    "accumulatedDowntime": "INACTIVIDAD ACUMULADA",
+    "configuredLimit": "LÍMITE CONFIGURADO",
+    "excessTime": "TIEMPO EXCEDIDO",
+    "machine": "MÁQUINA",
+    "review": "Revisar",
+    "selectAlert": "Selecciona una alerta para ver sus detalles.",
+    "viewMachine": "Ver máquina",
+    "machineDowntimeTitle": "Inactividad de máquina por encima del límite",
+    "downtimeDescription": "Inactividad acumulada: {accumulated} · Máximo permitido: {limit}",
     "placeholder": "Vista de Alertas — contenido próximamente."
   },
 
