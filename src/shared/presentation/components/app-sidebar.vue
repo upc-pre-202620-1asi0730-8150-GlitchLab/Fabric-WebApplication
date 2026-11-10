@@ -4,6 +4,7 @@ import {useI18n} from "vue-i18n";
 import LanguageSwitcher from "./language-switcher.vue";
 
 const { t } = useI18n();
+const emit = defineEmits(['logout']);
 
 const navItems = [
   {to: "/dashboard", icon: "pi pi-home", labelKey: "sidebar.dashboard"},
@@ -46,7 +47,7 @@ const navItems = [
         <button type="button" class="sidebar__profile-link">{{ t('sidebar.viewProfile') }}</button>
       </div>
     </div>
-    <button type="button" class="sidebar__logout">{{ t('sidebar.logOut') }}</button>
+    <button type="button" class="sidebar__logout" @click="emit('logout')">{{ t('sidebar.logOut') }}</button>
   </div>
   </div>
 </template>

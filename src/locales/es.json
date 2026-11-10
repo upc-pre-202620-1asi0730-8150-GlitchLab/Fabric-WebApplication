@@ -3,6 +3,21 @@
     "occurred": "Ocurrió un error"
   },
 
+  "identityAccess": {
+    "roleSelection": {
+      "title": "Bienvenido a Fabric",
+      "subtitle": "Elige cómo quieres iniciar sesión",
+      "roles": {
+        "qualityInspector": "Iniciar sesión como inspector de calidad",
+        "productionSupervisor": "Iniciar sesión como supervisor de producción"
+      }
+    },
+    "qualityInspectorHome": {
+      "title": "Área del inspector de calidad",
+      "comingSoon": "Esta vista está en construcción."
+    }
+  },
+
   "sidebar": {
     "companyName": "Fabric",
     "dashboard": "Panel de Control",
@@ -75,8 +90,7 @@
       "excel": "Excel (.xlsx)",
       "cancel": "Cancelar",
       "submit": "Exportar informe"
-    },
-    "placeholder": "Vista de Dashboard — contenido próximamente."
+    }
   },
 
   "productionBatches": {

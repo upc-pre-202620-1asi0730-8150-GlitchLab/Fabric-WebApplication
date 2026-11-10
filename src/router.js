@@ -1,5 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import machineRegistrationRoutes from "./machine-registration/presentation/machine-routes.js";
+import identityAccessRoutes from "./identity-access/presentation/identity-routes.js";
+import {authGuard} from "./identity-access/presentation/auth-guard.js";
 
 const pageNotFound = () => import('./shared/presentation/views/page-not-found.vue');
 const dashboard = () => import('./report-analytics/presentation/views/report-analytics.vue');
@@ -20,6 +22,8 @@ const traceabilityHistory = () => import('./production-batches/presentation/view
 const batchObservations = () => import('./production-batches/presentation/views/batch-observations.view.vue');
 
 const routes = [
+    ...identityAccessRoutes,
+
     // Dashboard
     {
         path: '/dashboard',
@@ -118,7 +122,7 @@ const routes = [
     // Default
     {
         path: '/',
-        redirect: '/dashboard'
+        redirect: '/login'
     },
 
     // 404
@@ -128,7 +132,8 @@ const routes = [
         component: pageNotFound,
         meta: {
             title: 'Page not found',
-            hideSidebar: true
+            hideSidebar: true,
+            public: true
         }
     }
 ];
@@ -138,17 +143,9 @@ const router = createRouter({
     routes: routes
 });
 
-let isInitialNavigation = true;
+router.beforeEach(authGuard);
 
 router.beforeEach((to, from) => {
-    if (isInitialNavigation) {
-        isInitialNavigation = false;
-
-        if (to.name !== 'dashboard' && to.name !== 'not-found') {
-            return { name: 'dashboard' };
-        }
-    }
-
     console.log(`Navigating from ${from.name} to ${to.name}`);
 
     const baseTitle = 'Fabric';
