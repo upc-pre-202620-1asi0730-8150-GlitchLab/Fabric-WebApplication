@@ -22,6 +22,75 @@
       "shrinkageTest": "Shrinkage test"
     },
     "placeholder": "This view is under construction.",
+    "parameters": {
+      "title": "Inspection parameters",
+      "subtitle": "Record the parameters evaluated during the inspection of a fabric roll to keep evidence of the conditions in which the material was received.",
+      "rollSection": {
+        "title": "Fabric roll",
+        "subtitle": "Select the registered roll to evaluate."
+      },
+      "parametersSection": {
+        "title": "Evaluated parameters",
+        "subtitle": "Record the shade, width, length and defects found in the roll."
+      },
+      "fields": {
+        "roll": "Fabric roll",
+        "shadeCondition": "Shade / tone",
+        "fabricWidth": "Width",
+        "fabricLength": "Length",
+        "defectsDetected": "Defects detected",
+        "observations": "Observations"
+      },
+      "placeholders": {
+        "roll": "Select a roll",
+        "shadeCondition": "Select the tone condition",
+        "fabricWidth": "e.g. 150",
+        "fabricLength": "e.g. 50",
+        "defectsDetected": "Select the defect type",
+        "observations": "Describe findings or conditions observed during the inspection."
+      },
+      "units": {
+        "width": "cm",
+        "length": "m"
+      },
+      "summary": {
+        "rollId": "Roll ID",
+        "supplier": "Supplier",
+        "receptionDate": "Reception date",
+        "sample": "Fabric / client sample",
+        "initialResult": "Initial result"
+      },
+      "options": {
+        "shadeCondition": {
+          "matches": "Matches approved sample",
+          "slightVariation": "Slight variation",
+          "offShade": "Off-shade"
+        },
+        "defects": {
+          "none": "None",
+          "holes": "Holes",
+          "stains": "Stains",
+          "shadeDifference": "Shade difference"
+        }
+      },
+      "errors": {
+        "required": "This field is required.",
+        "invalidMeasure": "The value must be greater than zero."
+      },
+      "hint": "These parameters are stored as evidence of the material condition at reception.",
+      "empty": "There are no rolls pending parameter registration.",
+      "actions": {
+        "save": "Save parameters",
+        "clear": "Clear form"
+      },
+      "messages": {
+        "savedTitle": "Parameters saved",
+        "saved": "The inspection parameters were registered.",
+        "errorTitle": "Error",
+        "saveError": "Could not save the parameters.",
+        "loadError": "Could not load the registered rolls."
+      }
+    },
     "newInspection": {
       "title": "New roll inspection",
       "subtitle": "Register the fabric roll received and verify its initial conformity before cutting.",

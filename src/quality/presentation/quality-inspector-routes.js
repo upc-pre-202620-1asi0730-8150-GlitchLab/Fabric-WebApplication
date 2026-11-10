@@ -1,5 +1,6 @@
 const inspectorPlaceholder = () => import('./views/inspector-placeholder.view.vue');
 const newRollInspection = () => import('./views/new-roll-inspection.view.vue');
+const inspectionParameters = () => import('./views/inspection-parameters.view.vue');
 
 const qualityInspectorRoutes = [
     {
@@ -17,8 +18,8 @@ const qualityInspectorRoutes = [
     {
         path: '/inspector/parameters',
         name: 'inspector-parameters',
-        component: inspectorPlaceholder,
-        meta: {title: 'Inspection Parameters', titleKey: 'qualityInspector.nav.parameters'}
+        component: inspectionParameters,
+        meta: {title: 'Inspection Parameters'}
     },
     {
         path: '/inspector/shrinkage-test',
