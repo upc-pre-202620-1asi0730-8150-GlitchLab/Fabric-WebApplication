@@ -1626,8 +1626,44 @@ label {
   border-color: #3b461e;
 }
 
+.inspection-roll-summary {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.5rem;
+  background: #f4f5f0;
+}
+
+.inspection-roll-summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.inspection-roll-summary-item span {
+  font-size: 0.75rem;
+  color: #8a8a80;
+}
+
+.inspection-roll-summary-item strong {
+  font-size: 0.875rem;
+  color: #2b2b26;
+}
+
+.inspection-empty {
+  color: #8a8a80;
+  font-size: 0.8rem;
+}
+
 @media (max-width: 900px) {
   .inspection-form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .inspection-roll-summary {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -1637,7 +1673,8 @@ label {
     padding: 1.25rem;
   }
 
-  .inspection-form-grid {
+  .inspection-form-grid,
+  .inspection-roll-summary {
     grid-template-columns: 1fr;
   }
 }
