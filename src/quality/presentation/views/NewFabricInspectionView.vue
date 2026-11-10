@@ -1,34 +1,34 @@
 <template>
   <div class="page-container">
     <header class="header">
-      <h1 class="page-title">Quality</h1>
-      <p class="page-subtitle">Manage fabric inspections, quality tests and garment defects.</p>
+      <h1 class="page-title">{{ t('quality.title') }}</h1>
+      <p class="page-subtitle">{{ t('quality.subtitle') }}</p>
     </header>
 
     <div class="tabs">
-      <button class="tab active" @click="goBack">Fabric Inspections</button>
-      <button class="tab" @click="goToDefects">Defects</button>
+      <button class="tab active" @click="goBack">{{ t('quality.tabs.fabric') }}</button>
+      <button class="tab" @click="goToDefects">{{ t('quality.tabs.defects') }}</button>
     </div>
 
     <form class="inspection-form-card" @submit.prevent="saveInspection">
       <div class="section-header">
         <div class="step-badge">1</div>
         <div>
-          <h2 class="section-title">Fabric Roll Information</h2>
-          <p class="section-subtitle">Enter the identification and reception data of the incoming roll.</p>
+          <h2 class="section-title">{{ t('quality.newInspection.rollInfo.title') }}</h2>
+          <p class="section-subtitle">{{ t('quality.newInspection.rollInfo.subtitle') }}</p>
         </div>
       </div>
 
       <div class="form-grid">
         <div class="form-group">
-          <label>Roll ID *</label>
-          <input v-model="form.rollId" type="text" placeholder="e.g. ROLL-001" required />
+          <label>{{ t('quality.newInspection.fields.rollId') }} *</label>
+          <input v-model="form.rollId" type="text" :placeholder="t('quality.newInspection.placeholders.rollId')" required />
         </div>
 
         <div class="form-group">
-          <label>Supplier *</label>
+          <label>{{ t('quality.newInspection.fields.supplier') }} *</label>
           <select v-model="form.supplier" required>
-            <option value="" disabled>Select supplier</option>
+            <option value="" disabled>{{ t('quality.newInspection.placeholders.supplier') }}</option>
             <option value="Textile A">Textile A</option>
             <option value="Supplier B">Supplier B</option>
             <option value="Supplier C">Supplier C</option>
@@ -36,14 +36,14 @@
         </div>
 
         <div class="form-group">
-          <label>Reception Date *</label>
+          <label>{{ t('quality.newInspection.fields.receptionDate') }} *</label>
           <input v-model="form.inspectionDate" type="date" required />
         </div>
 
         <div class="form-group">
-          <label>Fabric / Client Sample *</label>
+          <label>{{ t('quality.newInspection.fields.sample') }} *</label>
           <select v-model="form.sample" required>
-            <option value="" disabled>Select reference</option>
+            <option value="" disabled>{{ t('quality.newInspection.placeholders.sample') }}</option>
             <option value="T-Shirt Basic">T-Shirt Basic</option>
             <option value="Hoodie">Hoodie</option>
             <option value="Crewneck">Crewneck</option>
@@ -52,15 +52,15 @@
         </div>
 
         <div class="form-group">
-          <label>Shade / Color *</label>
-          <input v-model="form.color" type="text" placeholder="e.g. Navy Blue" required />
+          <label>{{ t('quality.newInspection.fields.color') }} *</label>
+          <input v-model="form.color" type="text" :placeholder="t('quality.newInspection.placeholders.color')" required />
         </div>
 
         <div class="form-group suffix-group">
-          <label>Roll Length</label>
+          <label>{{ t('quality.newInspection.fields.rollLength') }}</label>
           <div class="input-with-suffix">
-            <input v-model="form.rollLength" type="number" placeholder="e.g. 50" />
-            <span class="suffix">m</span>
+            <input v-model="form.rollLength" type="number" :placeholder="t('quality.newInspection.placeholders.rollLength')" />
+            <span class="suffix">{{ t('quality.newInspection.unit') }}</span>
           </div>
         </div>
       </div>
@@ -70,56 +70,51 @@
       <div class="section-header">
         <div class="step-badge">2</div>
         <div>
-          <h2 class="section-title">Initial Quality Inspection</h2>
-          <p class="section-subtitle">Compare the roll with the client's approved sample and record any severe variation.</p>
+          <h2 class="section-title">{{ t('quality.newInspection.initial.title') }}</h2>
+          <p class="section-subtitle">{{ t('quality.newInspection.initial.subtitle') }}</p>
         </div>
       </div>
 
       <div class="form-grid">
         <div class="form-group">
-          <label>Shade Match *</label>
+          <label>{{ t('quality.newInspection.fields.shadeMatch') }} *</label>
           <select v-model="form.shadeMatch" required>
-            <option value="Matches client sample">Matches client sample</option>
-            <option value="Slight variation">Slight variation</option>
-            <option value="Severe mismatch">Severe mismatch</option>
+            <option v-for="option in shadeMatchOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label>Weave Condition *</label>
+          <label>{{ t('quality.newInspection.fields.weaveCondition') }} *</label>
           <select v-model="form.weaveCondition" required>
-            <option value="No weave holes detected">No weave holes detected</option>
-            <option value="Minor irregularities">Minor irregularities</option>
-            <option value="Severe weave defects">Severe weave defects</option>
+            <option v-for="option in weaveConditionOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label>Inspection Result *</label>
+          <label>{{ t('quality.newInspection.fields.result') }} *</label>
           <select v-model="form.initialResult" required>
-            <option value="Conforming">Conforming</option>
-            <option value="Observed">Observed</option>
+            <option v-for="option in resultOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
           </select>
         </div>
 
         <div class="form-group full-width">
-          <label>Observation / Reason</label>
+          <label>{{ t('quality.newInspection.fields.observation') }}</label>
           <textarea
               v-model="form.observation"
               rows="3"
-              placeholder="Required when the roll is marked as Observed. Describe shade variation, weave holes, or other findings."
+              :placeholder="t('quality.newInspection.placeholders.observation')"
           ></textarea>
         </div>
       </div>
 
       <div class="form-footer">
         <div class="logic-banner">
-          Conforming → Available for Cutting | Observed → Blocked from cutting batches
+          {{ t('quality.newInspection.banner') }}
         </div>
 
         <div class="footer-actions">
-          <button type="button" class="btn-cancel" @click="goBack">Cancel</button>
-          <button type="submit" class="btn-submit">Save Inspection</button>
+          <button type="button" class="btn-cancel" @click="goBack">{{ t('quality.newInspection.actions.cancel') }}</button>
+          <button type="submit" class="btn-submit">{{ t('quality.newInspection.actions.save') }}</button>
         </div>
       </div>
     </form>
@@ -127,11 +122,19 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { FabricInspectionService } from '../../infrastructure/fabric-inspection.service.js'
+import { RESULT_OPTIONS, SHADE_MATCH_OPTIONS, WEAVE_CONDITION_OPTIONS } from '../inspection-options.js'
 
 const router = useRouter()
+const { t } = useI18n()
+
+const translate = (options) => options.map(({ value, labelKey }) => ({ value, label: t(labelKey) }))
+const shadeMatchOptions = computed(() => translate(SHADE_MATCH_OPTIONS))
+const weaveConditionOptions = computed(() => translate(WEAVE_CONDITION_OPTIONS))
+const resultOptions = computed(() => translate(RESULT_OPTIONS))
 
 const form = reactive({
   rollId: '',
