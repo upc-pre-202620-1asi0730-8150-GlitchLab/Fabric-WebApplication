@@ -3,8 +3,8 @@
                     totalProduced = 0,
                     averagePerHour = 0,
                     dailyCompliance = 0,
-                    selectedDate = '2026-10-04',
-                    selectedBatch = 'All batches'
+                    selectedDate = null,
+                    selectedBatch = null
                 } = {}) {
         this.totalProduced = totalProduced;
         this.averagePerHour = averagePerHour;
