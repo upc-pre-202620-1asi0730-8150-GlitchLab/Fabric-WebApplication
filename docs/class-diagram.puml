@@ -1,0 +1,382 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam linetype ortho
+hide empty members
+
+package "shared" {
+  class BaseEndpoint {
+    -endpoint: String
+    +getAll()
+    +getById(id)
+    +create(resource)
+    +update(id, resource)
+    +delete(id)
+  }
+  class BaseApi {
+    +API_BASE_URL: String
+    +http: AxiosInstance
+  }
+}
+
+package "identity-access" {
+  enum UserRole {
+    QUALITY_INSPECTOR
+    PRODUCTION_SUPERVISOR
+  }
+  class SessionStore <<Pinia Store>> {
+    +role: UserRole
+    +isAuthenticated: Boolean
+    +signIn(selectedRole)
+    +signOut()
+  }
+}
+
+package "alerts" {
+  class Alert {
+    +id
+    +status
+    +type
+    +reference
+    +title
+    +description
+    +action
+    +accumulated
+    +limit
+    +excess
+    +machine
+    +batch
+  }
+  class AlertsApiService {
+    +getAll()
+  }
+}
+
+package "machine-registration" {
+  class Machine {
+    +id
+    +type
+    +batchId
+    +status
+    +currentDowntime
+    +lastFailure
+    +failureDescription
+    +downtimeStartedAt
+  }
+  class StopEvent {
+    +id
+    +machineId
+    +cause
+    +stoppedAt
+    +resumedAt
+    +durationMinutes
+    +failureDescription
+  }
+  class MaintenanceRecord {
+    +id
+    +machineId
+    +date
+    +maintenanceType
+    +interventionPerformed
+    +partsReplaced
+    +technician
+    +observations
+  }
+  class MachineApi {
+    -machinesEndpoint
+    -stopEventsEndpoint
+    -maintenanceRecordsEndpoint
+    +getMachines()
+    +getMachineById(id)
+    +createMachine(resource)
+    +updateMachine(resource)
+    +deleteMachine(id)
+    +getStopEvents()
+    +createStopEvent(resource)
+    +updateStopEvent(resource)
+    +getMaintenanceRecords()
+    +createMaintenanceRecord(resource)
+  }
+  class MachineAssembler {
+    +{static} toEntityFromResource(resource)
+    +{static} toEntitiesFromResponse(response)
+  }
+  class MachineStore <<Pinia Store>> {
+    +machines: Machine[]
+    +stopEvents: StopEvent[]
+    +maintenanceRecords: MaintenanceRecord[]
+    +fetchMachines()
+    +getMachineById(id)
+    +addMachine(machine)
+    +deleteMachine(machine)
+    +reportBreakdown(machine, data)
+    +registerMaintenance(machineId, data)
+    +resumeOperation(machine, data)
+    +fetchStopEvents()
+    +fetchMaintenanceRecords()
+  }
+}
+
+package "production-batches" {
+  class ProductionBatch {
+    +id
+    +batchNumber
+    +garmentModel
+    +projectedQuantity
+    +currentStage
+    +progressPercentage
+    +deliveryDate
+    +status
+    +technicalSheetUrl
+    +notes
+    +getStatusBadgeSeverity()
+  }
+  class BatchStage {
+    +id
+    +batchId
+    +name
+    +order
+    +status
+    +processedQuantity
+    +targetQuantity
+    +getCompletionPercentage()
+  }
+  class BatchMovement {
+    +id
+    +batchId
+    +stageName
+    +qtyIn
+    +qtyOut
+    +difference
+    +responsiblePerson
+    +timestamp
+    +status
+    +hasDiscrepancy()
+  }
+  class BatchOperator {
+    +id
+    +batchId
+    +operatorId
+    +fullName
+    +specialty
+    +assignedStage
+    +assignmentDate
+  }
+  class BatchObservation {
+    +id
+    +batchId
+    +authorName
+    +category
+    +content
+    +createdAt
+  }
+  class ProductionBatchesApiService {
+    +createBatch(batch)
+    +patch(id, partial)
+    +getByStage(stage)
+    +getBatchMovements(batchId)
+    +addBatchMovement(movement)
+    +updateBatchMovement(id, partial)
+    +getOperators()
+    +getAssignedOperators(batchId)
+    +assignOperator(assignment)
+    +getBatchObservations(batchId)
+    +addObservation(observation)
+  }
+  class ProductionBatchesAssembler {
+    +toProductionBatch(data)
+    +toBatchMovement(data)
+    +toBatchObservation(data)
+    +toBatchOperator(data)
+  }
+  class ProductionStore <<Pinia Store>> {
+    +batches: ProductionBatch[]
+    +currentBatch: ProductionBatch
+    +loading: Boolean
+    +error: String
+    +fetchBatches()
+    +fetchBatchById(id)
+    +createBatch(data)
+    +loadOperators()
+    +assignOperator(assignment)
+    +loadObservations(batchId)
+    +addObservation(data)
+    +loadBatchMovements(batchId)
+    +updateBatchStage(batch, form, stages)
+  }
+}
+
+package "quality" {
+  class FabricInspection {
+    +id
+    +rollId
+    +supplier
+    +inspectionDate
+    +sample
+    +color
+    +rollLength
+    +shadeMatch
+    +weaveCondition
+    +initialResult
+    +observation
+    +shrinkageTest
+    +rollStatus
+    +testHistory: ShrinkageTest[]
+    +parameters: InspectionParameters
+    +{static} register(data)
+  }
+  class InspectionParameters {
+    +fabricWidth
+    +fabricLength
+    +shadeCondition
+    +defectsDetected
+    +observations
+    +updatedAt
+    +{static} register(data)
+    +toHistoryEntry()
+  }
+  class ShrinkageTest {
+    +testDate
+    +method
+    +sampleId
+    +initialLength
+    +initialWidth
+    +finalLength
+    +finalWidth
+    +lenShrinkage
+    +widthShrinkage
+    +tolerance
+    +result
+    +note
+    +{static} register(data, tolerance, defaultSampleId)
+  }
+  class DefectRecord {
+    +id
+    +batchId
+    +defectType
+    +quantity
+    +machineId
+    +origin
+    +status
+    +observation
+    +disposition
+    +correctionType
+    +date
+  }
+  class InspectionSummary <<Domain Service>> {
+    +summarizeInspections(inspections)
+    +filterInspections(inspections, filters)
+    +sortByDateDescending(inspections)
+  }
+  enum InspectionResult {
+    CONFORMING
+    OBSERVED
+  }
+  enum RollStatus {
+    AVAILABLE_FOR_CUTTING
+    BLOCKED
+  }
+  enum ShrinkageResult {
+    APPROVED
+    NON_COMPLIANT
+  }
+  class FabricInspectionService {
+    +{static} getAll()
+    +{static} getById(id)
+    +{static} create(inspection)
+    +{static} update(id, fields)
+  }
+  class FabricCatalogService {
+    +{static} getSuppliers()
+    +{static} getSamples()
+  }
+  class DefectService {
+    +{static} getAll()
+    +{static} create(defect)
+    +{static} update(id, fields)
+  }
+  class FabricInspectionStore <<Pinia Store>> {
+    +loadCatalogs()
+    +register(data)
+  }
+  class InspectionParametersStore <<Pinia Store>> {
+    +loadInspections()
+    +saveParameters(inspectionId, data)
+  }
+  class ShrinkageTestStore <<Pinia Store>> {
+    +load()
+    +saveTest(inspectionId, data)
+  }
+  class InspectorDashboardStore <<Pinia Store>> {
+    +load()
+  }
+}
+
+package "report-analytics" {
+  class DashboardMetrics {
+    +totalProduced
+    +averagePerHour
+    +dailyCompliance
+    +selectedDate
+    +selectedBatch
+  }
+  class ReportAnalyticsApiService {
+    +getDashboardData(date)
+    +getDashboardHistory()
+  }
+}
+
+ProductionBatchesApiService --|> BaseEndpoint
+MachineApi ..> BaseEndpoint : usa
+AlertsApiService ..> BaseApi : usa
+ReportAnalyticsApiService ..> BaseApi : usa
+FabricInspectionService ..> BaseApi : usa
+FabricCatalogService ..> BaseApi : usa
+DefectService ..> BaseApi : usa
+
+SessionStore o-- UserRole
+
+MachineStore ..> MachineApi
+MachineStore ..> MachineAssembler
+MachineAssembler ..> Machine : crea
+MachineApi ..> StopEvent
+MachineApi ..> MaintenanceRecord
+Machine "1" --> "0..*" StopEvent
+Machine "1" --> "0..*" MaintenanceRecord
+MachineStore o-- "0..*" Machine
+
+ProductionStore ..> ProductionBatchesApiService
+ProductionStore ..> ProductionBatchesAssembler
+ProductionStore o-- "0..*" ProductionBatch
+ProductionBatchesAssembler ..> ProductionBatch : crea
+ProductionBatchesAssembler ..> BatchMovement : crea
+ProductionBatchesAssembler ..> BatchObservation : crea
+ProductionBatchesAssembler ..> BatchOperator : crea
+ProductionBatch "1" *-- "1..*" BatchStage
+ProductionBatch "1" *-- "0..*" BatchMovement
+ProductionBatch "1" *-- "0..*" BatchObservation
+ProductionBatch "1" o-- "0..*" BatchOperator
+
+FabricInspection "1" *-- "0..*" ShrinkageTest
+FabricInspection "1" *-- "0..1" InspectionParameters
+FabricInspection ..> InspectionResult
+FabricInspection ..> RollStatus
+ShrinkageTest ..> ShrinkageResult
+DefectRecord "0..*" ..> "1" ProductionBatch : batchId
+DefectRecord "0..*" ..> "0..1" Machine : machineId
+Alert "0..*" ..> "0..1" Machine : machine
+Alert "0..*" ..> "0..1" ProductionBatch : batch
+Machine "0..*" ..> "0..1" ProductionBatch : batchId
+
+FabricInspectionStore ..> FabricInspectionService
+FabricInspectionStore ..> FabricCatalogService
+FabricInspectionStore ..> FabricInspection
+InspectionParametersStore ..> FabricInspectionService
+InspectionParametersStore ..> InspectionParameters
+ShrinkageTestStore ..> FabricInspectionService
+ShrinkageTestStore ..> ShrinkageTest
+InspectorDashboardStore ..> FabricInspectionService
+InspectorDashboardStore ..> InspectionSummary
+
+ReportAnalyticsApiService ..> DashboardMetrics
+@enduml
