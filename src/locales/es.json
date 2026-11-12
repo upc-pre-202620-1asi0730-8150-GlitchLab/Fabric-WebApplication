@@ -367,7 +367,13 @@
   },
 
   "productionBatches": {
-    "title": "Lotes de Producción",
+    "defects": {
+      "title": "Defectos de calidad",
+      "subtitle": "Defectos registrados por Calidad para este lote.",
+      "empty": "No hay defectos registrados para este lote.",
+      "columns": { "type": "Defecto", "quantity": "Cantidad", "origin": "Origen", "status": "Estado" }
+    },
+        "title": "Lotes de Producción",
     "subtitle": "Controla cada lote, su etapa y el estado de entrega.",
     "create": "Crear lote",
     "loading": "Cargando lotes de producción...",
@@ -390,6 +396,8 @@
       "progress": "Progreso",
       "deliveryDate": "Fecha de entrega",
       "actions": "Acciones",
+      "updateStage": "Actualizar etapa",
+      "defects": "Defectos",
       "detail": "Detalle del lote",
       "assignOperators": "Asignar operarios",
       "history": "Historial",
@@ -518,6 +526,13 @@
       "current": "Actual:",
       "totalDifference": "Diferencia total:",
       "currentStage": "Etapa actual:"
+    },
+    "tabs": {
+      "summary": "Resumen y etapa",
+      "operators": "Operarios",
+      "observations": "Observaciones",
+      "traceability": "Trazabilidad",
+      "defects": "Defectos"
     },
     "views": {
       "batchDetailTitle": "Detalle del lote",
@@ -682,6 +697,17 @@
       }
     },
     "back": "Volver a Calidad",
+    "sheet": {
+      "title": "Inspección de rollo",
+      "subtitle": "Revisa el rollo, registra sus parámetros y la prueba de encogimiento en un solo lugar.",
+      "done": "Completado",
+      "pending": "Pendiente",
+      "steps": {
+        "initial": "Inspección inicial",
+        "parameters": "Parámetros",
+        "shrinkage": "Prueba de encogimiento"
+      }
+    },
     "fabric": {
       "stats": {
         "rolls": "Rollos de Tela",
@@ -710,9 +736,14 @@
         "actions": "Acciones"
       },
       "actions": {
+        "openSheet": "Abrir ficha del rollo",
+        "registerParameters": "Registrar parámetros",
+        "registerTest": "Registrar prueba",
         "label": "Acciones",
         "shrinkageTest": "Prueba de Encogimiento",
-        "parameters": "Parámetros de Inspección"
+        "parameters": "Parámetros de Inspección",
+        "releaseRoll": "Liberar rollo",
+        "blockRoll": "Bloquear rollo"
       },
       "empty": "No se encontraron inspecciones de tela.",
       "legend": {
@@ -929,7 +960,7 @@
       "back": "Volver a Maquinaria",
       "info": {
         "status": "Estado Actual",
-        "batch": "Lote Actual",
+        "location": "Ubicación",
         "stopStarted": "Detenida Desde",
         "currentDowntime": "Tiempo de Inactividad",
         "lastFailure": "Última Falla"
@@ -1022,7 +1053,7 @@
         "title": "Información de la Máquina",
         "code": "Código de Máquina",
         "type": "Tipo de Máquina",
-        "batch": "Lote Actual",
+        "location": "Ubicación",
         "status": "Estado Actual"
       },
       "details": {
@@ -1082,7 +1113,7 @@
     "table": {
       "machine": "Máquina",
       "type": "Tipo",
-      "currentBatch": "Lote Actual",
+      "location": "Ubicación",
       "status": "Estado",
       "currentDowntime": "Tiempo de Inactividad",
       "lastFailure": "Última Falla",
@@ -1092,13 +1123,15 @@
     "form": {
       "title": "Registrar Máquina",
       "type": "Tipo de Máquina",
-      "batch": "Lote de Producción",
+      "code": "Código de la Máquina",
+      "location": "Ubicación",
       "submit": "Registrar",
       "cancel": "Cancelar",
       "errors": {
         "summary": "No puedes dejar campos vacíos. Completa todos los campos antes de registrar.",
         "typeRequired": "Selecciona un tipo de máquina.",
-        "batchRequired": "Selecciona un lote de producción."
+        "codeRequired": "Ingresa el código de la máquina.",
+        "locationRequired": "Ingresa la ubicación de la máquina."
       }
     }
   }

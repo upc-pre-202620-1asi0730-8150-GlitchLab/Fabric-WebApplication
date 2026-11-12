@@ -6,12 +6,10 @@ import {FAILURE_CATEGORIES} from "../../domain/model/failure-category.js";
 import useMachineRegistrationStore from "../../application/machine.store.js";
 import {MACHINE_TYPES} from "../../domain/model/machine-type.js";
 import {MACHINE_STATUS, MACHINE_STATUS_SEVERITY} from "../../domain/model/machine-status.js";
-import {useConfirm} from "primevue";
 
 const {t} = useI18n();
 const router = useRouter();
 const store = useMachineRegistrationStore();
-const confirm = useConfirm();
 
 const now = ref(Date.now());
 let timer;
@@ -70,19 +68,6 @@ const navigateToNew = () => {
   router.push({name: 'machine-registration-machine-new'});
 };
 
-const confirmDelete = (machine) => {
-  confirm.require({
-    message: t('machinery.confirmDelete', {code: machine.id}),
-    header: t('machinery.deleteHeader'),
-    icon: 'pi pi-exclamation-triangle',
-    acceptLabel: t('machinery.deleteAccept'),
-    rejectLabel: t('machinery.deleteReject'),
-    accept: () => {
-      store.deleteMachine(machine);
-    },
-  });
-};
-
 function typeLabel(type) {
   const match = MACHINE_TYPES.find(mt => mt.value === type);
   return match ? t(match.labelKey) : type;
@@ -104,7 +89,7 @@ const typeOptions = computed(() =>
 const filteredMachines = computed(() => {
   const term = search.value.trim().toLowerCase();
   return store.machines.filter(m =>
-      (!term || String(m.id).toLowerCase().includes(term)) &&
+      (!term || String(m.code).toLowerCase().includes(term)) &&
       (!statusFilter.value || m.status === statusFilter.value) &&
       (!typeFilter.value || m.type === typeFilter.value)
   );
@@ -150,11 +135,11 @@ watch([search, statusFilter, typeFilter], () => { first.value = 0; });
                    paginator :rows="5" data-key="id"
                    scrollable table-style="min-width: 50rem">
       <template #empty>{{ t('machinery.filters.noResults') }}</template>
-      <pv-column field="id" :header="t('machinery.table.machine')" sortable/>
+      <pv-column field="code" :header="t('machinery.table.machine')" sortable/>
       <pv-column :header="t('machinery.table.type')">
         <template #body="{data}">{{ typeLabel(data.type) }}</template>
       </pv-column>
-      <pv-column field="batchId" :header="t('machinery.table.currentBatch')"/>
+      <pv-column field="location" :header="t('machinery.table.location')"/>
       <pv-column :header="t('machinery.table.status')">
         <template #body="{data}">
           <pv-tag :severity="MACHINE_STATUS_SEVERITY[data.status]" :value="t(`machinery.status.${data.status}`)"/>
@@ -171,7 +156,6 @@ watch([search, statusFilter, typeFilter], () => { first.value = 0; });
           <pv-button icon="pi pi-ellipsis-v" rounded text severity="secondary"
                      aria-haspopup="true" :aria-label="t('machinery.table.actions')"
                      @click="openMenu($event, data)"/>
-          <pv-button icon="pi pi-trash" rounded severity="danger" text @click="confirmDelete(data)"/>
         </template>
       </pv-column>
     </pv-data-table>

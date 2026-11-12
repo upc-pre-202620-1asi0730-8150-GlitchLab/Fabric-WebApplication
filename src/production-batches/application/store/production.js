@@ -5,14 +5,11 @@ import {
     toBatchObservation,
     toBatchOperator,
     toProductionBatch,
-    toTraceabilityMovementPayload,
     toObservationPayload,
     toOperatorAssignmentPayload
 } from '../../infrastructure/services/production-batches.assembler.js';
-import { BatchMovement } from '../../domain/model/batch-movement.entity.js';
 import { BatchObservation } from '../../domain/model/batch-observation.entity.js';
 import { BatchOperator } from '../../domain/model/batch-operator.entity.js';
-import { BatchStage } from '../../domain/model/batch-stage.entity.js';
 
 const batchesService = new ProductionBatchesApiService();
 
@@ -126,55 +123,12 @@ export const useProductionStore = defineStore('production', {
         },
 
         async updateBatchStage(batch, updateForm, stages) {
-            const stageIndex = stages.indexOf(updateForm.newStage);
-            if (stageIndex < 0) return;
+            if (!stages.includes(updateForm.newStage)) return;
 
-            const stage = new BatchStage({
-                batchId: batch.id,
-                name: updateForm.newStage,
-                status: 'In Progress',
-                processedQuantity: Number(updateForm.processedQuantity),
-                targetQuantity: Number(batch.projectedQuantity)
-            });
-            const calculatedProgress = Math.round(((stageIndex + 1) / stages.length) * 100);
             const quantity = Number(updateForm.processedQuantity);
-
-            if (quantity > 0) {
-                const response = await batchesService.getBatchMovements(batch.id);
-                const history = response.data.map(toBatchMovement);
-                const last = history[history.length - 1];
-                const qtyIn = last ? Number(last.qtyOut) : Number(batch.projectedQuantity);
-
-                await Promise.all(
-                    history
-                        .filter(movement => movement.status === 'Current')
-                        .map(movement => batchesService.updateBatchMovement(movement.id, { status: 'Completed' }))
-                );
-
-                const movement = new BatchMovement({
-                    batchId: batch.id,
-                    stageName: batch.currentStage,
-                    timestamp: new Date().toLocaleString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        hour12: false
-                    }),
-                    qtyIn,
-                    qtyOut: quantity,
-                    difference: quantity - qtyIn,
-                    responsiblePerson: 'Supervisor',
-                    status: 'Current'
-                });
-                await batchesService.addBatchMovement(toTraceabilityMovementPayload(movement));
-            }
-
-            await batchesService.patch(batch.id, {
-                currentStage: stage.name,
-                progressPercentage: calculatedProgress,
-                status: stage.name === 'Completed' ? 'Completed' : batch.status
+            await batchesService.updateBatch(batch.id, {
+                currentStage: updateForm.newStage,
+                processedQuantity: quantity > 0 ? quantity : null
             });
         }
     }

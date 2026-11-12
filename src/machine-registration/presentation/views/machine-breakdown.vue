@@ -69,7 +69,7 @@ async function confirmStop() {
     toast.add({
       severity: 'success',
       summary: t('machinery.breakdown.success.title'),
-      detail: t('machinery.breakdown.success.detail', {code: machine.value.id}),
+      detail: t('machinery.breakdown.success.detail', {code: machine.value.code}),
       life: 4000
     });
     goBack();
@@ -98,15 +98,15 @@ async function confirmStop() {
       <div class="info-grid">
         <div>
           <span class="info-label">{{ t('machinery.breakdown.info.code') }}</span>
-          <span class="info-value">{{ machine.id }}</span>
+          <span class="info-value">{{ machine.code }}</span>
         </div>
         <div>
           <span class="info-label">{{ t('machinery.breakdown.info.type') }}</span>
           <span class="info-value">{{ typeLabel(machine.type) }}</span>
         </div>
         <div>
-          <span class="info-label">{{ t('machinery.breakdown.info.batch') }}</span>
-          <span class="info-value">{{ machine.batchId }}</span>
+          <span class="info-label">{{ t('machinery.breakdown.info.location') }}</span>
+          <span class="info-value">{{ machine.location }}</span>
         </div>
         <div>
           <span class="info-label">{{ t('machinery.breakdown.info.status') }}</span>
@@ -124,7 +124,7 @@ async function confirmStop() {
         <div class="fields-grid">
           <div>
             <label for="machine-code">{{ t('machinery.breakdown.fields.machineCode') }} *</label>
-            <pv-input-text id="machine-code" :model-value="machine.id" readonly class="w-full"/>
+            <pv-input-text id="machine-code" :model-value="machine.code" readonly class="w-full"/>
           </div>
 
           <div>

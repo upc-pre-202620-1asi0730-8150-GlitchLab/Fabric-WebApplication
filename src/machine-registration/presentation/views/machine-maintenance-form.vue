@@ -68,7 +68,7 @@ async function confirmRegister() {
     toast.add({
       severity: 'success',
       summary: t('machinery.detail.maintenance.success.title'),
-      detail: t('machinery.detail.maintenance.success.detail', {code: machine.value.id}),
+      detail: t('machinery.detail.maintenance.success.detail', {code: machine.value.code}),
       life: 4000
     });
     goBack();

@@ -37,7 +37,7 @@ async function confirmResume() {
     toast.add({
       severity: 'success',
       summary: t('machinery.detail.resume.success.title'),
-      detail: t('machinery.detail.resume.success.detail', {code: props.machine.id}),
+      detail: t('machinery.detail.resume.success.detail', {code: props.machine.code}),
       life: 4000
     });
     resumedAt.value = '';

@@ -1,30 +1,21 @@
-import {BaseEndpoint} from "../../shared/infrastructure/base-endpoint.js";
+import {http} from "../../shared/infrastructure/base-api.js";
 
 const machinesEndpointPath = import.meta.env.VITE_MACHINES_ENDPOINT_PATH || '/machines';
-const stopEventsEndpointPath = import.meta.env.VITE_STOP_EVENTS_ENDPOINT_PATH || '/stopEvents';
-const maintenanceRecordsEndpointPath = import.meta.env.VITE_MAINTENANCE_RECORDS_ENDPOINT_PATH || '/maintenanceRecords';
+const downtimesSegment = import.meta.env.VITE_DOWNTIMES_ENDPOINT_SEGMENT || 'downtimes';
+const maintenancesSegment = import.meta.env.VITE_MAINTENANCES_ENDPOINT_SEGMENT || 'maintenances';
 
 export class MachineApi {
-    #machinesEndpoint;
-    #stopEventsEndpoint;
-    #maintenanceRecordsEndpoint;
+    getMachines() { return http.get(machinesEndpointPath); }
+    getMachineById(id) { return http.get(`${machinesEndpointPath}/${id}`); }
+    createMachine(resource) { return http.post(machinesEndpointPath, resource); }
+    updateMachineStatus(id, resource) { return http.put(`${machinesEndpointPath}/${id}/status`, resource); }
 
-    constructor() {
-        this.#machinesEndpoint = new BaseEndpoint(machinesEndpointPath);
-        this.#stopEventsEndpoint = new BaseEndpoint(stopEventsEndpointPath);
-        this.#maintenanceRecordsEndpoint = new BaseEndpoint(maintenanceRecordsEndpointPath);
+    getDowntimes(machineId) { return http.get(`${machinesEndpointPath}/${machineId}/${downtimesSegment}`); }
+    createDowntime(machineId, resource) { return http.post(`${machinesEndpointPath}/${machineId}/${downtimesSegment}`, resource); }
+    resumeDowntime(machineId, downtimeId, resource) {
+        return http.put(`${machinesEndpointPath}/${machineId}/${downtimesSegment}/${downtimeId}/resumption`, resource);
     }
 
-    getMachines() { return this.#machinesEndpoint.getAll(); }
-    getMachineById(id) { return this.#machinesEndpoint.getById(id); }
-    createMachine(resource) { return this.#machinesEndpoint.create(resource); }
-    updateMachine(resource) { return this.#machinesEndpoint.update(resource.id, resource); }
-    deleteMachine(id) { return this.#machinesEndpoint.delete(id); }
-
-    getStopEvents() { return this.#stopEventsEndpoint.getAll(); }
-    createStopEvent(resource) { return this.#stopEventsEndpoint.create(resource); }
-    updateStopEvent(resource) { return this.#stopEventsEndpoint.update(resource.id, resource); }
-
-    getMaintenanceRecords() { return this.#maintenanceRecordsEndpoint.getAll(); }
-    createMaintenanceRecord(resource) { return this.#maintenanceRecordsEndpoint.create(resource); }
+    getMaintenanceRecords(machineId) { return http.get(`${machinesEndpointPath}/${machineId}/${maintenancesSegment}`); }
+    createMaintenanceRecord(machineId, resource) { return http.post(`${machinesEndpointPath}/${machineId}/${maintenancesSegment}`, resource); }
 }

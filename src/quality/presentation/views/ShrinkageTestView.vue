@@ -1,6 +1,6 @@
 <template>
-  <div class="page-container">
-    <div class="top-nav">
+  <div :class="{ 'page-container': !embedded }">
+    <div v-if="!embedded" class="top-nav">
       <div>
         <h1 class="page-title">{{ t('quality.shrinkage.title') }}</h1>
         <p class="page-subtitle">{{ t('quality.shrinkage.subtitle') }}</p>
@@ -8,7 +8,7 @@
       <button class="back-link" @click="goBack">← {{ t('quality.back') }}</button>
     </div>
 
-    <div class="info-card">
+    <div v-if="!embedded" class="info-card">
       <h3 class="card-caption">{{ t('quality.shrinkage.info.title') }}</h3>
       <div class="info-row">
         <div class="info-item">
@@ -175,6 +175,8 @@ import {
   WASH_METHOD_OPTIONS
 } from '../inspection-options.js'
 
+defineProps({ embedded: { type: Boolean, default: false } })
+const emit = defineEmits(['saved'])
 const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
@@ -253,6 +255,7 @@ const saveTest = async () => {
     roll.value.testHistory = updatedHistory
     roll.value.shrinkageTest = testForm.result
     testForm.note = ''
+    emit('saved')
   } catch (err) {
     console.error('Error saving shrinkage test:', err)
   }

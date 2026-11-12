@@ -2158,4 +2158,164 @@ div[style*="Invalid PrimeUI License"] {
   pointer-events: none !important;
 }
 
+.batch-defects-card {
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 20px;
+}
 
+.batch-defects-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  color: #111827;
+}
+
+.batch-defects-subtitle {
+  font-size: 13px;
+  color: #6B7280;
+  margin: 4px 0 16px 0;
+}
+
+.batch-defects-empty {
+  font-size: 14px;
+  color: #6B7280;
+  margin: 0;
+}
+
+.batch-defects-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.batch-defects-table th {
+  text-align: left;
+  font-size: 12px;
+  color: #6B7280;
+  text-transform: uppercase;
+  padding: 8px 0;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.batch-defects-table td {
+  padding: 10px 0;
+  border-bottom: 1px solid #F3F4F6;
+  color: #111827;
+}
+
+.batch-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  border-bottom: 1px solid #E5E7EB;
+  margin: 20px 0;
+}
+
+.batch-tab {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6B7280;
+  cursor: pointer;
+}
+
+.batch-tab:hover {
+  color: #111827;
+}
+
+.batch-tab-active {
+  color: #48532B;
+  border-bottom-color: #48532B;
+}
+
+.batch-tab-content {
+  font-family: system-ui, sans-serif;
+}
+
+.batch-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.batch-primary-action {
+  background: #48532B;
+  border-color: #48532B;
+  white-space: nowrap;
+}
+
+.sheet-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.sheet-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.sheet-step-active {
+  border-color: #48532B;
+  background: #F6F8F1;
+}
+
+.sheet-step-number {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F3F4F6;
+  color: #4B5563;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.sheet-step-done {
+  background: #48532B;
+  color: #ffffff;
+}
+
+.sheet-step-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.sheet-step-text small {
+  color: #6B7280;
+  font-size: 12px;
+}
+
+.quality-row-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.quality-primary-action {
+  background: #48532B;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}

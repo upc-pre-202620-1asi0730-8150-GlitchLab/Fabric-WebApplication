@@ -46,7 +46,7 @@
             </div>
             <div class="full-row">
               <span class="label">{{ $t('quality.evidence.defectInfo.garment') }}</span>
-              <span class="value font-bold">{{ defect.garmentModel || 'T-Shirt Basic' }}</span>
+              <span class="value font-bold">{{ defect.garmentModel || '—' }}</span>
             </div>
           </div>
         </div>

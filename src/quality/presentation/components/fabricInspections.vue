@@ -130,30 +130,35 @@
           </td>
 
           <td class="actions-cell">
-            <div class="dropdown-wrapper">
-              <button
-                  class="dots-btn"
-                  :aria-label="t('quality.fabric.actions.label')"
-                  @click.stop="toggleMenu(inspection.id)"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <circle cx="12" cy="5" r="2"></circle>
-                  <circle cx="12" cy="12" r="2"></circle>
-                  <circle cx="12" cy="19" r="2"></circle>
-                </svg>
+            <div class="quality-row-actions">
+              <button class="quality-primary-action" @click="openSheet(inspection)">
+                {{ primaryActionLabel(inspection) }}
               </button>
+              <div class="dropdown-wrapper">
+                <button
+                    class="dots-btn"
+                    :aria-label="t('quality.fabric.actions.label')"
+                    @click.stop="toggleMenu(inspection.id)"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="12" cy="5" r="2"></circle>
+                    <circle cx="12" cy="12" r="2"></circle>
+                    <circle cx="12" cy="19" r="2"></circle>
+                  </svg>
+                </button>
 
-              <div
-                  v-if="openMenuId === inspection.id"
-                  class="dropdown-menu"
-                  @click.stop
-              >
-                <button @click="goToShrinkageTest(inspection.id)">
-                  {{ t('quality.fabric.actions.shrinkageTest') }}
-                </button>
-                <button @click="goToInspectionParameters(inspection.id)">
-                  {{ t('quality.fabric.actions.parameters') }}
-                </button>
+                <div
+                    v-if="openMenuId === inspection.id"
+                    class="dropdown-menu"
+                    @click.stop
+                >
+                  <button @click="openSheet(inspection, 'initial')">
+                    {{ t('quality.fabric.actions.openSheet') }}
+                  </button>
+                  <button @click="toggleRollStatus(inspection)">
+                    {{ inspection.rollStatus === ROLL_STATUS.BLOCKED ? t('quality.fabric.actions.releaseRoll') : t('quality.fabric.actions.blockRoll') }}
+                  </button>
+                </div>
               </div>
             </div>
           </td>
@@ -180,6 +185,7 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { FabricInspectionService } from '../../infrastructure/fabric-inspection.service.js'
+import { ROLL_STATUS } from '../../domain/model/fabric-inspection.js'
 import {
   RESULT_OPTIONS,
   RESULT_STATUS_DISPLAY,
@@ -240,14 +246,36 @@ const goToNewInspection = () => {
   router.push('/quality/inspections/new')
 }
 
-const goToShrinkageTest = (id) => {
+const openSheet = (inspection, step) => {
   closeMenu()
-  router.push(`/quality/inspections/${id}/shrinkage-test`)
+  const target = step || nextStep(inspection)
+  router.push({ path: `/quality/inspections/${inspection.id}`, query: target ? { step: target } : {} })
 }
 
-const goToInspectionParameters = (id) => {
+const nextStep = (inspection) => {
+  if (!(inspection.parameterHistory?.length > 0)) return 'parameters'
+  if (!inspection.shrinkageTest || ['Pending', '—'].includes(inspection.shrinkageTest)) return 'shrinkage'
+  return 'initial'
+}
+
+const primaryActionLabel = (inspection) => {
+  const step = nextStep(inspection)
+  if (step === 'parameters') return t('quality.fabric.actions.registerParameters')
+  if (step === 'shrinkage') return t('quality.fabric.actions.registerTest')
+  return t('quality.fabric.actions.openSheet')
+}
+
+const toggleRollStatus = async (inspection) => {
   closeMenu()
-  router.push(`/quality/inspections/${id}/parameters`)
+  const nextStatus = inspection.rollStatus === ROLL_STATUS.BLOCKED
+    ? ROLL_STATUS.AVAILABLE_FOR_CUTTING
+    : ROLL_STATUS.BLOCKED
+  try {
+    const updated = await FabricInspectionService.updateRollStatus(inspection.id, nextStatus)
+    fabricInspections.value = fabricInspections.value.map(item => item.id === updated.id ? updated : item)
+  } catch (error) {
+    console.error('Error updating roll status:', error)
+  }
 }
 
 onMounted(() => {

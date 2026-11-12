@@ -1,6 +1,6 @@
 ﻿<template>
-  <div class="page-container" v-if="batch">
-    <div class="page-header">
+  <div :class="embedded ? 'batch-tab-content' : 'page-container'" v-if="batch">
+    <div v-if="!embedded" class="page-header">
       <div>
         <h1 class="page-title">{{ t('productionBatches.views.operatorAssignmentTitle') }}</h1>
         <p class="page-subtitle">{{ t('productionBatches.views.operatorAssignmentSubtitle') }}</p>
@@ -8,7 +8,7 @@
       <router-link to="/production-batches" class="back-link mb-20">&larr; {{ t('productionBatches.views.backToBatches') }}</router-link>
     </div>
 
-    <div class="info-card">
+    <div v-if="!embedded" class="info-card">
       <div class="info-grid">
         <div><span class="info-label">{{ t('productionBatches.batchInfo.batchId') }}</span><span class="info-value">{{ batch.batchNumber }}</span></div>
         <div><span class="info-label">{{ t('productionBatches.batchInfo.garmentModel') }}</span><span class="info-value">{{ translateModel(batch.garmentModel) }}</span></div>
@@ -43,7 +43,7 @@
         </p>
 
         <div class="modal-actions">
-          <button type="button" class="btn-outline-olive" @click="goToBatch">{{ t('productionBatches.assignment.viewBatch') }}</button>
+          <button v-if="!embedded" type="button" class="btn-outline-olive" @click="goToBatch">{{ t('productionBatches.assignment.viewBatch') }}</button>
           <button type="button" class="btn-olive modal-btn" @click="showSuccessModal = false">{{ t('productionBatches.assignment.ok') }}</button>
         </div>
       </div>
@@ -81,6 +81,7 @@ import { useProductionStore } from '../../application/store/production.js'
 import AssignOperatorForm from '../components/assign-operator-form.component.vue'
 import AssignedOperatorsTable from '../components/assigned-operators-table.component.vue'
 
+const props = defineProps({ embedded: { type: Boolean, default: false } })
 const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
@@ -187,7 +188,7 @@ const assignOperator = async () => {
 
 const goToBatch = () => {
   showSuccessModal.value = false
-  router.push('/production-batches')
+  if (!props.embedded) router.push('/production-batches')
 }
 </script>
 

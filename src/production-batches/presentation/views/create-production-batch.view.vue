@@ -47,21 +47,10 @@ const createBatch = async (form) => {
   saving.value = true
 
   try {
-    await productionStore.fetchBatches()
-
-    if (productionStore.error) {
-      alert(t('productionBatches.loadError'))
-      return
-    }
-
     await productionStore.createBatch({
-      batchNumber: productionStore.nextBatchNumber,
       garmentModel: form.garmentModel,
       projectedQuantity: form.projectedQuantity,
-      currentStage: 'Cutting',
-      progressPercentage: 10,
       deliveryDate: form.deliveryDate,
-      status: 'In Production',
       notes: form.notes
     })
 

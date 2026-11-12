@@ -37,15 +37,22 @@
         </template>
       </pv-column>
 
-      <pv-column :header="$t('productionBatches.table.actions')" style="width: 50px; text-align: center;">
+      <pv-column :header="$t('productionBatches.table.actions')" style="min-width: 200px;">
         <template #body="slotProps">
-          <pv-button
-              icon="pi pi-ellipsis-v"
-              class="p-button-text p-button-secondary p-button-rounded p-button-sm"
-              @click="toggleMenu($event, slotProps.data)"
-              aria-haspopup="true"
-              aria-controls="overlay_menu"
-          />
+          <div class="batch-row-actions">
+            <pv-button
+                :label="primaryActionLabel(slotProps.data)"
+                class="p-button-sm batch-primary-action"
+                @click="openBatch(slotProps.data)"
+            />
+            <pv-button
+                icon="pi pi-ellipsis-v"
+                class="p-button-text p-button-secondary p-button-rounded p-button-sm"
+                @click="toggleMenu($event, slotProps.data)"
+                aria-haspopup="true"
+                aria-controls="overlay_menu"
+            />
+          </div>
         </template>
       </pv-column>
     </pv-data-table>
@@ -66,47 +73,35 @@ export default {
   },
   computed: {
     menuItems() {
-      return [
-        {
-          label: this.$t('productionBatches.table.detail'),
-          icon: 'pi pi-eye',
-          command: () => {
-            if (this.selectedBatch) {
-              this.$router.push({ name: 'batch-detail', params: { id: this.selectedBatch.id } });
-            }
-          }
-        },
-        {
-          label: this.$t('productionBatches.table.assignOperators'),
-          icon: 'pi pi-users',
-          command: () => {
-            if (this.selectedBatch) {
-              this.$router.push({ name: 'batch-operator-assignment', params: { id: this.selectedBatch.id } });
-            }
-          }
-        },
-        {
-          label: this.$t('productionBatches.table.history'),
-          icon: 'pi pi-history',
-          command: () => {
-            if (this.selectedBatch) {
-              this.$router.push({ name: 'traceability-history', params: { id: this.selectedBatch.id } });
-            }
-          }
-        },
-        {
-          label: this.$t('productionBatches.table.observations'),
-          icon: 'pi pi-comment',
-          command: () => {
-            if (this.selectedBatch) {
-              this.$router.push({ name: 'batch-observations', params: { id: this.selectedBatch.id } });
-            }
-          }
-        }
+      const tabs = [
+        { tab: 'summary', icon: 'pi pi-eye', label: 'detail' },
+        { tab: 'operators', icon: 'pi pi-users', label: 'assignOperators' },
+        { tab: 'observations', icon: 'pi pi-comment', label: 'observations' },
+        { tab: 'traceability', icon: 'pi pi-history', label: 'history' },
+        { tab: 'defects', icon: 'pi pi-exclamation-triangle', label: 'defects' }
       ];
+      return tabs.map(item => ({
+        label: this.$t(`productionBatches.table.${item.label}`),
+        icon: item.icon,
+        command: () => {
+          if (this.selectedBatch) this.openBatch(this.selectedBatch, item.tab);
+        }
+      }));
     }
   },
   methods: {
+    primaryActionLabel(batch) {
+      return batch.status === 'Completed' || batch.currentStage === 'Completed'
+        ? this.$t('productionBatches.table.detail')
+        : this.$t('productionBatches.table.updateStage');
+    },
+    openBatch(batch, tab = 'summary') {
+      this.$router.push({
+        name: 'batch-detail',
+        params: { id: batch.id },
+        query: tab === 'summary' ? {} : { tab }
+      });
+    },
     toggleMenu(event, batch) {
       this.selectedBatch = batch;
       this.$emit('select-batch', batch);
