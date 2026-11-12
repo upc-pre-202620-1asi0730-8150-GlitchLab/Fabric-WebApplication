@@ -471,6 +471,8 @@
       "errorTitle": "Unable to Assign Operators",
       "errorNoOperators": "No operators have been selected.",
       "errorSelectOperator": "Please select at least one operator to continue.",
+      "errorSavingAssignment": "The assignment could not be saved. Please try again. Details: {details}",
+      "errorUnknown": "Unknown error",
       "duplicate": "Duplicate assignment → Operator is already assigned to this batch and stage."
     },
     "observations": {
