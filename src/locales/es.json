@@ -471,6 +471,8 @@
       "errorTitle": "No se pudieron asignar los operarios",
       "errorNoOperators": "No se ha seleccionado ningún operario.",
       "errorSelectOperator": "Selecciona al menos un operario para continuar.",
+      "errorSavingAssignment": "No se pudo guardar la asignación. Inténtalo de nuevo. Detalle: {details}",
+      "errorUnknown": "Error desconocido",
       "duplicate": "Asignación duplicada → El operario ya está asignado a este lote y etapa."
     },
     "observations": {

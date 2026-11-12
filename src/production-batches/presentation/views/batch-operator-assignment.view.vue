@@ -62,7 +62,7 @@
 
         <h2 class="modal-title">{{ t('productionBatches.assignment.errorTitle') }}</h2>
         <p class="modal-description">
-          {{ t('productionBatches.assignment.errorNoOperators') }}<br />{{ t('productionBatches.assignment.errorSelectOperator') }}
+          {{ errorModalMessage }}
         </p>
 
         <div class="modal-actions">
@@ -91,6 +91,7 @@ const operators = ref([])
 const assignedList = ref([])
 const selectedOperatorId = ref('')
 const errorMessage = ref('')
+const errorModalMessage = ref('')
 
 const translateModel = (model) => {
   const keys = {
@@ -150,6 +151,7 @@ const assignOperator = async () => {
   errorMessage.value = ''
 
   if (!selectedOperatorId.value) {
+    errorModalMessage.value = t('productionBatches.assignment.errorSelectOperator')
     showErrorModal.value = true
     return
   }
@@ -182,6 +184,14 @@ const assignOperator = async () => {
     showSuccessModal.value = true
   } catch (err) {
     console.error('Error assigning operator:', err)
+    const responseMessage = err.response?.data?.message || err.response?.data?.error
+    const details = typeof responseMessage === 'string'
+      ? responseMessage
+      : typeof err.message === 'string' && err.message.trim()
+        ? err.message
+        : t('productionBatches.assignment.errorUnknown')
+    errorModalMessage.value = t('productionBatches.assignment.errorSavingAssignment', { details })
+    showErrorModal.value = true
   }
 }
 
