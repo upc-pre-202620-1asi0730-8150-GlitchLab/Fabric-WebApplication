@@ -55,15 +55,15 @@ function goToRegisterMaintenance() {
     </div>
 
     <section class="card">
-      <h2>{{ machine.id }} — {{ typeLabel(machine.type) }}</h2>
+      <h2>{{ machine.code }} — {{ typeLabel(machine.type) }}</h2>
       <div class="info-grid">
         <div>
           <span class="info-label">{{ t('machinery.detail.info.status') }}</span>
           <pv-tag :severity="MACHINE_STATUS_SEVERITY[machine.status]" :value="t(`machinery.status.${machine.status}`)"/>
         </div>
         <div>
-          <span class="info-label">{{ t('machinery.detail.info.batch') }}</span>
-          <span class="info-value">{{ machine.batchId }}</span>
+          <span class="info-label">{{ t('machinery.detail.info.location') }}</span>
+          <span class="info-value">{{ machine.location }}</span>
         </div>
         <div v-if="machine.downtimeStartedAt">
           <span class="info-label">{{ t('machinery.detail.info.stopStarted') }}</span>

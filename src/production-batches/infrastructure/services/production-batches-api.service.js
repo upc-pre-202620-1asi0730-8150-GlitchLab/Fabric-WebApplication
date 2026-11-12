@@ -7,27 +7,20 @@ export class ProductionBatchesApiService extends BaseEndpoint {
     }
 
     createBatch(batch) {
-        return this.create(batch);
+        return this.create({
+            garmentModel: batch.garmentModel,
+            projectedQuantity: batch.projectedQuantity,
+            deliveryDate: batch.deliveryDate,
+            notes: batch.notes
+        });
     }
 
-    patch(id, partial) {
-        return http.patch(`${this.endpoint}/${id}`, partial);
-    }
-
-    getByStage(stage) {
-        return http.get(this.endpoint, { params: { currentStage: stage } });
+    updateBatch(id, resource) {
+        return http.put(`${this.endpoint}/${id}`, resource);
     }
 
     getBatchMovements(batchId) {
-        return http.get('/traceabilityHistory', { params: { batchId } });
-    }
-
-    addBatchMovement(movement) {
-        return http.post('/traceabilityHistory', movement);
-    }
-
-    updateBatchMovement(id, partial) {
-        return http.patch(`/traceabilityHistory/${id}`, partial);
+        return http.get(`/traceabilityHistory/${batchId}`);
     }
 
     getOperators() {
@@ -35,7 +28,7 @@ export class ProductionBatchesApiService extends BaseEndpoint {
     }
 
     getAssignedOperators(batchId) {
-        return http.get('/assignedOperators', { params: { batchId } });
+        return http.get(`/assignedOperators/${batchId}`);
     }
 
     assignOperator(assignment) {
@@ -43,7 +36,7 @@ export class ProductionBatchesApiService extends BaseEndpoint {
     }
 
     getBatchObservations(batchId) {
-        return http.get('/observations', { params: { batchId } });
+        return http.get(`/observations/${batchId}`);
     }
 
     addObservation(observation) {

@@ -3,8 +3,8 @@ import { http } from '../../shared/infrastructure/base-api.js'
 const PATH = '/defects'
 
 export class DefectService {
-    static async getAll() {
-        const { data } = await http.get(PATH)
+    static async getAll(batchId) {
+        const { data } = await http.get(PATH, { params: batchId ? { batchId } : {} })
         return data
     }
 
@@ -14,7 +14,7 @@ export class DefectService {
     }
 
     static async update(defectId, updatedFields) {
-        const { data } = await http.patch(`${PATH}/${encodeURIComponent(defectId)}`, updatedFields)
+        const { data } = await http.put(`${PATH}/${encodeURIComponent(defectId)}`, updatedFields)
         return data
     }
 }

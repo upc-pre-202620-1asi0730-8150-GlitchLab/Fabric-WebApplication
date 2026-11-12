@@ -1,6 +1,6 @@
 <template>
-  <div class="page-container">
-    <div class="top-nav">
+  <div :class="{ 'page-container': !embedded }">
+    <div v-if="!embedded" class="top-nav">
       <div>
         <h1 class="page-title">{{ t('quality.parameters.title') }}</h1>
         <p class="page-subtitle">{{ t('quality.parameters.subtitle') }}</p>
@@ -8,7 +8,7 @@
       <button class="back-link" @click="goBack">← {{ t('quality.back') }}</button>
     </div>
 
-    <div class="info-card">
+    <div v-if="!embedded" class="info-card">
       <h3 class="card-caption">{{ t('quality.parameters.info.title') }}</h3>
       <div class="info-row">
         <div class="info-item">
@@ -174,6 +174,8 @@ import {
   WEAVE_PARAMETER_OPTIONS
 } from '../inspection-options.js'
 
+defineProps({ embedded: { type: Boolean, default: false } })
+const emit = defineEmits(['saved'])
 const route = useRoute()
 const router = useRouter()
 const { t } = useI18n()
@@ -248,6 +250,7 @@ const saveParameters = async () => {
 
     roll.value.parameterHistory = updatedHistory
     paramsForm.observations = ''
+    emit('saved')
   } catch (err) {
     console.error('Error saving inspection parameters:', err)
   }

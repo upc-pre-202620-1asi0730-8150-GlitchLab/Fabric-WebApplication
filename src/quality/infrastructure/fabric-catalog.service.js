@@ -1,7 +1,7 @@
 import { http } from '../../shared/infrastructure/base-api.js'
 
 const SUPPLIERS_PATH = '/suppliers'
-const SAMPLES_PATH = '/fabricSamples'
+const SAMPLES_PATH = '/fabric-samples'
 
 export class FabricCatalogService {
     static async getSuppliers() {

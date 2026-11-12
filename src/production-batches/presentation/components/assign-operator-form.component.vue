@@ -10,7 +10,7 @@
       </div>
       <div class="form-group flex-2">
         <label for="operators">{{ $t('productionBatches.assignment.operators') }}</label>
-        <select id="operators" v-model="selectedOperatorId" class="custom-select">
+        <select id="operators" v-model="selectedOperator" class="custom-select">
           <option value="" disabled>{{ $t('productionBatches.assignment.selectOperators') }}</option>
           <option v-for="operator in operators" :key="operator.id" :value="operator.id">
             {{ operator.name }} ({{ operator.specialty }})
@@ -47,7 +47,17 @@ export default {
       default: ''
     }
   },
-  emits: ['assign-operator', 'update:modelValue']
+  emits: ['assign-operator', 'update:modelValue'],
+  computed: {
+    selectedOperator: {
+      get() {
+        return this.modelValue;
+      },
+      set(value) {
+        this.$emit('update:modelValue', value);
+      }
+    }
+  }
 };
 </script>
 

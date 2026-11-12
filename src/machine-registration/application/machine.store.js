@@ -23,9 +23,31 @@ const useMachineStore = defineStore('machine-registration', () => {
     const operationalCount = computed(() => machines.value.filter(m => m.status === 'operational').length);
     const inMaintenanceCount = computed(() => machines.value.filter(m => m.status === 'in-maintenance').length);
 
+    function replaceEventsOf(machineId, events) {
+        stopEvents.value = [...stopEvents.value.filter(e => e.machineId !== machineId), ...events];
+    }
+
+    function applyOpenDowntime(machine, events) {
+        const openEvent = events.find(e => e.resumedAt === null);
+        machine.downtimeStartedAt = openEvent ? openEvent.stoppedAt : null;
+        machine.lastFailure = openEvent ? openEvent.cause : null;
+        machine.failureDescription = openEvent ? openEvent.failureDescription : null;
+    }
+
+    function loadDowntimesOf(machine) {
+        return machineApi.getDowntimes(machine.id).then(response => {
+            const events = MachineAssembler.toStopEventsFromResponse(response);
+            replaceEventsOf(machine.id, events);
+            applyOpenDowntime(machine, events);
+        });
+    }
+
     function fetchMachines() {
         return machineApi.getMachines().then(response => {
             machines.value = MachineAssembler.toEntitiesFromResponse(response);
+            return Promise.all(machines.value
+                .filter(m => m.status === MACHINE_STATUS.MACHINE_STOPPED)
+                .map(loadDowntimesOf));
         }).catch(error => errors.value.push(error))
             .finally(() => { machinesLoaded.value = true; });
     }
@@ -34,58 +56,21 @@ const useMachineStore = defineStore('machine-registration', () => {
         return machines.value.find(machine => String(machine.id) === String(id));
     }
 
-    function generateNextId() {
-        const maxId = machines.value
-            .map(m => parseInt(m.id, 10))
-            .filter(n => !isNaN(n))
-            .reduce((max, n) => Math.max(max, n), 0);
-        return String(maxId + 1);
-    }
-
     function addMachine(machine) {
-        return fetchMachines().then(() => {
-            machine.id = generateNextId();
-            machine.status = 'operational';
-            machine.currentDowntime = null;
-            machine.lastFailure = null;
-
-            return machineApi.createMachine(machine).then(response => {
-                machines.value.push(MachineAssembler.toEntityFromResource(response.data));
-                return fetchMachines();
-            });
-        }).catch(error => errors.value.push(error));
-    }
-
-    function deleteMachine(machine) {
-        const removeLocal = () => {
-            machines.value = machines.value.filter(m => m.id !== machine.id);
-        };
-
-        return machineApi.deleteMachine(machine.id).then(() => {
-            removeLocal();
-            return fetchMachines();
+        return machineApi.createMachine(MachineAssembler.toRegisterResource(machine)).then(response => {
+            machines.value.push(MachineAssembler.toEntityFromResource(response.data));
         }).catch(error => {
-            if (error.response?.status === 404) removeLocal();
-            else errors.value.push(error);
+            errors.value.push(error);
+            throw error;
         });
     }
 
     function reportBreakdown(machine, {category, description, stoppedAt}) {
-        const stopEvent = {
-            machineId: machine.id,
-            cause: category,
-            stoppedAt: stoppedAt.toISOString(),
-            resumedAt: null,
-            durationMinutes: null,
-            failureDescription: description || null
-        };
+        const resource = MachineAssembler.toDowntimeResource({category, description, stoppedAt: stoppedAt.toISOString()});
 
-        return machineApi.createStopEvent(stopEvent).then(response => {
-            stopEvents.value.push(response.data);
+        return machineApi.createDowntime(machine.id, resource).then(() => {
             machine.status = MACHINE_STATUS.MACHINE_STOPPED;
-            machine.lastFailure = category;
-            machine.downtimeStartedAt = stopEvent.stoppedAt;
-            return machineApi.updateMachine(machine);
+            return loadDowntimesOf(machine);
         }).catch(error => {
             errors.value.push(error);
             throw error;
@@ -93,45 +78,46 @@ const useMachineStore = defineStore('machine-registration', () => {
     }
 
     function registerMaintenance(machineId, recordData) {
-        const record = {machineId, ...recordData};
-        return machineApi.createMaintenanceRecord(record).then(response => {
-            maintenanceRecords.value.push(response.data);
-            const machine = machines.value.find(m => m.id === machineId);
-            machine.status = MACHINE_STATUS.IN_MAINTENANCE;
-            return machineApi.updateMachine(machine);
+        const resource = MachineAssembler.toMaintenanceResource(recordData);
+
+        return machineApi.createMaintenanceRecord(machineId, resource).then(() => {
+            const machine = getMachineById(machineId);
+            return machineApi.updateMachineStatus(machineId, MachineAssembler.toStatusResource(MACHINE_STATUS.IN_MAINTENANCE))
+                .then(() => {
+                    machine.status = MACHINE_STATUS.IN_MAINTENANCE;
+                    return fetchMaintenanceRecords();
+                });
         }).catch(error => {
             errors.value.push(error);
             throw error;
         });
     }
 
-
     function fetchStopEvents() {
-        machineApi.getStopEvents().then(response => stopEvents.value = response.data)
+        return Promise.all(machines.value.map(loadDowntimesOf))
             .catch(error => errors.value.push(error));
     }
 
     function fetchMaintenanceRecords() {
-        machineApi.getMaintenanceRecords().then(response => maintenanceRecords.value = response.data)
+        return Promise.all(machines.value.map(machine =>
+            machineApi.getMaintenanceRecords(machine.id).then(MachineAssembler.toMaintenanceRecordsFromResponse)))
+            .then(groups => { maintenanceRecords.value = groups.flat(); })
             .catch(error => errors.value.push(error));
     }
 
     function resumeOperation(machine, {resumedAt}) {
         const openEvent = stopEvents.value.find(e => e.machineId === machine.id && e.resumedAt === null);
-        const durationMinutes = openEvent
-            ? Math.round((resumedAt.getTime() - new Date(openEvent.stoppedAt).getTime()) / 60000)
-            : null;
 
-        const closeEvent = openEvent
-            ? machineApi.updateStopEvent({...openEvent, resumedAt: resumedAt.toISOString(), durationMinutes})
-            : Promise.resolve();
+        const request = openEvent
+            ? machineApi.resumeDowntime(machine.id, openEvent.id, MachineAssembler.toResumeResource({resumedAt: resumedAt.toISOString()}))
+            : machineApi.updateMachineStatus(machine.id, MachineAssembler.toStatusResource(MACHINE_STATUS.OPERATIONAL));
 
-        return closeEvent.then(() => {
+        return request.then(() => {
             machine.status = MACHINE_STATUS.OPERATIONAL;
             machine.currentDowntime = null;
             machine.lastFailure = null;
             machine.downtimeStartedAt = null;
-            return machineApi.updateMachine(machine);
+            return openEvent ? loadDowntimesOf(machine) : null;
         }).catch(error => {
             errors.value.push(error);
             throw error;
@@ -141,7 +127,7 @@ const useMachineStore = defineStore('machine-registration', () => {
     return {
         machines, stopEvents, maintenanceRecords, errors, machinesLoaded,
         totalMachines, operationalCount, inMaintenanceCount,
-        fetchMachines, getMachineById, addMachine, deleteMachine, reportBreakdown,
+        fetchMachines, getMachineById, addMachine, reportBreakdown,
         registerMaintenance, resumeOperation,
         fetchStopEvents, fetchMaintenanceRecords,
         getStopEventsForMachine, getMaintenanceRecordsForMachine

@@ -68,36 +68,6 @@
         />
       </div>
 
-      <div class="form-group">
-        <label for="technicalSheet">{{ $t('productionBatches.createBatch.createBatchTable.technicalSheet') }}</label>
-
-        <div
-            class="upload-box"
-            @click="$refs.fileInput.click()"
-            @dragover.prevent
-            @drop.prevent="handleFileDrop"
-        >
-          <input
-              ref="fileInput"
-              id="technicalSheet"
-              type="file"
-              accept=".pdf,.jpg,.jpeg,.png"
-              hidden
-              @change="handleFileChange"
-          />
-
-          <div class="upload-icon">↑</div>
-
-          <p class="upload-main">
-            {{ selectedFile ? selectedFile.name : $t('productionBatches.createBatch.createBatchTable.technicalSheetPlaceholder') }}
-          </p>
-
-          <p class="upload-sub">
-            {{ $t('productionBatches.createBatch.createBatchTable.uploadFormats') }}
-          </p>
-        </div>
-      </div>
-
     </div>
 
     <hr class="divider" />
@@ -171,8 +141,6 @@ export default {
         notes: ''
       },
 
-      selectedFile: null,
-
       garmentModels: [
         'T-Shirt Basic',
         'Hoodie',
@@ -198,44 +166,6 @@ export default {
       };
       return keys[model] ? this.$t(`productionBatches.models.${keys[model]}`) : model;
     },
-    handleFileChange(event) {
-      const file = event.target.files[0]
-
-      if (file) {
-        this.validateFile(file)
-      }
-    },
-
-    handleFileDrop(event) {
-      const file = event.dataTransfer.files[0]
-
-      if (file) {
-        this.validateFile(file)
-      }
-    },
-
-    validateFile(file) {
-      const allowedTypes = [
-        'application/pdf',
-        'image/jpeg',
-        'image/png'
-      ]
-
-      const maxSize = 5 * 1024 * 1024
-
-      if (!allowedTypes.includes(file.type)) {
-        alert(this.$t('productionBatches.validation.fileType'))
-        return
-      }
-
-      if (file.size > maxSize) {
-        alert(this.$t('productionBatches.validation.fileSize'))
-        return
-      }
-
-      this.selectedFile = file
-    },
-
     handleSubmit() {
       if (
           !this.form.garmentModel ||
@@ -246,10 +176,7 @@ export default {
         return
       }
 
-      this.$emit('save', {
-        ...this.form,
-        technicalSheetFile: this.selectedFile
-      })
+      this.$emit('save', { ...this.form })
     }
   }
 }

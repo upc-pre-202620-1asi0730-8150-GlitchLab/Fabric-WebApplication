@@ -1,6 +1,6 @@
 ﻿<template>
-  <div class="page-container" v-if="batch">
-    <div class="page-header">
+  <div :class="embedded ? 'batch-tab-content' : 'page-container'" v-if="batch">
+    <div v-if="!embedded" class="page-header">
       <div>
         <h1 class="page-title">{{ t('productionBatches.views.traceabilityTitle') }}</h1>
         <p class="page-subtitle">{{ t('productionBatches.views.traceabilitySubtitle') }}</p>
@@ -8,7 +8,7 @@
       <router-link :to="`/production-batches/${batch.id}`" class="back-link">&larr; {{ t('productionBatches.views.backToBatchDetail') }}</router-link>
     </div>
 
-    <div class="info-card">
+    <div v-if="!embedded" class="info-card">
       <div class="info-grid">
         <div><span class="info-label">{{ t('productionBatches.batchInfo.batchId') }}</span><span class="info-value">{{ batch.batchNumber }}</span></div>
         <div><span class="info-label">{{ t('productionBatches.batchInfo.garmentModel') }}</span><span class="info-value">{{ translateModel(batch.garmentModel) }}</span></div>
@@ -37,6 +37,7 @@ import { useProductionStore } from '../../application/store/production.js'
 import MovementHistoryTable from '../components/movement-history-table.component.vue'
 import TraceabilitySummaryCard from '../components/traceability-summary-card.component.vue'
 
+defineProps({ embedded: { type: Boolean, default: false } })
 const route = useRoute()
 const { t } = useI18n()
 const productionStore = useProductionStore()

@@ -36,7 +36,11 @@
 
       <div v-if="currentTab === 'defects'" class="layout-grid">
         <section class="left-col">
-          <RegisterDefectForm @register-defect="handleCreateDefect" />
+          <RegisterDefectForm
+              :batches="productionStore.batches"
+              :machines="machineStore.machines"
+              @register-defect="handleCreateDefect"
+          />
         </section>
 
         <section class="right-col">
@@ -72,8 +76,12 @@ import DefectDispositionCard from '../components/DefectDispositionCard.vue'
 import AddEvidenceView from './AddEvidenceView.vue'
 import FabricInspections from '../components/fabricInspections.vue'
 import { DefectService } from '../../infrastructure/defect.service.js'
+import { useProductionStore } from '../../../production-batches/application/store/production.js'
+import useMachineRegistrationStore from '../../../machine-registration/application/machine.store.js'
 
 const { t } = useI18n()
+const productionStore = useProductionStore()
+const machineStore = useMachineRegistrationStore()
 
 const currentView = ref('defects')
 const currentTab = ref('fabric')
@@ -89,7 +97,11 @@ const errorMessage = ref('')
 const loadDefects = async () => {
   try {
     errorMessage.value = ''
-    const data = await DefectService.getAll()
+    const defects = await DefectService.getAll()
+    const data = defects.map(defect => ({
+      ...defect,
+      garmentModel: productionStore.batches.find(batch => batch.batchNumber === defect.batchId)?.garmentModel
+    }))
     defectList.value = data
 
     if (dispositionDefect.value) {
@@ -104,7 +116,9 @@ const loadDefects = async () => {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
+  machineStore.fetchMachines()
+  await productionStore.fetchBatches()
   loadDefects()
 })
 
@@ -148,14 +162,13 @@ const handleSaveEvidence = async ({ defectId, evidences }) => {
 const handleCreateDefect = async (formData) => {
   const newDefect = {
     id: nextDefectId(),
-    batchId: formData.batchId.split(' ')[0],
+    batchId: formData.batchId,
     defectType: formData.defectType,
     quantity: formData.quantity,
-    machineId: formData.machineId,
+    machineId: formData.machineId || null,
     origin: formData.origin,
     status: formData.status,
     observation: formData.observation,
-    garmentModel: formData.batchId.split('—')[1]?.trim() || 'T-Shirt Basic',
     date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
     evidences: []
   }

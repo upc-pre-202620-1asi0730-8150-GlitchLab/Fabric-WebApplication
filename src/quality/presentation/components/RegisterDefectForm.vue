@@ -10,9 +10,9 @@
         <label class="form-label">{{ $t('quality.form.active') }}</label>
         <div class="select-wrapper">
           <select v-model="form.batchId" class="form-control" required>
-            <option value="LOT-024 — T-Shirt Basic">LOT-024 — T-Shirt Basic</option>
-            <option value="LOT-025 — Polo Shirt">LOT-025 — Polo Shirt</option>
-            <option value="LOT-026 — Denim Pants">LOT-026 — Denim Pants</option>
+            <option v-for="batch in batches" :key="batch.id" :value="batch.batchNumber">
+              {{ batch.batchNumber }} — {{ batch.garmentModel }}
+            </option>
           </select>
         </div>
       </div>
@@ -47,9 +47,10 @@
         <label class="form-label">{{ $t('quality.form.associated') }}</label>
         <div class="select-wrapper">
           <select v-model="form.machineId" class="form-control">
-            <option value="MC-014 — Overlock">MC-014 — Overlock</option>
-            <option value="MC-015 — Straight Stitch">MC-015 — Straight Stitch</option>
-            <option value="MC-016 — Coverstitch">MC-016 — Coverstitch</option>
+            <option value="">—</option>
+            <option v-for="machine in machines" :key="machine.id" :value="machine.code">
+              {{ machine.code }} — {{ machineTypeLabel(machine.type) }}
+            </option>
           </select>
         </div>
       </div>
@@ -87,18 +88,36 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { reactive, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { MACHINE_TYPES } from '../../../machine-registration/domain/model/machine-type.js';
+
+const props = defineProps({
+  batches: { type: Array, default: () => [] },
+  machines: { type: Array, default: () => [] }
+});
 
 const emit = defineEmits(['register-defect']);
 
+const { t } = useI18n();
+
+const machineTypeLabel = (type) => {
+  const match = MACHINE_TYPES.find(machineType => machineType.value === type);
+  return match ? t(match.labelKey) : type;
+};
+
 const form = reactive({
-  batchId: 'LOT-024 — T-Shirt Basic',
+  batchId: '',
   defectType: 'Open stitches',
   quantity: 6,
-  machineId: 'MC-014 — Overlock',
+  machineId: '',
   origin: 'Machine',
   observation: ''
 });
+
+watch(() => props.batches, (batches) => {
+  if (!form.batchId && batches.length) form.batchId = batches[0].batchNumber;
+}, { immediate: true });
 
 const handleSubmit = () => {
   const finalStatus = form.origin === 'Unknown Origin' ? 'In Evaluation' : 'Pending Decision';

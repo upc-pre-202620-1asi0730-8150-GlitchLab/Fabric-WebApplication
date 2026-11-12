@@ -367,7 +367,13 @@
   },
 
   "productionBatches": {
-    "title": "Production Batches",
+    "defects": {
+      "title": "Quality defects",
+      "subtitle": "Defects registered by Quality for this batch.",
+      "empty": "No defects registered for this batch.",
+      "columns": { "type": "Defect", "quantity": "Quantity", "origin": "Origin", "status": "Status" }
+    },
+        "title": "Production Batches",
     "subtitle": "Track every batch, its stage and delivery status.",
     "create": "Create Batch",
     "loading": "Loading production batches...",
@@ -390,6 +396,8 @@
       "progress": "Progress",
       "deliveryDate": "Delivery Date",
       "actions": "Actions",
+      "updateStage": "Update stage",
+      "defects": "Defects",
       "detail": "Batch Detail",
       "assignOperators": "Assign Operators",
       "history": "History",
@@ -518,6 +526,13 @@
       "current": "Current:",
       "totalDifference": "Total Difference:",
       "currentStage": "Current Stage:"
+    },
+    "tabs": {
+      "summary": "Summary and stage",
+      "operators": "Operators",
+      "observations": "Observations",
+      "traceability": "Traceability",
+      "defects": "Defects"
     },
     "views": {
       "batchDetailTitle": "Batch Detail",
@@ -682,6 +697,17 @@
       }
     },
     "back": "Back to Quality",
+    "sheet": {
+      "title": "Roll Inspection",
+      "subtitle": "Review the roll, register its parameters and record the shrinkage test in one place.",
+      "done": "Completed",
+      "pending": "Pending",
+      "steps": {
+        "initial": "Initial inspection",
+        "parameters": "Parameters",
+        "shrinkage": "Shrinkage test"
+      }
+    },
     "fabric": {
       "stats": {
         "rolls": "Fabric Rolls",
@@ -710,9 +736,14 @@
         "actions": "Actions"
       },
       "actions": {
+        "openSheet": "Open roll sheet",
+        "registerParameters": "Register parameters",
+        "registerTest": "Register test",
         "label": "Actions",
         "shrinkageTest": "Shrinkage Test",
-        "parameters": "Inspection Parameters"
+        "parameters": "Inspection Parameters",
+        "releaseRoll": "Release roll",
+        "blockRoll": "Block roll"
       },
       "empty": "No fabric inspections found.",
       "legend": {
@@ -929,7 +960,7 @@
       "back": "Back to Machinery",
       "info": {
         "status": "Current Status",
-        "batch": "Current Batch",
+        "location": "Location",
         "stopStarted": "Stopped Since",
         "currentDowntime": "Current Downtime",
         "lastFailure": "Last Failure"
@@ -1021,7 +1052,7 @@
         "title": "Machine Information",
         "code": "Machine ID",
         "type": "Machine Type",
-        "batch": "Current Batch",
+        "location": "Location",
         "status": "Current Status"
       },
       "details": {
@@ -1080,7 +1111,7 @@
     "table": {
       "machine": "Machine ID",
       "type": "Type",
-      "currentBatch": "Current Batch",
+      "location": "Location",
       "status": "Status",
       "currentDowntime": "Current Downtime",
       "lastFailure": "Last Failure",
@@ -1089,14 +1120,16 @@
     "form": {
       "title": "Register Machine",
       "type": "Machine Type",
-      "batch": "Production Batch",
+      "code": "Machine Code",
+      "location": "Location",
       "submit": "Register",
       "cancel": "Cancel",
 
       "errors": {
         "summary": "You can't leave empty fields. Please complete all the fields before registering.",
         "typeRequired": "Please select a machine type.",
-        "batchRequired": "Please select a production batch."
+        "codeRequired": "Please enter the machine code.",
+        "locationRequired": "Please enter the machine location."
       }
     }
   }

@@ -11,15 +11,11 @@ const alerts = () => import('./alerts/presentation/views/alerts.vue');
 
 const qualityView = () => import('./quality/presentation/views/quality.vue');
 const newFabricInspectionView = () => import('./quality/presentation/views/NewFabricInspectionView.vue');
-const shrinkageTestView = () => import('./quality/presentation/views/ShrinkageTestView.vue');
-const inspectionParametersView = () => import('./quality/presentation/views/InspectionParametersView.vue');
+const inspectionSheetView = () => import('./quality/presentation/views/InspectionSheetView.vue');
 
 const productionBatchesList = () => import('./production-batches/presentation/views/production-batches-list.view.vue');
 const createProductionBatch = () => import('./production-batches/presentation/views/create-production-batch.view.vue');
 const batchDetail = () => import('./production-batches/presentation/views/batch-detail.view.vue');
-const batchOperatorAssignment = () => import('./production-batches/presentation/views/batch-operator-assignment.view.vue');
-const traceabilityHistory = () => import('./production-batches/presentation/views/traceability-history.view.vue');
-const batchObservations = () => import('./production-batches/presentation/views/batch-observations.view.vue');
 
 const routes = [
     ...identityAccessRoutes,
@@ -53,28 +49,18 @@ const routes = [
     {
         path: '/production-batches/:id/operators',
         name: 'batch-operator-assignment',
-        component: batchOperatorAssignment,
-        meta: { title: 'Assign Operators' }
+        redirect: to => ({ path: `/production-batches/${to.params.id}`, query: { tab: 'operators' } })
     },
     {
         path: '/production-batches/:id/traceability',
         alias: ['/production-batches/:id/history'],
         name: 'traceability-history',
-        component: traceabilityHistory,
-        meta: {
-            title: 'Traceability History'
-        }
-    },
-    {
-        path: '/production-batches/:id/history',
-        name: 'batch-history',
-        redirect: to => `/production-batches/${to.params.id}/traceability`
+        redirect: to => ({ path: `/production-batches/${to.params.id}`, query: { tab: 'traceability' } })
     },
     {
         path: '/production-batches/:id/observations',
         name: 'batch-observations',
-        component: batchObservations,
-        meta: { title: 'Batch Observations' }
+        redirect: to => ({ path: `/production-batches/${to.params.id}`, query: { tab: 'observations' } })
     },
 
     {
@@ -90,16 +76,20 @@ const routes = [
         meta: { title: 'New Fabric Inspection' }
     },
     {
+        path: '/quality/inspections/:id',
+        name: 'inspection-sheet',
+        component: inspectionSheetView,
+        meta: { title: 'Roll Inspection' }
+    },
+    {
         path: '/quality/inspections/:id/shrinkage-test',
         name: 'shrinkage-test',
-        component: shrinkageTestView,
-        meta: { title: 'Shrinkage Test' }
+        redirect: to => ({ path: `/quality/inspections/${to.params.id}`, query: { step: 'shrinkage' } })
     },
     {
         path: '/quality/inspections/:id/parameters',
         name: 'inspection-parameters',
-        component: inspectionParametersView,
-        meta: { title: 'Inspection Parameters' }
+        redirect: to => ({ path: `/quality/inspections/${to.params.id}`, query: { step: 'parameters' } })
     },
 
     {
